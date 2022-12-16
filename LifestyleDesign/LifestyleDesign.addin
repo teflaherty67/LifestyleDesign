@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command LifestyleDesign</Text>
+    <Description>Some description for LifestyleDesign</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.Command</FullClassName>
+    <ClientId>172db331-f8ef-482b-adfa-6b650fc90cab</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application LifestyleDesign</Name>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.App</FullClassName>
+    <ClientId>aa529c08-7d65-4bb6-8c2a-6128627ee5f1</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
+</RevitAddIns>

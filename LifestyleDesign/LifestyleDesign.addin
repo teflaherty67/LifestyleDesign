@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
-  <AddIn Type="Command">
-    <Text>Command LifestyleDesign</Text>
+  <AddIn Type="Mirror">
+    <Text>Executes Revit Project Mirror</Text>
     <Description>Some description for LifestyleDesign</Description>
     <Assembly>LifestyleDesign.dll</Assembly>
-    <FullClassName>LifestyleDesign.Command</FullClassName>
+    <FullClassName>LifestyleDesign.cmdRevitMirror</FullClassName>
     <ClientId>172db331-f8ef-482b-adfa-6b650fc90cab</ClientId>
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>

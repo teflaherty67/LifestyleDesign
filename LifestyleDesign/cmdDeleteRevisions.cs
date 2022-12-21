@@ -32,14 +32,12 @@ namespace LifestyleDesign
 
             TaskDialog.Show("Results", "There are " + revisions.Count() + " revisions in the project.");
 
-            // set the first revision as Issued
-
-
+            // set the first revision as Issued                   
 
             // delete all the remaining revisions
 
             // uncheck the Issued box on the first revision
-                       
+
 
             return Result.Succeeded;
         }

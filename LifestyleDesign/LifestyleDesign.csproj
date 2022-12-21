@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="cmdDeleteRevisions.cs" />
     <Compile Include="cmdReverseDoorSwings.cs" />
     <Compile Include="cmdElevationRename.cs" />
     <Compile Include="cmdNewSheetGroup.cs" />

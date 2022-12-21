@@ -36,6 +36,15 @@
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
   </AddIn>
+  <AddIn Type="Command">
+    <Text>Delete Revisions</Text>
+    <Description>Deletes Revisions from schedule</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdDeleteRevisions</FullClassName>
+    <ClientId>AB1DB36F-FF09-429D-B418-85368E903F06</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
   <AddIn Type="Application">
     <Name>Application LifestyleDesign</Name>
     <Assembly>LifestyleDesign.dll</Assembly>

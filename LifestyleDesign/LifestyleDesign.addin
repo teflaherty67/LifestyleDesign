@@ -1,11 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
-  <AddIn Type="Mirror">
-    <Text>Executes Revit Project Mirror</Text>
-    <Description>Some description for LifestyleDesign</Description>
+  <AddIn Type="Command">
+    <Text>Mirror Project</Text>
+    <Description>Executes Revit Project Mirror</Description>
     <Assembly>LifestyleDesign.dll</Assembly>
     <FullClassName>LifestyleDesign.cmdRevitMirror</FullClassName>
     <ClientId>172db331-f8ef-482b-adfa-6b650fc90cab</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>New Sheet Group</Text>
+    <Description>Creates new sheet group for specified elevation</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdNewSheetGroup</FullClassName>
+    <ClientId>CE86D796-1229-41F1-8B64-3EA99450515C</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>Rename Elevations</Text>
+    <Description>Renames Elevations after plan flip</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdElevationRename</FullClassName>
+    <ClientId>96F6D85B-090F-4E5F-96DE-0C411E79A78B</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>Reverse Door Swings</Text>
+    <Description>Reverses Door Swings after plan flip</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdReverseDoorSwings</FullClassName>
+    <ClientId>ABA0C5F8-CF1F-4B22-83F2-6FB0D209440E</ClientId>
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
   </AddIn>

@@ -30,15 +30,20 @@ namespace LifestyleDesign
 
             IList<ElementId> revisions = Revision.GetAllRevisionIds(doc);
 
-            TaskDialog.Show("Results", "There are " + revisions.Count() + " revisions in the project.");
+            // remove the first revision from the list
 
-            // set the first revision as Issued
-
-            // revisions(0) (BuiltInParameter.PROJECT_REVISION_REVISION_ISSUED).Set(0);
+            revisions.RemoveAt(0);       
 
             // delete all the remaining revisions
 
-            // uncheck the Issued box on the first revision
+            using(Transaction t = new Transaction(doc))
+            {
+                t.Start("Delete Revisions");
+
+                doc.Delete(revisions);
+
+                t.Commit();
+            }
 
             return Result.Succeeded;
         }

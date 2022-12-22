@@ -25,9 +25,76 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-           
+            // get all the elevation views
 
-            return Result.Succeeded;
+            List<View> viewList = Utils.GetAllElevationViews(doc);
+
+            List<View> renamedList = new List<View>();
+
+            // start the transaction
+
+            using (Transaction t = new Transaction(doc))
+            {
+                t.Start("Rename Elevations");
+
+                // loop through the view collector
+
+                foreach (View curView in viewList)
+                {
+                    Parameter titleParam = null;
+
+                    string curTitle = "";
+
+                    foreach (Parameter curParam in curView.Parameters)
+                    {
+                        if (curParam.Definition.Name == "Title on Sheet")
+                        {
+                            titleParam = curParam;
+
+                            curTitle = curParam.AsString();
+                        }
+                    }
+
+                    // change view name
+
+                    if (curView.Name.Contains("Left") == true)
+                        curView.Name = curView.Name.Replace("Left", "$Right");
+
+                    else if (curView.Name.Contains("Right") == true)
+                        curView.Name = curView.Name.Replace("Right", "$Left");
+
+                    renamedList.Add(curView);
+
+                    // change the title on sheet
+
+                    if (curTitle.Contains("Left"))
+                        titleParam.Set(curTitle.Replace("Left", "Right"));
+
+                    else if (curTitle.Contains("Right"))
+                        titleParam.Set(curTitle.Replace("Right", "Left"));
+                }
+
+                foreach (View curView in renamedList)
+                {
+                    // remove $ from view name
+
+                    if (curView.Name.Contains("$Right") == true)
+                        curView.Name = curView.Name.Replace("$Right", "Right");
+
+                    else if (curView.Name.Contains("$Left") == true)
+                        curView.Name = curView.Name.Replace("$Left", "Left");
+                }
+
+                // commit the chnages
+
+                t.Commit();
+                t.Dispose();
+
+                return Result.Succeeded;
+            }
         }
     }
 }
+
+
+          

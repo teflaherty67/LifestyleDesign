@@ -34,7 +34,7 @@ namespace LifestyleDesign
 
             // set the first revision as Issued
 
-            revisions(0) (BuiltInParameter.PROJECT_REVISION_REVISION_ISSUED).Set(0);
+            // revisions(0) (BuiltInParameter.PROJECT_REVISION_REVISION_ISSUED).Set(0);
 
             // delete all the remaining revisions
 

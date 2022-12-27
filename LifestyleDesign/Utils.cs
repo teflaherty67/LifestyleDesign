@@ -3,14 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 
 namespace LifestyleDesign
 {
     internal static class Utils
     {
-        internal static void method1()
+        public static List<View> GetAllElevationViews(Document doc)
         {
-            // add method code here
+            List<View> returnList = new List<View>();
+
+            FilteredElementCollector colViews = new FilteredElementCollector(doc);
+            colViews.OfClass(typeof(View));
+
+            // loop through views and check for elevation views
+            foreach (View x in colViews)
+            {
+                if (x.GetType() == typeof(ViewSection))
+                {
+                    if (x.IsTemplate == false)
+                    {
+                        if (x.ViewType == ViewType.Elevation)
+                        {
+                            // add view to list
+                            returnList.Add(x);
+                        }
+                    }
+                }
+            }
+
+            return returnList;
         }
     }
 }

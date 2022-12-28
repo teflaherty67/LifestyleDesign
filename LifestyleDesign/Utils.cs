@@ -38,5 +38,31 @@ namespace LifestyleDesign
 
             return returnList;
         }
+
+        internal static string GetParameterValueByName(Element element, string paramName)
+        {
+            IList<Parameter> paramList = element.GetParameters(paramName);
+
+            if (paramList != null)
+            {
+                Parameter param = paramList[0];
+                string paramValue = param.AsValueString();
+                return paramValue;
+            }
+
+            return "";
+        }
+
+        internal static void SetParameterByName(Element element, string paramName, string value)
+        {
+            IList<Parameter> paramList = element.GetParameters(paramName);
+
+            if (paramList != null)
+            {
+                Parameter param = paramList[0];
+
+                param.Set(value);
+            }
+        }
     }
 }

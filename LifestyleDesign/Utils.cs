@@ -60,7 +60,7 @@ namespace LifestyleDesign
             if (paramList != null)
             {
                 Parameter param = paramList[0];
-
+                
                 param.Set(value);
             }
         }

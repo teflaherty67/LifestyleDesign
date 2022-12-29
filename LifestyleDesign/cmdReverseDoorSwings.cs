@@ -42,6 +42,11 @@ namespace LifestyleDesign
                 string lSwing = Utils.GetParameterValueByName(door, "Swing Left");
                 string rSwing = Utils.GetParameterValueByName(door, "Swing Right");
 
+                if(lSwing == null || rSwing == null)
+                {
+                    continue;
+                }
+
                 if (lSwing == "Yes")
                 {
                     leftSwing.Add(door);

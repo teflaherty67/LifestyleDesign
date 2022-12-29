@@ -44,11 +44,16 @@ namespace LifestyleDesign
             IList<Parameter> paramList = element.GetParameters(paramName);
 
             if (paramList != null)
-            {
-                Parameter param = paramList[0];
-                string paramValue = param.AsValueString();
-                return paramValue;
-            }
+                try
+                {
+                    Parameter param = paramList[0];
+                    string paramValue = param.AsValueString();
+                    return paramValue;
+                }
+                catch(System.ArgumentOutOfRangeException)
+                {
+                    return null;
+                }
 
             return "";
         }

@@ -61,19 +61,19 @@ namespace LifestyleDesign
                 foreach (FamilyInstance curDoor in leftSwing)
                 {
                     // set Swing Left value to no
-                    Utils.SetParameterByName(curDoor, "Swing Left", "No");
+                    Utils.SetParameterByName(curDoor, "Swing Left", 0);
 
                     // set Swing Right value to yes
-                    Utils.SetParameterByName(curDoor, "Swing Right", "Yes");
+                    Utils.SetParameterByName(curDoor, "Swing Right", 1);
                 }
 
                 foreach (FamilyInstance curDoor in rightSwing)
                 {
                     // set Swing Right value to no
-                    Utils.SetParameterByName(curDoor, "Swing Right", "No");
+                    Utils.SetParameterByName(curDoor, "Swing Right", 0);
 
                     // set Swing Left value to yes
-                    Utils.SetParameterByName(curDoor, "Swing Left", "Yes");
+                    Utils.SetParameterByName(curDoor, "Swing Left", 1);
                 }
 
                 t.Commit();

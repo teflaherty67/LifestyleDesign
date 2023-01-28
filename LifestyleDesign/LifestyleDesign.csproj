@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
+    <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
+    <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
     <EmbeddedResource Include="Resources\MirrorProject_32.png" />
     <EmbeddedResource Include="Resources\MirrorProject_16.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />

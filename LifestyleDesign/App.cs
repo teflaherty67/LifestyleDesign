@@ -36,22 +36,28 @@ namespace LifestyleDesign
 
             RibbonPanel panel1 = Utils.CreateRibbonPanel(app, "Lifestyle Design", "Mirror Plan");
             RibbonPanel panel2 = Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Management");
+            RibbonPanel panel3 = Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Setup");
 
             // create button data instances
 
-            ButtonClass data1 = new ButtonClass("Tool1", "Delete Revisions", "LifestyleDesign.cmdDeleteRevisions",
-               LifestyleDesign.Properties.Resources.DeleteRevisions_32,
-               LifestyleDesign.Properties.Resources.DeleteRevisions_16, "Deletes revisions in project");
-
-            ButtonClass data2 = new ButtonClass("Tool2", "Mirror Project", "LifestyleDesign.cmdRevitMirror",
+            ButtonClass data1 = new ButtonClass("Tool1", "Mirror\rProject", "LifestyleDesign.cmdRevitMirror",
                LifestyleDesign.Properties.Resources.MirrorProject_32,
                LifestyleDesign.Properties.Resources.MirrorProject_16, "Mirrors project on specified axis");
+
+            ButtonClass data2 = new ButtonClass("Tool2", "Reverse\rSwings", "LifestyleDesign.cmdReverseDoorSwings",
+               LifestyleDesign.Properties.Resources.ReverseSwings_32,
+               LifestyleDesign.Properties.Resources.ReverseSwings_16, "Reverses all door swings");
+
+            ButtonClass data6 = new ButtonClass("Tool6", "Delete\rRevisions", "LifestyleDesign.cmdDeleteRevisions",
+               LifestyleDesign.Properties.Resources.DeleteRevisions_32,
+               LifestyleDesign.Properties.Resources.DeleteRevisions_16, "Deletes revisions from project");
 
             // create buttons
 
             panel1.AddItem(data1.Data);
+            panel1.AddItem(data2.Data);
 
-            panel2.AddItem(data2.Data);
+            panel2.AddItem(data6.Data);
 
 
             return Result.Succeeded;

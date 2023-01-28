@@ -39,6 +39,20 @@ namespace LifestyleDesign
 
             // create button data instances
 
+            ButtonClass data1 = new ButtonClass("Tool1", "Delete Revisions", "LifestyleDesign.cmdDeleteRevisions",
+               LifestyleDesign.Properties.Resources.DeleteRevisions_32,
+               LifestyleDesign.Properties.Resources.DeleteRevisions_16, "Deletes revisions in project");
+
+            ButtonClass data2 = new ButtonClass("Tool2", "Mirror Project", "LifestyleDesign.cmdRevitMirror",
+               LifestyleDesign.Properties.Resources.MirrorProject_32,
+               LifestyleDesign.Properties.Resources.MirrorProject_16, "Mirrors project on specified axis");
+
+            // create buttons
+
+            panel1.AddItem(data1.Data);
+
+            panel2.AddItem(data2.Data);
+
 
             return Result.Succeeded;
         }
@@ -46,6 +60,20 @@ namespace LifestyleDesign
         public Result OnShutdown(UIControlledApplication a)
         {
             return Result.Succeeded;
+        }
+    }
+
+    public class ButtonClass
+    {
+        public PushButtonData Data { get; set; }
+
+        public ButtonClass(string name, string text, string className, System.Drawing.Bitmap largeImage,
+            System.Drawing.Bitmap smallImage, string toolTip)
+        {
+            Data = new PushButtonData(name, text, Utils.GetAssemblyName(), className);
+            Data.ToolTip = toolTip;
+            Data.LargeImage = Utils.BitmapToImageSource(largeImage);
+            Data.Image = Utils.BitmapToImageSource(smallImage);
         }
     }
 }

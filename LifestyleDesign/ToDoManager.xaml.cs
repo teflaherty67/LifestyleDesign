@@ -132,32 +132,90 @@ namespace LifestyleDesign
 
             curEdit = null;
             lblAddEdit.Text = "Add Item";
-            btnAddEdit.Text = "Add Item";
+            btnAddEdit.Content = "Add Item";
 
             WriteToDoFile();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            TaskDialog.Show("Edit", "Clicked the Edit button");
+            if (lbxTasks.SelectedItems != null)
+            {
+                ToDoData curToDo = lbxTasks.SelectedItem as ToDoData;
+                StartEditingItem(curToDo);
+            }
+        }
+
+        private void StartEditingItem(ToDoData curToDo)
+        {
+            curEdit = curToDo;
+
+            lblAddEdit.Text = "Update Item";
+            btnAddEdit.Content = "Update Item";
+            tbxItem.Text = curToDo.Text;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            TaskDialog.Show("Delete", "Clicked the Delete button");
+            if (lbxTasks.SelectedItems != null)
+            {
+                ToDoData curToDo = lbxTasks.SelectedItem as ToDoData;
+                RemoveItem(curToDo);
+            }
         }
 
         private void btnUp_Click(object sender, RoutedEventArgs e)
         {
-            TaskDialog.Show("Up", "Clicked the Up button");
+            if (lbxTasks.SelectedItems != null)
+            {
+                ToDoData todo = lbxTasks.SelectedItem as ToDoData;
+                MoveItemUp(todo);
+            }
+        }
+
+        private void MoveItemUp(ToDoData todo)
+        {
+            for (int i = 0; i < todoDataList.Count; i++)
+            {
+                if (todoDataList[i] == todo)
+                {
+                    if (i != 0)
+                    {
+                        todoDataList.RemoveAt(i);
+                        todoDataList.Insert(i - 1, todo);
+                        ReOrderToDoItems();
+                    }
+                }
+            }
+
+            WriteToDoFile();
         }
 
         private void btnDn_Click(object sender, RoutedEventArgs e)
         {
-            if(lbxTasks.SelectedItems != null)
+            if (lbxTasks.SelectedItems != null)
             {
-
+                ToDoData todo = lbxTasks.SelectedItem as ToDoData;
+                MoveItemDn(todo);
             }
+        }
+
+        private void MoveItemDn(ToDoData todo)
+        {
+            for (int i = 0; i < todoDataList.Count; i++)
+            {
+                if (todoDataList[i] == todo)
+                {
+                    if (i < todoDataList.Count - 1)
+                    {
+                        todoDataList.RemoveAt(i);
+                        todoDataList.Insert(i + 1, todo);
+                        ReOrderToDoItems();
+                    }
+                }
+            }
+
+            WriteToDoFile();
         }
     }
 }

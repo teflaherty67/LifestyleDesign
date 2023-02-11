@@ -26,7 +26,7 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            ToDoManager curForm = new ToDoManager();
+            ToDoManager curForm = new ToDoManager(doc.PathName);
 
             curForm.Width = 500;
             curForm.Height = 700;

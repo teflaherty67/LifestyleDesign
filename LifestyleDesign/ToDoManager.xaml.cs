@@ -31,10 +31,10 @@ namespace LifestyleDesign
         {
             InitializeComponent();
 
-            tbFileNmae.Text = Path.GetFileName(filePath);
+            tbFileNmae.Text = System.IO.Path.GetFileName(filePath);
 
-            string curPath = Path.GetDirectoryName(filePath);
-            string curFileName = Path.GetFileNameWithoutExtension(filePath);
+            string curPath = System.IO.Path.GetDirectoryName(filePath);
+            string curFileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
 
             todoFilePath = curPath + @"\" + curFileName;
 
@@ -131,7 +131,7 @@ namespace LifestyleDesign
             }
 
             curEdit = null;
-            lblAddEdit.Text = "Add Item";
+            tbkAddEdit.Text = "Add Item";
             btnAddEdit.Content = "Add Item";
 
             WriteToDoFile();
@@ -150,7 +150,7 @@ namespace LifestyleDesign
         {
             curEdit = curToDo;
 
-            lblAddEdit.Text = "Update Item";
+            tbkAddEdit.Text = "Update Item";
             btnAddEdit.Content = "Update Item";
             tbxItem.Text = curToDo.Text;
         }

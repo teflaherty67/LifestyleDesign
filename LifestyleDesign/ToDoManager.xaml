@@ -17,7 +17,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="To Do Items:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <ListBox x:Name="lbxTasks" Grid.Row="1"/>
+            <ListBox x:Name="lbxTasks" Grid.Row="1" MouseDoubleClick="lbxTasks_MouseDoubleClick"/>
         </Grid>
         <Grid Grid.Column="1" Margin="5,10,10,10">
             <Grid.RowDefinitions>

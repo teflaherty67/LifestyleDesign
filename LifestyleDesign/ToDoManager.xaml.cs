@@ -34,7 +34,7 @@ namespace LifestyleDesign
             tbFileNmae.Text = System.IO.Path.GetFileName(filePath);
 
             string curPath = System.IO.Path.GetDirectoryName(filePath);
-            string curFileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+            string curFileName = System.IO.Path.GetFileNameWithoutExtension(filePath) + "_ToDo.txt";
 
             todoFilePath = curPath + @"\" + curFileName;
 
@@ -215,6 +215,21 @@ namespace LifestyleDesign
                 }
             }
 
+            WriteToDoFile();
+        }
+
+        private void lbxTasks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxTasks.SelectedItems != null)
+            {
+                ToDoData todo = lbxTasks.SelectedItem as ToDoData;
+                FinishItem(todo);
+            }
+        }
+
+        private void FinishItem(ToDoData todo)
+        {
+            todo.Status = "Complete";
             WriteToDoFile();
         }
     }

@@ -18,6 +18,15 @@
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
   </AddIn>
+  <AddIn Type="Command">
+    <Text>To Do Manager</Text>
+    <Description>Opens Revit To Do Manager</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdToDoManager</FullClassName>
+    <ClientId>ACE74327-ED2A-4E3B-9E19-B4DEA9FBA901</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
   <AddIn Type="Application">
     <Name>Application LifestyleDesign</Name>
     <Assembly>LifestyleDesign.dll</Assembly>

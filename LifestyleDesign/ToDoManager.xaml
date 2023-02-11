@@ -36,13 +36,13 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Add New Item" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <TextBox x:Name="tbxItem" Grid.Row="1" Height="25"/>
-            <Button x:Name="btnAddEdit" Grid.Row="2" Content="Add Item" Width="100" Height="25" HorizontalAlignment="Left"/>
+            <Button x:Name="btnAddEdit" Grid.Row="2" Content="Add Item" Width="100" Height="25" HorizontalAlignment="Left" Click="btnAddEdit_Click"/>
 
-            <Button x:Name="btnEdit" Grid.Row="4" Content="Edit Item" Width="100" Height="25" HorizontalAlignment="Left"/>
-            <Button x:Name="btnDelete" Grid.Row="5" Content="Delete Item" Width="100" Height="25" HorizontalAlignment="Left"/>
+            <Button x:Name="btnEdit" Grid.Row="4" Content="Edit Item" Width="100" Height="25" HorizontalAlignment="Left" Click="btnEdit_Click"/>
+            <Button x:Name="btnDelete" Grid.Row="5" Content="Delete Item" Width="100" Height="25" HorizontalAlignment="Left" Click="btnDelete_Click"/>
 
-            <Button x:Name="btnUp" Grid.Row="7" Content="Item Up" Width="100" Height="25" HorizontalAlignment="Left"/>
-            <Button x:Name="btnDn" Grid.Row="8" Content="Item Down" Width="100" Height="25" HorizontalAlignment="Left"/>
+            <Button x:Name="btnUp" Grid.Row="7" Content="Item Up" Width="100" Height="25" HorizontalAlignment="Left" Click="btnUp_Click"/>
+            <Button x:Name="btnDn" Grid.Row="8" Content="Item Down" Width="100" Height="25" HorizontalAlignment="Left" Click="btnDn_Click"/>
 
             <TextBlock Grid.Row="10" Text="File Name:" VerticalAlignment="Bottom"/>
             <TextBlock x:Name="tbFileNmae" Grid.Row="11" Text="CURRENT FILE NAME" VerticalAlignment="Bottom"/>

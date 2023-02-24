@@ -52,10 +52,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="cmdToDoManager.cs" />
     <Compile Include="cmdDeleteRevisions.cs" />
     <Compile Include="cmdReverseDoorSwings.cs" />
     <Compile Include="cmdElevationRename.cs" />
@@ -67,10 +69,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ToDoData.cs" />
+    <Compile Include="ToDoManager.xaml.cs">
+      <DependentUpon>ToDoManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
+    <EmbeddedResource Include="Resources\ToDo_32.png" />
+    <EmbeddedResource Include="Resources\ToDo_16.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
     <EmbeddedResource Include="Resources\MirrorProject_32.png" />
@@ -112,6 +120,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ToDoManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

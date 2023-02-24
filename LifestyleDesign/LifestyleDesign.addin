@@ -17,7 +17,7 @@
     <ClientId>96F6D85B-090F-4E5F-96DE-0C411E79A78B</ClientId>
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
-  </AddIn>
+  </AddIn>  
   <AddIn Type="Application">
     <Name>Application LifestyleDesign</Name>
     <Assembly>LifestyleDesign.dll</Assembly>

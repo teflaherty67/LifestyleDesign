@@ -28,8 +28,8 @@ namespace LifestyleDesign
 
             ToDoManager curForm = new ToDoManager(doc.PathName);
 
-            curForm.Width = 500;
-            curForm.Height = 700;
+            curForm.Width = 700;
+            curForm.Height = 500;
 
             curForm.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             curForm.Topmost = true;

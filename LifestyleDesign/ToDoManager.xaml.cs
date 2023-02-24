@@ -211,6 +211,7 @@ namespace LifestyleDesign
                         todoDataList.RemoveAt(i);
                         todoDataList.Insert(i + 1, todo);
                         ReOrderToDoItems();
+                        break;
                     }
                 }
             }
@@ -231,6 +232,11 @@ namespace LifestyleDesign
         {
             todo.Status = "Complete";
             WriteToDoFile();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

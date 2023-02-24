@@ -52,12 +52,17 @@ namespace LifestyleDesign
                LifestyleDesign.Properties.Resources.DeleteRevisions_32,
                LifestyleDesign.Properties.Resources.DeleteRevisions_16, "Deletes revisions from project");
 
+            ButtonClass btn7 = new ButtonClass("Tool7", "To Do\rManager", "LifestyleDesign.cmdToDoManager",
+                LifestyleDesign.Properties.Resources.ToDo_32,
+                LifestyleDesign.Properties.Resources.ToDo_16, "Launches To Do Manager");
+
             // create buttons
 
             panel1.AddItem(data1.Data);
             panel1.AddItem(data2.Data);
 
             panel2.AddItem(data6.Data);
+            panel2.AddItem(btn7.Data);
 
 
             return Result.Succeeded;

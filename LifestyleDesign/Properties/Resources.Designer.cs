@@ -83,6 +83,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ElevationRename_16 {
+            get {
+                object obj = ResourceManager.GetObject("ElevationRename_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ElevationRename_32 {
+            get {
+                object obj = ResourceManager.GetObject("ElevationRename_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MirrorProject_16 {
             get {
                 object obj = ResourceManager.GetObject("MirrorProject_16", resourceCulture);
@@ -116,6 +136,26 @@ namespace LifestyleDesign.Properties {
         internal static System.Drawing.Bitmap ReverseSwings_32 {
             get {
                 object obj = ResourceManager.GetObject("ReverseSwings_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SheetSwap_16 {
+            get {
+                object obj = ResourceManager.GetObject("SheetSwap_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SheetSwap_32 {
+            get {
+                object obj = ResourceManager.GetObject("SheetSwap_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

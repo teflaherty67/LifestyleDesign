@@ -77,6 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
+    <EmbeddedResource Include="Resources\SheetSwap_32.png" />
+    <EmbeddedResource Include="Resources\SheetSwap_16.png" />
+    <EmbeddedResource Include="Resources\ElevationRename_32.png" />
+    <EmbeddedResource Include="Resources\ElevationRename_16.png" />
     <EmbeddedResource Include="Resources\ToDo_32.png" />
     <EmbeddedResource Include="Resources\ToDo_16.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_32.png" />

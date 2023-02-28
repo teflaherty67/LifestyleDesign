@@ -8,15 +8,6 @@
     <ClientId>CE86D796-1229-41F1-8B64-3EA99450515C</ClientId>
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Text>Rename Elevations</Text>
-    <Description>Renames Elevations after plan flip</Description>
-    <Assembly>LifestyleDesign.dll</Assembly>
-    <FullClassName>LifestyleDesign.cmdElevationRename</FullClassName>
-    <ClientId>96F6D85B-090F-4E5F-96DE-0C411E79A78B</ClientId>
-    <VendorId>T Edward</VendorId>
-    <VendorDescription>T Edward Coder</VendorDescription>
   </AddIn>  
   <AddIn Type="Application">
     <Name>Application LifestyleDesign</Name>

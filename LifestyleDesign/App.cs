@@ -40,29 +40,39 @@ namespace LifestyleDesign
 
             // create button data instances
 
-            ButtonClass data1 = new ButtonClass("Tool1", "Mirror\rProject", "LifestyleDesign.cmdRevitMirror",
+            ButtonClass btn1 = new ButtonClass("Tool1", "Mirror\rProject", "LifestyleDesign.cmdRevitMirror",
                LifestyleDesign.Properties.Resources.MirrorProject_32,
                LifestyleDesign.Properties.Resources.MirrorProject_16, "Mirrors project on specified axis");
 
-            ButtonClass data2 = new ButtonClass("Tool2", "Reverse\rSwings", "LifestyleDesign.cmdReverseDoorSwings",
+            ButtonClass btn2 = new ButtonClass("Tool2", "Reverse\rSwings", "LifestyleDesign.cmdReverseDoorSwings",
                LifestyleDesign.Properties.Resources.ReverseSwings_32,
                LifestyleDesign.Properties.Resources.ReverseSwings_16, "Reverses all door swings");
 
-            ButtonClass data6 = new ButtonClass("Tool6", "Delete\rRevisions", "LifestyleDesign.cmdDeleteRevisions",
+            ButtonClass btn3 = new ButtonClass("Tool3", "Rename\rElevations", "LifestyleDesign.cmdElevationRename",
+               LifestyleDesign.Properties.Resources.ElevationRename_32,
+               LifestyleDesign.Properties.Resources.ElevationRename_16, "Renames Left & Right Elevations for Mirrored Projects");
+
+            ButtonClass btn4 = new ButtonClass("Tool4", "Swap\rSheets", "LifestyleDesign.cmdElevationRename",
+               LifestyleDesign.Properties.Resources.SheetSwap_32,
+               LifestyleDesign.Properties.Resources.SheetSwap_16, "Swaps the Left & Right Elevation sheets for Mirrored Projects");
+
+            ButtonClass btn5 = new ButtonClass("Tool6", "Delete\rRevisions", "LifestyleDesign.cmdDeleteRevisions",
                LifestyleDesign.Properties.Resources.DeleteRevisions_32,
                LifestyleDesign.Properties.Resources.DeleteRevisions_16, "Deletes revisions from project");
 
-            ButtonClass btn7 = new ButtonClass("Tool7", "To Do\rManager", "LifestyleDesign.cmdToDoManager",
+            ButtonClass btn6 = new ButtonClass("Tool7", "To Do\rManager", "LifestyleDesign.cmdToDoManager",
                 LifestyleDesign.Properties.Resources.ToDo_32,
                 LifestyleDesign.Properties.Resources.ToDo_16, "Launches To Do Manager");
 
             // create buttons
 
-            panel1.AddItem(data1.Data);
-            panel1.AddItem(data2.Data);
+            panel1.AddItem(btn1.Data);
+            panel1.AddItem(btn2.Data);
+            panel1.AddItem(btn3.Data);
+            panel1.AddItem(btn4.Data);
 
-            panel2.AddItem(data6.Data);
-            panel2.AddItem(btn7.Data);
+            panel2.AddItem(btn5.Data);
+            panel2.AddItem(btn6.Data);
 
 
             return Result.Succeeded;

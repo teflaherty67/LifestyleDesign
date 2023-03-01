@@ -23,20 +23,46 @@ namespace LifestyleDesign
     /// </summary>
     public partial class RevisionJournal : Window
     {
-        string todoFilePath = "";
-        BindingList<JournalData> todoDataList = new BindingList<JournalData>();
-        JournalData curEdit;
-
+        string folderPath = "";
+        string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs\";
+        string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs\";
+       
         public RevisionJournal(string filePath)
         {
             InitializeComponent();
 
+            string[] directory1 = Directory.GetDirectories(searchPath1);
+            string[] directory2 = Directory.GetDirectories(searchPath2);
+
+            // search path 1
+
+            foreach (string dir in directory1)
+            {
+                if(dir.Contains(Globals.JobNumber))
+                    folderPath = dir;
+            }
+
+            // search path 2
+
+            if(folderPath == "")
+            {
+                foreach(string dir in directory2)
+                {
+                    if (dir.Contains(Globals.JobNumber))
+                        folderPath = dir;
+                }
+            }
+
+            if(folderPath == "")
+            {
+                folderPath = searchPath1;
+            }
+
             tbFileNmae.Text = System.IO.Path.GetFileName(filePath);
 
-            string curPath = System.IO.Path.GetDirectoryName(filePath);
-            string curFileName = System.IO.Path.GetFileNameWithoutExtension(filePath) + "_ToDo.txt";
+            string curFileName = Globals.JobNumber + "_Log.txt";
 
-            todoFilePath = curPath + @"\" + curFileName;
+            todoFilePath = folderPath + @"\" + curFileName;
 
             ReadToDoFile();
         }

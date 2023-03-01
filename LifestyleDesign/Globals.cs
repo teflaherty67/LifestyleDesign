@@ -8,5 +8,6 @@ namespace LifestyleDesign
 {
     internal static class Globals
     {
+        public static string JobNumber;
     }
 }

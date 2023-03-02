@@ -26,6 +26,9 @@ namespace LifestyleDesign
         string folderPath = "";
         string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs\";
         string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs\";
+
+        BindingList<JournalData> journalDataList = new BindingList<JournalData>();
+        JournalData curEdit;
        
         public RevisionJournal(string filePath)
         {
@@ -62,24 +65,24 @@ namespace LifestyleDesign
 
             string curFileName = Globals.JobNumber + "_Log.txt";
 
-            todoFilePath = folderPath + @"\" + curFileName;
+            journalFilePath = folderPath + @"\" + curFileName;
 
             ReadToDoFile();
         }
 
         private void ReadToDoFile()
         {
-            if (File.Exists(todoFilePath))
+            if (File.Exists(journalFilePath))
             {
                 int counter = 0;
-                string[] strings = File.ReadAllLines(todoFilePath);
+                string[] strings = File.ReadAllLines(journalFilePath);
 
                 foreach (string line in strings)
                 {
                     string[] todoData = JournalData.ParseDsiplayString(line);
 
                     JournalData curToDo = new JournalData(counter + 1, todoData[0], todoData[1]);
-                    todoDataList.Add(curToDo);
+                    journalDataList.Add(curToDo);
                     counter++;
                 }
             }
@@ -90,7 +93,7 @@ namespace LifestyleDesign
         private void ShowData()
         {
             lbxTasks.ItemsSource = null;
-            lbxTasks.ItemsSource = todoDataList;
+            lbxTasks.ItemsSource = journalDataList;
             lbxTasks.DisplayMemberPath = "Display";
         }
 
@@ -111,15 +114,15 @@ namespace LifestyleDesign
 
         private void AddToDoItem(string todoText)
         {
-            JournalData curToDo = new JournalData(todoDataList.Count + 1, todoText, "To Do");
-            todoDataList.Add(curToDo);
+            JournalData curToDo = new JournalData(journalDataList.Count + 1, todoText, "To Do");
+            journalDataList.Add(curToDo);
 
             WriteToDoFile();
         }
 
         private void WriteToDoFile()
         {
-            using (StreamWriter writer = File.CreateText(todoFilePath))
+            using (StreamWriter writer = File.CreateText(journalFilePath))
             {
                 foreach (JournalData curToDo in lbxTasks.Items)
                 {
@@ -133,7 +136,7 @@ namespace LifestyleDesign
 
         private void CompleteEditingItem()
         {
-            foreach (JournalData todo in todoDataList)
+            foreach (JournalData todo in journalDataList)
             {
                 if (todo == curEdit)
                     todo.Text = tbxItem.Text;
@@ -175,7 +178,7 @@ namespace LifestyleDesign
 
         private void RemoveItem(JournalData curToDo)
         {
-            todoDataList.Remove(curToDo);
+            journalDataList.Remove(curToDo);
             ReOrderToDoItems();
 
             WriteToDoFile();
@@ -183,10 +186,10 @@ namespace LifestyleDesign
 
         private void ReOrderToDoItems()
         {
-            for (int i = 0; i < todoDataList.Count; i++)
+            for (int i = 0; i < journalDataList.Count; i++)
             {
-                todoDataList[i].PositionNumber = i + 1;
-                todoDataList[i].UpdateDisplayString();
+                journalDataList[i].PositionNumber = i + 1;
+                journalDataList[i].UpdateDisplayString();
             }
             WriteToDoFile();
         }

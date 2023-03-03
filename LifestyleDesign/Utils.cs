@@ -128,5 +128,54 @@ namespace LifestyleDesign
             string assemblyName = Assembly.GetExecutingAssembly().Location;
             return assemblyName;
         }
+
+        internal static string GetStringBetweenCharacters(string input, string charFrom, string charTo)
+        {
+            int posFrom = input.IndexOf(charFrom);
+            if (posFrom != -1) //if found char
+            {
+                int posTo = input.IndexOf(charTo, posFrom + 1);
+                if (posTo != -1) //if found char
+                {
+                    return input.Substring(posFrom + 1, posTo - posFrom - 1);
+                }
+            }
+
+            return string.Empty;
+        }
+
+        public static List<ViewSheet> GetSheetsByNumber(Document curDoc, string sheetNumber)
+        {
+            List<ViewSheet> returnSheets = new List<ViewSheet>();
+
+            //get all sheets
+            List<ViewSheet> curSheets = GetAllSheets(curDoc);
+
+            //loop through sheets and check sheet name
+            foreach (ViewSheet curSheet in curSheets)
+            {
+                if (curSheet.SheetNumber.Contains(sheetNumber))
+                {
+                    returnSheets.Add(curSheet);
+                }
+            }
+
+            return returnSheets;
+        }
+
+        public static List<ViewSheet> GetAllSheets(Document curDoc)
+        {
+            //get all sheets
+            FilteredElementCollector m_colViews = new FilteredElementCollector(curDoc);
+            m_colViews.OfCategory(BuiltInCategory.OST_Sheets);
+
+            List<ViewSheet> m_sheets = new List<ViewSheet>();
+            foreach (ViewSheet x in m_colViews.ToElements())
+            {
+                m_sheets.Add(x);
+            }
+
+            return m_sheets;
+        }
     }
 }

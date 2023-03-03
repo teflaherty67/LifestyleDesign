@@ -24,6 +24,7 @@ namespace LifestyleDesign
     public partial class RevisionJournal : Window
     {
         string folderPath = "";
+        string journalFilePath = "";
         string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs\";
         string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs\";
 

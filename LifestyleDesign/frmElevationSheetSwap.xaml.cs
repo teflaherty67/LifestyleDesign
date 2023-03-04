@@ -70,6 +70,16 @@ namespace LifestyleDesign
             return cbxRight1.SelectedItem.ToString();
         }
 
+        internal string GetComboBoxLeft2Item()
+        {
+            return cbxLeft2.SelectedItem.ToString();
+        }
+
+        internal string GetComboBoxRight2Item()
+        {
+            return cbxRight2.SelectedItem.ToString();
+        }
+
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
 

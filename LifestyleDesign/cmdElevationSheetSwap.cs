@@ -69,8 +69,8 @@ namespace LifestyleDesign
 
                 if (curForm.GetCheckBox1() == true)
                 {
-                    string curLeftNum2 = curForm.GetComboBox3Item();
-                    string curRightNum2 = curForm.GetComboBox4Item();
+                    string curLeftNum2 = curForm.GetComboBoxLeft2Item();
+                    string curRightNum2 = curForm.GetComboBoxRight2Item();
 
                     string numLeft2 = Utils.GetStringBetweenCharacters(curLeftNum2, curLeftNum2[0].ToString(),
                    curLeftNum2[curLeftNum2.Length - 1].ToString());

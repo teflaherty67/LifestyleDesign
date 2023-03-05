@@ -57,16 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="cmdElevationSheetSwap.cs" />
     <Compile Include="cmdToDoManager.cs" />
     <Compile Include="cmdDeleteRevisions.cs" />
     <Compile Include="cmdReverseDoorSwings.cs" />
     <Compile Include="cmdElevationRename.cs" />
     <Compile Include="cmdNewSheetGroup.cs" />
     <Compile Include="cmdRevitMirror.cs" />
-    <Compile Include="frmElevationSheetSwap.xaml.cs">
-      <DependentUpon>frmElevationSheetSwap.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -81,16 +77,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
-    <EmbeddedResource Include="Resources\SheetSwap_32.png" />
-    <EmbeddedResource Include="Resources\SheetSwap_16.png" />
-    <EmbeddedResource Include="Resources\ElevationRename_32.png" />
-    <EmbeddedResource Include="Resources\ElevationRename_16.png" />
     <EmbeddedResource Include="Resources\ToDo_32.png" />
     <EmbeddedResource Include="Resources\ToDo_16.png" />
+    <EmbeddedResource Include="Resources\SheetSwap_32.png" />
+    <EmbeddedResource Include="Resources\SheetSwap_16.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
+    <EmbeddedResource Include="Resources\Renumber_32.png" />
+    <EmbeddedResource Include="Resources\Renumber_16.png" />
+    <EmbeddedResource Include="Resources\ProjectSetup_32.png" />
+    <EmbeddedResource Include="Resources\ProjectSetup_16.png" />
+    <EmbeddedResource Include="Resources\NewSheet_32.png" />
+    <EmbeddedResource Include="Resources\NewSheet_16.png" />
     <EmbeddedResource Include="Resources\MirrorProject_32.png" />
     <EmbeddedResource Include="Resources\MirrorProject_16.png" />
+    <EmbeddedResource Include="Resources\ElevationRename_32.png" />
+    <EmbeddedResource Include="Resources\ElevationRename_16.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_16.png" />
   </ItemGroup>
@@ -130,10 +132,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="frmElevationSheetSwap.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ToDoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LifestyleDesign"
              mc:Ignorable="d" 
-             d:DesignHeight="210" d:DesignWidth="320" Title="New Elevation Sheet Group" FontSize="16" FontWeight="Bold">
+             d:DesignHeight="210" d:DesignWidth="320" Title="New Elevation Sheet Group" FontSize="16" FontWeight="Bold" MinWidth="300" MinHeight="200">
     <Border Margin="10">
         <Grid>
             <Grid.RowDefinitions>
@@ -24,14 +24,14 @@
             </StackPanel>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Foundation Type:" Grid.Row="2" FontSize="12"/>
             <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
-                <RadioButton x:Name="rbBasement" Content="Basement" FontSize="12" FontWeight="Normal" Margin="0,0,10,0" IsChecked="True"/>
-                <RadioButton x:Name="rbCrawlspace" Content="Crawlspace" FontSize="12" FontWeight="Normal" Margin="0,0,10,0"/>
-                <RadioButton x:Name="rbSlab" Content="Slab" FontSize="12" FontWeight="Normal"/>
+                <RadioButton x:Name="rbBasement" Content="Basement" FontSize="12" FontWeight="Normal" Margin="0,0,10,0" IsChecked="True" GroupName="Group1"/>
+                <RadioButton x:Name="rbCrawlspace" Content="Crawlspace" FontSize="12" FontWeight="Normal" Margin="0,0,10,0" GroupName="Group1"/>
+                <RadioButton x:Name="rbSlab" Content="Slab" FontSize="12" FontWeight="Normal" GroupName="Group1"/>
             </StackPanel>
-            <TextBlock Grid.Row="4" Text="# of Storys:" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="4" Text="# of Stories:" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <StackPanel Grid.Row="5" Orientation="Horizontal">
-                <RadioButton x:Name="rbOne" VerticalAlignment="Center" Content="One Story" FontSize="12" FontWeight="Normal" Margin="0,0,10,0" IsChecked="True"/>
-                <RadioButton x:Name="rbTwo" FontSize="12" FontWeight="Normal" Content="Two Story" VerticalAlignment="Center"/>
+                <RadioButton x:Name="rbOne" VerticalAlignment="Center" Content="One Story" FontSize="12" FontWeight="Normal" Margin="0,0,10,0" IsChecked="True" GroupName="Group2"/>
+                <RadioButton x:Name="rbTwo" FontSize="12" FontWeight="Normal" Content="Two Story" VerticalAlignment="Center" GroupName="Group2"/>
             </StackPanel>
             <Grid Grid.Row="8">
                 <Grid.ColumnDefinitions>

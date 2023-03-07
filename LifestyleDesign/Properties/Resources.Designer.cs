@@ -63,6 +63,46 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Check_16 {
+            get {
+                object obj = ResourceManager.GetObject("Check_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Check_32 {
+            get {
+                object obj = ResourceManager.GetObject("Check_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Clear_16 {
+            get {
+                object obj = ResourceManager.GetObject("Clear_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Clear_32 {
+            get {
+                object obj = ResourceManager.GetObject("Clear_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DeleteRevisions_16 {
             get {
                 object obj = ResourceManager.GetObject("DeleteRevisions_16", resourceCulture);
@@ -176,6 +216,26 @@ namespace LifestyleDesign.Properties {
         internal static System.Drawing.Bitmap Renumber_32 {
             get {
                 object obj = ResourceManager.GetObject("Renumber_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReverseSwing_16 {
+            get {
+                object obj = ResourceManager.GetObject("ReverseSwing_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReverseSwing_32 {
+            get {
+                object obj = ResourceManager.GetObject("ReverseSwing_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

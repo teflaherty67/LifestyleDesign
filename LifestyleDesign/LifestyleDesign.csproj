@@ -83,6 +83,8 @@
     <EmbeddedResource Include="Resources\SheetSwap_16.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
+    <EmbeddedResource Include="Resources\ReverseSwing_32.png" />
+    <EmbeddedResource Include="Resources\ReverseSwing_16.png" />
     <EmbeddedResource Include="Resources\Renumber_32.png" />
     <EmbeddedResource Include="Resources\Renumber_16.png" />
     <EmbeddedResource Include="Resources\ProjectSetup_32.png" />
@@ -95,6 +97,10 @@
     <EmbeddedResource Include="Resources\ElevationRename_16.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_16.png" />
+    <EmbeddedResource Include="Resources\Clear_32.png" />
+    <EmbeddedResource Include="Resources\Clear_16.png" />
+    <EmbeddedResource Include="Resources\Check_32.png" />
+    <EmbeddedResource Include="Resources\Check_16.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

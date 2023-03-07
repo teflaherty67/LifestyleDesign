@@ -52,8 +52,8 @@ namespace LifestyleDesign
 
             frmElevationSheetSwap curForm = new frmElevationSheetSwap(lrSheets)
             {
-                Width = 350,
-                Height = 250,
+                Width = 375,
+                Height = 275,
                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
                 Topmost = true,
             };

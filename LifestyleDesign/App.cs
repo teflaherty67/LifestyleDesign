@@ -19,8 +19,7 @@ namespace LifestyleDesign
     {
         public Result OnStartup(UIControlledApplication app)
         {
-            string assemblyName = Utils.GetAssemblyName();
-
+            
             // create the ribbon tab
 
             try
@@ -40,27 +39,27 @@ namespace LifestyleDesign
 
             // create button data instances
 
-            ButtonClass btn1 = new ButtonClass("Tool1", "Mirror\rProject", "LifestyleDesign.cmdRevitMirror",
+            ButtonDataClass btn1 = new ButtonDataClass("Tool1", "Mirror\rProject", "LifestyleDesign.cmdRevitMirror",
                LifestyleDesign.Properties.Resources.MirrorProject_32,
                LifestyleDesign.Properties.Resources.MirrorProject_16, "Mirrors project on specified axis");
 
-            ButtonClass btn2 = new ButtonClass("Tool2", "Reverse\rSwings", "LifestyleDesign.cmdReverseDoorSwings",
+            ButtonDataClass btn2 = new ButtonDataClass("Tool2", "Reverse\rSwings", "LifestyleDesign.cmdReverseDoorSwings",
                LifestyleDesign.Properties.Resources.ReverseSwings_32,
                LifestyleDesign.Properties.Resources.ReverseSwings_16, "Reverses all door swings");
 
-            ButtonClass btn3 = new ButtonClass("Tool3", "Rename\rElevations", "LifestyleDesign.cmdElevationRename",
+            ButtonDataClass btn3 = new ButtonDataClass("Tool3", "Rename\rElevations", "LifestyleDesign.cmdElevationRename",
                LifestyleDesign.Properties.Resources.ElevationRename_32,
                LifestyleDesign.Properties.Resources.ElevationRename_16, "Renames Left & Right Elevations for Mirrored Projects");
 
-            ButtonClass btn4 = new ButtonClass("Tool4", "Swap\rSheets", "LifestyleDesign.cmdElevationRename",
+            ButtonDataClass btn4 = new ButtonDataClass("Tool4", "Swap\rSheets", "LifestyleDesign.cmdElevationSheetSwap",
                LifestyleDesign.Properties.Resources.SheetSwap_32,
                LifestyleDesign.Properties.Resources.SheetSwap_16, "Swaps the Left & Right Elevation sheets for Mirrored Projects");
 
-            ButtonClass btn5 = new ButtonClass("Tool6", "Delete\rRevisions", "LifestyleDesign.cmdDeleteRevisions",
+            ButtonDataClass btn5 = new ButtonDataClass("Tool6", "Delete\rRevisions", "LifestyleDesign.cmdDeleteRevisions",
                LifestyleDesign.Properties.Resources.DeleteRevisions_32,
                LifestyleDesign.Properties.Resources.DeleteRevisions_16, "Deletes revisions from project");
 
-            ButtonClass btn6 = new ButtonClass("Tool7", "To Do\rManager", "LifestyleDesign.cmdToDoManager",
+            ButtonDataClass btn6 = new ButtonDataClass("Tool7", "To Do\rManager", "LifestyleDesign.cmdToDoManager",
                 LifestyleDesign.Properties.Resources.ToDo_32,
                 LifestyleDesign.Properties.Resources.ToDo_16, "Launches To Do Manager");
 
@@ -82,19 +81,5 @@ namespace LifestyleDesign
         {
             return Result.Succeeded;
         }
-    }
-
-    public class ButtonClass
-    {
-        public PushButtonData Data { get; set; }
-
-        public ButtonClass(string name, string text, string className, System.Drawing.Bitmap largeImage,
-            System.Drawing.Bitmap smallImage, string toolTip)
-        {
-            Data = new PushButtonData(name, text, Utils.GetAssemblyName(), className);
-            Data.ToolTip = toolTip;
-            Data.LargeImage = Utils.BitmapToImageSource(largeImage);
-            Data.Image = Utils.BitmapToImageSource(smallImage);
-        }
-    }
+    }    
 }

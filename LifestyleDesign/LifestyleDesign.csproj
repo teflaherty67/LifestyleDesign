@@ -57,12 +57,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Classes\ButtonDataClass.cs" />
+    <Compile Include="cmdElevationSheetSwap.cs" />
     <Compile Include="cmdToDoManager.cs" />
     <Compile Include="cmdDeleteRevisions.cs" />
     <Compile Include="cmdReverseDoorSwings.cs" />
     <Compile Include="cmdElevationRename.cs" />
     <Compile Include="cmdNewSheetGroup.cs" />
     <Compile Include="cmdRevitMirror.cs" />
+    <Compile Include="Forms\frmElevationSheetSwap.xaml.cs">
+      <DependentUpon>frmElevationSheetSwap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -138,6 +143,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Forms\frmElevationSheetSwap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Forms\ToDoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

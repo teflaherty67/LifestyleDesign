@@ -122,13 +122,7 @@ namespace LifestyleDesign
 
             return null;
         }
-
-        internal static string GetAssemblyName()
-        {
-            string assemblyName = Assembly.GetExecutingAssembly().Location;
-            return assemblyName;
-        }
-
+      
         internal static string GetStringBetweenCharacters(string input, string charFrom, string charTo)
         {
             int posFrom = input.IndexOf(charFrom);

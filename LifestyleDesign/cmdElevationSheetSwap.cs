@@ -53,7 +53,7 @@ namespace LifestyleDesign
             frmElevationSheetSwap curForm = new frmElevationSheetSwap(lrSheets);
             curForm.ShowDialog();
 
-            if (curForm.DialogResult == System.Windows.Forms.DialogResult.OK)
+            if (curForm.DialogResult == true)
             {
 
                 // create variable for current sheet numbers

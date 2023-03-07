@@ -57,7 +57,10 @@ namespace LifestyleDesign
 
         internal bool GetCheckBox1()
         {
-            return chbSplit.Checked;
+            if(chbSplit.IsChecked == true)
+                return true;
+
+            return false;
         }
 
         internal string GetComboBoxLeft1Item()

@@ -27,10 +27,10 @@ namespace LifestyleDesign
         {
             InitializeComponent();
 
-            tbkLeft2.Visible = false;
-            tbkRight2.Visible = false;
-            cbxLeft2.Visible = false;
-            cbxRight2.Visible = false;
+            tbkLeft2.IsEnabled = false;
+            tbkRight2.IsEnabled = false;
+            cbxLeft2.IsEnabled = false;
+            cbxRight2.IsEnabled = false;
 
             chbSplit.IsChecked = false;
 
@@ -51,8 +51,8 @@ namespace LifestyleDesign
 
             CheckBox cBox = (CheckBox)sender;
 
-            if (cBox.IsChecked == true) { tbkLeft2.Visible = true; cbxLeft2.Visible = true; tbkRight2.Visible = true; cbxRight2.Visible = true; }
-            else { cbxLeft2.Visible = false; cbxRight2.Visible = false; tbkLeft2.Visible = false; tbkRight2.Visible = false; }
+            if (cBox.IsChecked == true) { tbkLeft2.IsEnabled = true; cbxLeft2.IsEnabled = true; tbkRight2.IsEnabled = true; cbxRight2.IsEnabled = true; }
+            else { cbxLeft2.IsEnabled = false; cbxRight2.IsEnabled = false; tbkLeft2.IsEnabled = false; tbkRight2.IsEnabled = false; }
         }
 
         internal bool GetCheckBox1()

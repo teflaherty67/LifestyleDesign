@@ -26,7 +26,20 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-           
+
+
+
+
+            RevisionJournal curForm = new RevisionJournal(doc.PathName);
+
+            curForm.Width = 700;
+            curForm.Height = 500;
+
+            curForm.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            curForm.Topmost = true;
+
+            curForm.ShowDialog();
+
             return Result.Succeeded;
         }
     }

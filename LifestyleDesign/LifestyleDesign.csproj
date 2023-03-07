@@ -70,7 +70,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ToDoData.cs" />
-    <Compile Include="ToDoManager.xaml.cs">
+    <Compile Include="Forms\ToDoManager.xaml.cs">
       <DependentUpon>ToDoManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
@@ -138,7 +138,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ToDoManager.xaml">
+    <Page Include="Forms\ToDoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

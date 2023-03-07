@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="cmdRevisionJournal.cs" />
-    <Compile Include="cmdJobNumber.cs" />
     <Compile Include="cmdDeleteRevisions.cs" />
     <Compile Include="cmdReverseDoorSwings.cs" />
     <Compile Include="cmdElevationRename.cs" />

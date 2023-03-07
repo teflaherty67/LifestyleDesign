@@ -46,12 +46,14 @@ namespace LifestyleDesign
 
                 ExcelWorkbook wb = package.Workbook;
 
-                if (curForm.GetGroup1 = "Basement" && curForm.GetGroup2 = "One Story")
-                    ExcelWorksheet ws = wb.Worksheets[0];
-                else if (curForm.GetGroup1 = "Basement" && curForm.GetGroup2 = "Two Story")
-                    ExcelWorksheet ws = wb.Worksheets[1];
-                else if (curForm.GetGroup1 = "Crawlspace" && curForm.GetGroup2 = "One Story")
-                    ExcelWorksheet ws = wb.Worksheets[2];
+                ExcelWorksheet ws;
+
+                if (curForm.GetGroup1() == "Basement" && curForm.GetGroup2() == "One Story")
+                    ws = wb.Worksheets[0];
+                else if (curForm.GetGroup1() == "Basement" && curForm.GetGroup2() == "Two Story")
+                    ws = wb.Worksheets[1];
+                else if (curForm.GetGroup1() == "Crawlspace" && curForm.GetGroup2() == "One Story")
+                    ws = wb.Worksheets[2];
                 else if (curForm.GetGroup1 = "Crawlspace" && curForm.GetGroup2 = "Two Story")
                     ExcelWorksheet ws = wb.Worksheets[3];
                 else if (curForm.GetGroup1 = "Slab" && curForm.GetGroup2 = "One Story")

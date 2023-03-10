@@ -12,6 +12,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using System.Text.RegularExpressions;
 
 namespace LifestyleDesign
 {
@@ -136,6 +137,16 @@ namespace LifestyleDesign
             }
 
             return string.Empty;
+        }
+
+        internal static string CleanSheetNumber(string sheetNumber)
+        
+        { 
+            string replaceText = Regex.Replace(sheetNumber, @"[^\u0000-\u001f]", "");
+
+            string newSheetNum = sheetNumber.Replace(replaceText, "");
+            
+            return newSheetNum;
         }
 
         public static List<ViewSheet> GetSheetsByNumber(Document curDoc, string sheetNumber)

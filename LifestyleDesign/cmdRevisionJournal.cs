@@ -26,9 +26,15 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
+            JobNumber curForm1 = new JobNumber();
 
+            curForm1.Width = 375;
+            curForm1.Height = 120;
 
+            curForm1.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            curForm1.Topmost = true;
 
+            curForm1.ShowDialog();
 
             RevisionJournal curForm = new RevisionJournal(doc.PathName);
 

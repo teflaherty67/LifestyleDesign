@@ -23,6 +23,11 @@ namespace LifestyleDesign
     /// </summary>
     public partial class JobNumber : Window
     {
+        public JobNumber()
+        {
+            InitializeComponent();
+        }       
+
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             Globals.JobNumber = this.tbxJobNum.Text;

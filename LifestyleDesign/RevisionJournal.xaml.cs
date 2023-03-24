@@ -25,8 +25,8 @@ namespace LifestyleDesign
     {
         string folderPath = "";
         string journalFilePath = "";
-        string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs\";
-        string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs\";
+        string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs";
+        string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs";
 
         BindingList<JournalData> journalDataList = new BindingList<JournalData>();
         JournalData curEdit;

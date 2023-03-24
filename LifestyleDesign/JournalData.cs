@@ -24,7 +24,7 @@ namespace LifestyleDesign
 
         public void UpdateDisplayString()
         {
-            Display = PositionNumber + " : " + Text + " : " + Status;
+            Display = Text;
         }
 
         public static string[] ParseDsiplayString(string displayString)

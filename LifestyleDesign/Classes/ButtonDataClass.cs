@@ -25,7 +25,7 @@ namespace LifestyleDesign
             Data.Image = BitmapToImageSource(smallImage);
 
             // set command availability
-            // Data.AvailabilityClassName = "RAA_Level_02_Skills.CommandAvailability";
+            Data.AvailabilityClassName = "LifestyleDesign.CommandAvailability";
         }
         private Assembly GetAssembly()
         {

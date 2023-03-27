@@ -75,8 +75,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ToDoData.cs" />
-    <Compile Include="Forms\ToDoManager.xaml.cs">
-      <DependentUpon>ToDoManager.xaml</DependentUpon>
+    <Compile Include="Forms\frmToDoManager.xaml.cs">
+      <DependentUpon>frmToDoManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>
@@ -147,7 +147,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\ToDoManager.xaml">
+    <Page Include="Forms\frmToDoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

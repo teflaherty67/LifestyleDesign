@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="RevisionJournal.xaml.cs">
       <DependentUpon>RevisionJournal.xaml</DependentUpon>
-
+    </Compile>
     <Compile Include="ToDoData.cs" />
     <Compile Include="Forms\frmToDoManager.xaml.cs">
       <DependentUpon>frmToDoManager.xaml</DependentUpon>
@@ -163,7 +163,7 @@
 
     <Page Include="JobNumber.xaml">
       <Generator>MSBuild:Compile</Generator>
-
+    </Page>
     <Page Include="Forms\frmElevationSheetSwap.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

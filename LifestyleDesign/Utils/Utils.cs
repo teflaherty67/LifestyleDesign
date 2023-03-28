@@ -12,6 +12,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using System.Text.RegularExpressions;
 
 namespace LifestyleDesign
 {
@@ -122,11 +123,64 @@ namespace LifestyleDesign
 
             return null;
         }
-
-        internal static string GetAssemblyName()
+      
+        internal static string GetStringBetweenCharacters(string input, string charFrom, string charTo)
         {
-            string assemblyName = Assembly.GetExecutingAssembly().Location;
-            return assemblyName;
+            int posFrom = input.IndexOf(charFrom);
+            if (posFrom != -1) //if found char
+            {
+                int posTo = input.IndexOf(charTo, posFrom + 1);
+                if (posTo != -1) //if found char
+                {
+                    return input.Substring(posFrom + 1, posTo - posFrom - 1);
+                }
+            }
+
+            return string.Empty;
+        }
+
+        internal static string CleanSheetNumber(string sheetNumber)
+        
+        { 
+            string replaceText = Regex.Replace(sheetNumber, @"[^\u0000-\u001f]", "");
+
+            string newSheetNum = sheetNumber.Replace(replaceText, "");
+            
+            return newSheetNum;
+        }
+
+        public static List<ViewSheet> GetSheetsByNumber(Document curDoc, string sheetNumber)
+        {
+            List<ViewSheet> returnSheets = new List<ViewSheet>();
+
+            //get all sheets
+            List<ViewSheet> curSheets = GetAllSheets(curDoc);
+
+            //loop through sheets and check sheet name
+            foreach (ViewSheet curSheet in curSheets)
+            {
+                if (curSheet.SheetNumber.Contains(sheetNumber))
+                {
+                    returnSheets.Add(curSheet);
+                }
+            }
+
+            return returnSheets;
+        }
+
+        public static List<ViewSheet> GetAllSheets(Document curDoc)
+        {
+            //get all sheets
+            FilteredElementCollector m_colViews = new FilteredElementCollector(curDoc);
+            m_colViews.OfCategory(BuiltInCategory.OST_Sheets);
+
+            List<ViewSheet> m_sheets = new List<ViewSheet>();
+            foreach (ViewSheet x in m_colViews.ToElements())
+            {
+                m_sheets.Add(x);
+            }
+
+            return m_sheets;
         }
     }
 }

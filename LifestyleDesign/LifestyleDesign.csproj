@@ -57,42 +57,72 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+
     <Compile Include="cmdRevisionJournal.cs" />
+
+    <Compile Include="Classes\ButtonDataClass.cs" />
+    <Compile Include="cmdElevationSheetSwap.cs" />
+    <Compile Include="cmdToDoManager.cs" />
+
     <Compile Include="cmdDeleteRevisions.cs" />
     <Compile Include="cmdReverseDoorSwings.cs" />
     <Compile Include="cmdElevationRename.cs" />
     <Compile Include="cmdNewSheetGroup.cs" />
     <Compile Include="cmdRevitMirror.cs" />
+
     <Compile Include="Globals.cs" />
     <Compile Include="JournalData.cs" />
+
+    <Compile Include="Forms\frmElevationSheetSwap.xaml.cs">
+      <DependentUpon>frmElevationSheetSwap.xaml</DependentUpon>
+    </Compile>
+
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+
     <Compile Include="JobNumber.xaml.cs">
       <DependentUpon>JobNumber.xaml</DependentUpon>
     </Compile>
     <Compile Include="RevisionJournal.xaml.cs">
       <DependentUpon>RevisionJournal.xaml</DependentUpon>
+
+    <Compile Include="ToDoData.cs" />
+    <Compile Include="Forms\frmToDoManager.xaml.cs">
+      <DependentUpon>frmToDoManager.xaml</DependentUpon>
+
     </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
-    <EmbeddedResource Include="Resources\SheetSwap_32.png" />
-    <EmbeddedResource Include="Resources\SheetSwap_16.png" />
-    <EmbeddedResource Include="Resources\ElevationRename_32.png" />
-    <EmbeddedResource Include="Resources\ElevationRename_16.png" />
     <EmbeddedResource Include="Resources\ToDo_32.png" />
     <EmbeddedResource Include="Resources\ToDo_16.png" />
+    <EmbeddedResource Include="Resources\SheetSwap_32.png" />
+    <EmbeddedResource Include="Resources\SheetSwap_16.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
     <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
+    <EmbeddedResource Include="Resources\ReverseSwing_32.png" />
+    <EmbeddedResource Include="Resources\ReverseSwing_16.png" />
+    <EmbeddedResource Include="Resources\Renumber_32.png" />
+    <EmbeddedResource Include="Resources\Renumber_16.png" />
+    <EmbeddedResource Include="Resources\ProjectSetup_32.png" />
+    <EmbeddedResource Include="Resources\ProjectSetup_16.png" />
+    <EmbeddedResource Include="Resources\NewSheet_32.png" />
+    <EmbeddedResource Include="Resources\NewSheet_16.png" />
     <EmbeddedResource Include="Resources\MirrorProject_32.png" />
     <EmbeddedResource Include="Resources\MirrorProject_16.png" />
+    <EmbeddedResource Include="Resources\ElevationRename_32.png" />
+    <EmbeddedResource Include="Resources\ElevationRename_16.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
     <EmbeddedResource Include="Resources\DeleteRevisions_16.png" />
+    <EmbeddedResource Include="Resources\Clear_32.png" />
+    <EmbeddedResource Include="Resources\Clear_16.png" />
+    <EmbeddedResource Include="Resources\Check_32.png" />
+    <EmbeddedResource Include="Resources\Check_16.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
@@ -130,8 +160,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+
     <Page Include="JobNumber.xaml">
       <Generator>MSBuild:Compile</Generator>
+
+    <Page Include="Forms\frmElevationSheetSwap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\frmToDoManager.xaml">
+
       <SubType>Designer</SubType>
     </Page>
     <Page Include="RevisionJournal.xaml">

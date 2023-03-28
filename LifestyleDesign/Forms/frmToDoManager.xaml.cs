@@ -19,15 +19,15 @@ using System.IO;
 namespace LifestyleDesign
 {
     /// <summary>
-    /// Interaction logic for ToDoManager.xaml
+    /// Interaction logic for frmToDoManager.xaml
     /// </summary>
-    public partial class ToDoManager : Window
+    public partial class frmToDoManager : Window
     {
         string todoFilePath = "";
         BindingList<ToDoData> todoDataList = new BindingList<ToDoData>();
         ToDoData curEdit;
 
-        public ToDoManager(string filePath)
+        public frmToDoManager(string filePath)
         {
             InitializeComponent();
 

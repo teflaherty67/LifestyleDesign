@@ -25,7 +25,8 @@ namespace LifestyleDesign
             Data.Image = BitmapToImageSource(smallImage);
 
             // set command availability
-            // Data.AvailabilityClassName = "LifestyleDesign.CommandAvailability";
+
+            Data.AvailabilityClassName = "LifestyleDesign.CommandAvailability";
         }
         private Assembly GetAssembly()
         {

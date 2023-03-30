@@ -26,7 +26,7 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            JobNumber curForm1 = new JobNumber();
+            frmJobNumber curForm1 = new frmJobNumber();
 
             curForm1.Width = 375;
             curForm1.Height = 120;
@@ -36,7 +36,7 @@ namespace LifestyleDesign
 
             curForm1.ShowDialog();
 
-            RevisionJournal curForm = new RevisionJournal(doc.PathName);
+            frmRevisionJournal curForm = new frmRevisionJournal(doc.PathName);
 
             curForm.Width = 700;
             curForm.Height = 500;

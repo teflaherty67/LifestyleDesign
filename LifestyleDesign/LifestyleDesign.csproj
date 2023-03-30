@@ -77,16 +77,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\JobNumber.xaml.cs">
-      <DependentUpon>JobNumber.xaml</DependentUpon>
+    <Compile Include="Forms\frmJobNumber.xaml.cs">
+      <DependentUpon>frmJobNumber.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RevisionJournal.xaml.cs">
-      <DependentUpon>RevisionJournal.xaml</DependentUpon>
+    <Compile Include="Forms\frmRevisionJournal.xaml.cs">
+      <DependentUpon>frmRevisionJournal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\ToDoData.cs" />
     <Compile Include="Forms\frmToDoManager.xaml.cs">
       <DependentUpon>frmToDoManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CommandAvailability.cs" />
+    <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
@@ -151,8 +153,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Forms\JobNumber.xaml">
+    <Page Include="Forms\frmJobNumber.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\frmElevationSheetSwap.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,7 +164,7 @@
     <Page Include="Forms\frmToDoManager.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\RevisionJournal.xaml">
+    <Page Include="Forms\frmRevisionJournal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

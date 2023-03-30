@@ -19,11 +19,11 @@ using System.IO;
 namespace LifestyleDesign
 {
     /// <summary>
-    /// Interaction logic for JobNumber.xaml
+    /// Interaction logic for frmJobNumber.xaml
     /// </summary>
-    public partial class JobNumber : Window
+    public partial class frmJobNumber : Window
     {
-        public JobNumber()
+        public frmJobNumber()
         {
             InitializeComponent();
         }       

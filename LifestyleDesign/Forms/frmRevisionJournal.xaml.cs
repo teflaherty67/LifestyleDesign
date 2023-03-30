@@ -19,9 +19,9 @@ using System.IO;
 namespace LifestyleDesign
 {
     /// <summary>
-    /// Interaction logic for RevisionJournal.xaml
+    /// Interaction logic for frmRevisionJournal.xaml
     /// </summary>
-    public partial class RevisionJournal : Window
+    public partial class frmRevisionJournal : Window
     {
         string folderPath = "";
         string journalFilePath = "";
@@ -31,7 +31,7 @@ namespace LifestyleDesign
         BindingList<JournalData> journalDataList = new BindingList<JournalData>();
         JournalData curEdit;
        
-        public RevisionJournal(string filePath)
+        public frmRevisionJournal(string filePath)
         {
             InitializeComponent();
 

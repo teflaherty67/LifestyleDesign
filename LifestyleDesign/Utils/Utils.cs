@@ -126,15 +126,15 @@ namespace LifestyleDesign
       
         internal static string GetStringBetweenCharacters(string input, string charFrom, string charTo)
         {
-            string cleanInput = CleanSheetNumber(input);
+            //string cleanInput = CleanSheetNumber(input);
             
-            int posFrom = cleanInput.IndexOf(charFrom);
+            int posFrom = input.IndexOf(charFrom);
             if (posFrom != -1) //if found char
             {
-                int posTo = cleanInput.IndexOf(charTo, posFrom + 1);
+                int posTo = input.IndexOf(charTo, posFrom + 1);
                 if (posTo != -1) //if found char
                 {
-                    return cleanInput.Substring(posFrom + 1, posTo - posFrom - 1);
+                    return input.Substring(posFrom + 1, posTo - posFrom - 1);
                 }
             }
 
@@ -143,15 +143,10 @@ namespace LifestyleDesign
 
         internal static string CleanSheetNumber(string sheetNumber)
         {
-            string replaceText = Regex.Replace(sheetNumber, @"[^\u0000-\uFFFF]+", string.Empty);
+            Regex regex = new Regex(@"[^a-zA-Z0-9\s]", (RegexOptions)0);
+            string replaceText = regex.Replace(sheetNumber, "");
 
-            if (string.IsNullOrEmpty(replaceText))
-                return sheetNumber;
-            else
-            {
-                string newSheetNum = sheetNumber.Replace(replaceText, string.Empty);
-                return newSheetNum;
-            }
+            return replaceText;
         }
 
         public static List<ViewSheet> GetSheetsByNumber(Document curDoc, string sheetNumber)

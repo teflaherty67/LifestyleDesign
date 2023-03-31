@@ -143,13 +143,13 @@ namespace LifestyleDesign
 
         internal static string CleanSheetNumber(string sheetNumber)
         {
-            string replaceText = Regex.Replace(sheetNumber, @"[^\u0000-\u001f]", "");
+            string replaceText = Regex.Replace(sheetNumber, @"[^\u0000-\uFFFF]+", string.Empty);
 
             if (string.IsNullOrEmpty(replaceText))
                 return sheetNumber;
             else
             {
-                string newSheetNum = sheetNumber.Replace(replaceText, "");
+                string newSheetNum = sheetNumber.Replace(replaceText, string.Empty);
                 return newSheetNum;
             }
         }

@@ -78,7 +78,8 @@
     <Compile Include="Forms\frmToDoManager.xaml.cs">
       <DependentUpon>frmToDoManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
+    <Compile Include="Utils\CommandAvailability.cs" />
+    <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />

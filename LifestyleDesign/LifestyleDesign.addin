@@ -8,7 +8,16 @@
     <ClientId>CE86D796-1229-41F1-8B64-3EA99450515C</ClientId>
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
-  </AddIn>  
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>Revision Journal</Text>
+    <Description>Creates .txt file for revision log journal</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdRevisionJournal</FullClassName>
+    <ClientId>80BD787E-43F7-42E7-B340-3F63C252AC97</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
   <AddIn Type="Application">
     <Name>Application LifestyleDesign</Name>
     <Assembly>LifestyleDesign.dll</Assembly>

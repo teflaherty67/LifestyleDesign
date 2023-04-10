@@ -65,8 +65,8 @@ namespace LifestyleDesign
 
                 // create variable for current sheet numbers
 
-                string curLeftNum1 = curForm.GetComboBoxLeft1Item();
-                string curRightNum1 = curForm.GetComboBoxRight1Item();
+                string curLeftNum1 = Utils.CleanSheetNumber(curForm.GetComboBoxLeft1Item());
+                string curRightNum1 = Utils.CleanSheetNumber(curForm.GetComboBoxRight1Item());
 
                 string numLeft1 = Utils.GetStringBetweenCharacters(curLeftNum1, curLeftNum1[0].ToString(),
                     curLeftNum1[curLeftNum1.Length - 1].ToString());

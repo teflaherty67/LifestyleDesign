@@ -57,14 +57,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Commands\cmdRevisionJournal.cs" />
     <Compile Include="Classes\ButtonDataClass.cs" />
-    <Compile Include="cmdElevationSheetSwap.cs" />
-    <Compile Include="cmdToDoManager.cs" />
-    <Compile Include="cmdDeleteRevisions.cs" />
-    <Compile Include="cmdReverseDoorSwings.cs" />
-    <Compile Include="cmdElevationRename.cs" />
-    <Compile Include="cmdNewSheetGroup.cs" />
-    <Compile Include="cmdRevitMirror.cs" />
+    <Compile Include="Commands\cmdElevationSheetSwap.cs" />
+    <Compile Include="Commands\cmdToDoManager.cs" />
+    <Compile Include="Commands\cmdDeleteRevisions.cs" />
+    <Compile Include="Commands\cmdReverseDoorSwings.cs" />
+    <Compile Include="Commands\cmdElevationRename.cs" />
+    <Compile Include="Commands\cmdNewSheetGroup.cs" />
+    <Compile Include="Commands\cmdRevitMirror.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Classes\JournalData.cs" />
     <Compile Include="Forms\frmElevationSheetSwap.xaml.cs">
       <DependentUpon>frmElevationSheetSwap.xaml</DependentUpon>
     </Compile>
@@ -74,7 +77,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ToDoData.cs" />
+    <Compile Include="Forms\frmJobNumber.xaml.cs">
+      <DependentUpon>frmJobNumber.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmRevisionJournal.xaml.cs">
+      <DependentUpon>frmRevisionJournal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ToDoData.cs" />
     <Compile Include="Forms\frmToDoManager.xaml.cs">
       <DependentUpon>frmToDoManager.xaml</DependentUpon>
     </Compile>
@@ -144,15 +153,23 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Forms\frmJobNumber.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Forms\frmElevationSheetSwap.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\frmToDoManager.xaml">
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\frmRevisionJournal.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if exist "$(AppData)\Autodesk\REVIT\Addins\2023" copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2023"

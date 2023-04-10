@@ -1,0 +1,42 @@
+﻿using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.IO;
+
+namespace LifestyleDesign
+{
+    /// <summary>
+    /// Interaction logic for frmJobNumber.xaml
+    /// </summary>
+    public partial class frmJobNumber : Window
+    {
+        public frmJobNumber()
+        {
+            InitializeComponent();
+        }       
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            Globals.JobNumber = this.tbxJobNum.Text;
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

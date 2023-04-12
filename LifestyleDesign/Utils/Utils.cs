@@ -182,5 +182,41 @@ namespace LifestyleDesign
 
             return m_sheets;
         }
+
+        public static ViewSchedule GetScheduleByName(Document curDoc, string schedName)
+        {
+            //collect all schedules in current model
+            List<ViewSchedule> viewCollector = GetAllSchedules(curDoc);
+
+            //loop through collection
+            foreach (ViewSchedule curView in viewCollector)
+            {
+                if (curView.Name == schedName)
+                {
+                    return curView;
+                }
+            }
+
+            return null;
+        }
+
+        public static List<ViewSchedule> GetAllSchedules(Document curDoc)
+        {
+            List<ViewSchedule> schedList = new List<ViewSchedule>();
+
+            FilteredElementCollector curCollector = new FilteredElementCollector(curDoc);
+            curCollector.OfClass(typeof(ViewSchedule));
+
+            //loop through views and check if schedule - if so then put into schedule list
+            foreach (ViewSchedule curView in curCollector)
+            {
+                if (curView.ViewType == ViewType.Schedule)
+                {
+                    schedList.Add((ViewSchedule)curView);
+                }
+            }
+
+            return schedList;
+        }
     }
 }

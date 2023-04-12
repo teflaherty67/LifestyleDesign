@@ -26,6 +26,13 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
+            // set the active view to the Door Schedule
+
+            View curView;
+            curView = Utils.GetScheduleByName(doc, "Door Schedule");
+
+            uidoc.ActiveView = curView;
+
             // get all the doors in the project & create lists by swing
 
             FilteredElementCollector colDoors = new FilteredElementCollector(doc);
@@ -56,12 +63,14 @@ namespace LifestyleDesign
                 {
                     rightSwing.Add(door);
                 }
-            }
+            }            
 
             // start the transaction
             using (Transaction t = new Transaction(doc))
             {
                 t.Start("Reverse Door Swings");
+
+                System.Threading.Thread.Sleep(5000);
 
                 foreach (FamilyInstance curDoor in leftSwing)
                 {

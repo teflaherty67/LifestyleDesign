@@ -31,6 +31,8 @@ namespace LifestyleDesign
 
             List<View> renamedList = new List<View>();
 
+            int counter = 0;
+
             // start the transaction
 
             using (Transaction t = new Transaction(doc))
@@ -83,12 +85,15 @@ namespace LifestyleDesign
 
                     else if (curView.Name.Contains("$Left") == true)
                         curView.Name = curView.Name.Replace("$Left", "Left");
+
+                    counter++;
                 }
+
+                TaskDialog.Show("Complete", "Renamed " + counter.ToString() + " views.");
 
                 // commit the chnages
 
                 t.Commit();
-                t.Dispose();
 
                 return Result.Succeeded;
             }

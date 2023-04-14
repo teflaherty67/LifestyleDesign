@@ -223,26 +223,6 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReverseSwing_16 {
-            get {
-                object obj = ResourceManager.GetObject("ReverseSwing_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ReverseSwing_32 {
-            get {
-                object obj = ResourceManager.GetObject("ReverseSwing_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap ReverseSwings_16 {
             get {
                 object obj = ResourceManager.GetObject("ReverseSwings_16", resourceCulture);

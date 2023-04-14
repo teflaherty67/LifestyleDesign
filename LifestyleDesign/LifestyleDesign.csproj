@@ -92,14 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LifestyleDesign.addin" />
+    <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
+    <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
     <EmbeddedResource Include="Resources\ToDo_32.png" />
     <EmbeddedResource Include="Resources\ToDo_16.png" />
     <EmbeddedResource Include="Resources\SheetSwap_32.png" />
     <EmbeddedResource Include="Resources\SheetSwap_16.png" />
-    <EmbeddedResource Include="Resources\ReverseSwings_32.png" />
-    <EmbeddedResource Include="Resources\ReverseSwings_16.png" />
-    <EmbeddedResource Include="Resources\ReverseSwing_32.png" />
-    <EmbeddedResource Include="Resources\ReverseSwing_16.png" />
     <EmbeddedResource Include="Resources\Renumber_32.png" />
     <EmbeddedResource Include="Resources\Renumber_16.png" />
     <EmbeddedResource Include="Resources\ProjectSetup_32.png" />

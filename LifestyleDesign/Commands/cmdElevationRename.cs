@@ -60,12 +60,16 @@ namespace LifestyleDesign
                     // change view name
 
                     if (curView.Name.Contains("Left") == true)
+                    {
                         curView.Name = curView.Name.Replace("Left", "$Right");
+                        renamedList.Add(curView);
+                    }
 
                     else if (curView.Name.Contains("Right") == true)
+                    {
                         curView.Name = curView.Name.Replace("Right", "$Left");
-
-                    renamedList.Add(curView);
+                        renamedList.Add(curView);
+                    }                    
 
                     // change the title on sheet
 
@@ -89,9 +93,11 @@ namespace LifestyleDesign
                     counter++;
                 }
 
+                // alert the user
+
                 TaskDialog.Show("Complete", "Renamed " + counter.ToString() + " views.");
 
-                // commit the chnages
+                // commit the changes
 
                 t.Commit();
 

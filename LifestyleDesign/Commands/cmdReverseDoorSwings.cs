@@ -91,6 +91,8 @@ namespace LifestyleDesign
                 }
 
                 t.Commit();
+
+                TaskDialog.Show("Complete", "Door swings have been reversed.");
             }
 
             return Result.Succeeded;

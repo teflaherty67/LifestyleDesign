@@ -29,7 +29,7 @@ namespace LifestyleDesign
             frmJobNumber curForm1 = new frmJobNumber();
 
             curForm1.Width = 375;
-            curForm1.Height = 120;
+            curForm1.Height = 150;
 
             curForm1.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             curForm1.Topmost = true;

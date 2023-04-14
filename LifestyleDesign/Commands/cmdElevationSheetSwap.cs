@@ -119,6 +119,8 @@ namespace LifestyleDesign
                     t.Commit();
 
                     pB.Show();
+
+                    TaskDialog.Show("Complete", "Elevation sheets have been re-ordered.");
                 }
             }
 

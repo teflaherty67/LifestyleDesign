@@ -33,6 +33,8 @@ namespace LifestyleDesign
 
             uidoc.ActiveView = curView;
 
+            System.Threading.Thread.Sleep(5000);
+
             // get all the doors in the project & create lists by swing
 
             FilteredElementCollector colDoors = new FilteredElementCollector(doc);
@@ -42,7 +44,7 @@ namespace LifestyleDesign
             List<FamilyInstance> leftSwing = new List<FamilyInstance>();
             List<FamilyInstance> rightSwing = new List<FamilyInstance>();
 
-            // code snippetts; not sure where these go
+            // loop through the doors & add to appropriate list
 
             foreach (FamilyInstance door in colDoors)
             {
@@ -68,9 +70,7 @@ namespace LifestyleDesign
             // start the transaction
             using (Transaction t = new Transaction(doc))
             {
-                t.Start("Reverse Door Swings");
-
-                System.Threading.Thread.Sleep(5000);
+                t.Start("Reverse Door Swings");                
 
                 foreach (FamilyInstance curDoor in leftSwing)
                 {

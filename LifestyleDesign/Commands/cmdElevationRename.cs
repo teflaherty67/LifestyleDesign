@@ -7,6 +7,7 @@ using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Forms = System.Windows;
 
 #endregion
 
@@ -95,7 +96,7 @@ namespace LifestyleDesign
 
                 // alert the user
 
-                TaskDialog.Show("Complete", "Renamed " + counter.ToString() + " views.");
+                TaskDialog.Show("Complete", "Renamed " + counter.ToString() + " views.");               
 
                 // commit the changes
 

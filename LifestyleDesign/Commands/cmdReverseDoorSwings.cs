@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using Forms = System.Windows;
 
 #endregion
 
@@ -33,69 +34,86 @@ namespace LifestyleDesign
 
             uidoc.ActiveView = curView;
 
-            System.Threading.Thread.Sleep(5000);
+            string msgText = "About to reverse door swings.";
+            string msgTitle = "Warning";
+            Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OKCancel;
 
-            // get all the doors in the project & create lists by swing
+            Forms.MessageBoxResult result = Forms.MessageBox.Show(msgText, msgTitle, msgButtons, Forms.MessageBoxImage.Warning);
 
-            FilteredElementCollector colDoors = new FilteredElementCollector(doc);
-            colDoors.OfCategory(BuiltInCategory.OST_Doors);
-            colDoors.WhereElementIsNotElementType();
-
-            List<FamilyInstance> leftSwing = new List<FamilyInstance>();
-            List<FamilyInstance> rightSwing = new List<FamilyInstance>();
-
-            // loop through the doors & add to appropriate list
-
-            foreach (FamilyInstance door in colDoors)
+            if(result == Forms.MessageBoxResult.OK)
             {
-                string lSwing = Utils.GetParameterValueByName(door, "Swing Left");
-                string rSwing = Utils.GetParameterValueByName(door, "Swing Right");
+                // get all the doors in the project & create lists by swing
 
-                if(lSwing == null || rSwing == null)
+                FilteredElementCollector colDoors = new FilteredElementCollector(doc);
+                colDoors.OfCategory(BuiltInCategory.OST_Doors);
+                colDoors.WhereElementIsNotElementType();
+
+                List<FamilyInstance> leftSwing = new List<FamilyInstance>();
+                List<FamilyInstance> rightSwing = new List<FamilyInstance>();
+
+                // loop through the doors & add to appropriate list
+
+                foreach (FamilyInstance door in colDoors)
                 {
-                    continue;
+                    string lSwing = Utils.GetParameterValueByName(door, "Swing Left");
+                    string rSwing = Utils.GetParameterValueByName(door, "Swing Right");
+
+                    if (lSwing == null || rSwing == null)
+                    {
+                        continue;
+                    }
+
+                    if (lSwing == "Yes")
+                    {
+                        leftSwing.Add(door);
+                    }
+
+                    else if (rSwing == "Yes")
+                    {
+                        rightSwing.Add(door);
+                    }
                 }
 
-                if (lSwing == "Yes")
+                // start the transaction
+                using (Transaction t = new Transaction(doc))
                 {
-                    leftSwing.Add(door);
+                    t.Start("Reverse Door Swings");
+
+                    foreach (FamilyInstance curDoor in leftSwing)
+                    {
+                        // set Swing Left value to no
+                        Utils.SetParameterByName(curDoor, "Swing Left", 0);
+
+                        // set Swing Right value to yes
+                        Utils.SetParameterByName(curDoor, "Swing Right", 1);
+                    }
+
+                    foreach (FamilyInstance curDoor in rightSwing)
+                    {
+                        // set Swing Right value to no
+                        Utils.SetParameterByName(curDoor, "Swing Right", 0);
+
+                        // set Swing Left value to yes
+                        Utils.SetParameterByName(curDoor, "Swing Left", 1);
+                    }
+
+                    t.Commit();
+
+                    string msgText2 = "Reversed door swings.";
+                    string msgTitle2 = "Complete";
+                    Forms.MessageBoxButton msgButtons2 = Forms.MessageBoxButton.OK;
+
+                    Forms.MessageBox.Show(msgText2, msgTitle2, msgButtons2, Forms.MessageBoxImage.Information);
                 }
 
-                else if (rSwing == "Yes")
-                {
-                    rightSwing.Add(door);
-                }
-            }            
-
-            // start the transaction
-            using (Transaction t = new Transaction(doc))
-            {
-                t.Start("Reverse Door Swings");                
-
-                foreach (FamilyInstance curDoor in leftSwing)
-                {
-                    // set Swing Left value to no
-                    Utils.SetParameterByName(curDoor, "Swing Left", 0);
-
-                    // set Swing Right value to yes
-                    Utils.SetParameterByName(curDoor, "Swing Right", 1);
-                }
-
-                foreach (FamilyInstance curDoor in rightSwing)
-                {
-                    // set Swing Right value to no
-                    Utils.SetParameterByName(curDoor, "Swing Right", 0);
-
-                    // set Swing Left value to yes
-                    Utils.SetParameterByName(curDoor, "Swing Left", 1);
-                }
-
-                t.Commit();
-
-                TaskDialog.Show("Complete", "Door swings have been reversed.");
+                return Result.Succeeded;
             }
+            else
+            {
+                // exit the command
 
-            return Result.Succeeded;
+                return Result.Failed;
+            }            
         }
     }
 }

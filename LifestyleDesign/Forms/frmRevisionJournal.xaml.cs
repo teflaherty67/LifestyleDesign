@@ -80,9 +80,7 @@ namespace LifestyleDesign
 
                 foreach (string line in strings)
                 {
-                    string[] todoData = JournalData.ParseDsiplayString(line);
-
-                    JournalData curToDo = new JournalData(counter + 1, todoData[0], todoData[1]);
+                    JournalData curToDo = new JournalData(counter + 1, line);
                     journalDataList.Add(curToDo);
                     counter++;
                 }
@@ -115,7 +113,7 @@ namespace LifestyleDesign
 
         private void AddToDoItem(string todoText)
         {
-            JournalData curToDo = new JournalData(journalDataList.Count + 1, todoText, "To Do");
+            JournalData curToDo = new JournalData(journalDataList.Count + 1, todoText);
             journalDataList.Add(curToDo);
 
             WriteToDoFile();

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
+using Forms = System.Windows;
 #endregion
 
 namespace LifestyleDesign
@@ -26,26 +26,54 @@ namespace LifestyleDesign
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            // get all the revisions in the project
+            string msgText = "About to delete all Revisions.";
+            string msgTitle = "Warning";
+            Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OKCancel;
 
-            IList<ElementId> revisions = Revision.GetAllRevisionIds(doc);
+            Forms.MessageBoxResult result = Forms.MessageBox.Show(msgText, msgTitle, msgButtons, Forms.MessageBoxImage.Warning);
 
-            // remove the first revision from the list
-
-            revisions.RemoveAt(0);       
-
-            // delete all the remaining revisions
-
-            using(Transaction t = new Transaction(doc))
+            if (result == Forms.MessageBoxResult.OK)
             {
-                t.Start("Delete Revisions");
+                // start the transaction
 
-                doc.Delete(revisions);
+                using (Transaction t = new Transaction(doc))
+                {
+                    t.Start("Delete Revisions");
 
-                t.Commit();
+                    // add a blank revision
+
+                    Revision newRevision = Revision.Create(doc);
+
+                    // get all the revisions in the project
+
+                    IList<ElementId> revisions = Revision.GetAllRevisionIds(doc);
+
+                    // remove the last revision from the list
+
+                    revisions.RemoveAt(revisions.Count - 1);
+
+                    // delete the remaining revisions
+
+                    doc.Delete(revisions);
+
+                    t.Commit();
+
+                    string msgText2 = "All Revisions have been deleted.";
+                    string msgTitle2 = "Complete";
+                    Forms.MessageBoxButton msgButtons2 = Forms.MessageBoxButton.OK;
+
+                    Forms.MessageBox.Show(msgText2, msgTitle2, msgButtons2, Forms.MessageBoxImage.Information);
+                }
+
+                return Result.Succeeded;
             }
 
-            return Result.Succeeded;
+            else
+            {
+                // exit the command
+
+                return Result.Failed;
+            }
         }
     }
 }

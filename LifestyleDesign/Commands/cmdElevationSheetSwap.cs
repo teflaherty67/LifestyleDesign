@@ -7,6 +7,8 @@ using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
+using Forms = System.Windows;
 
 #endregion
 
@@ -117,10 +119,13 @@ namespace LifestyleDesign
                     }
 
                     t.Commit();
-
                     pB.Show();
 
-                    TaskDialog.Show("Complete", "Elevation sheets have been re-ordered.");
+                    string msgText = "Elevation sheets have been reordered.";
+                    string msgTitle = "Complete";
+                    Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OK;
+
+                    Forms.MessageBox.Show(msgText, msgTitle, msgButtons, Forms.MessageBoxImage.Information);
                 }
             }
 

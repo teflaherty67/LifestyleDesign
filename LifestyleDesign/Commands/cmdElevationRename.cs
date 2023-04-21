@@ -96,7 +96,11 @@ namespace LifestyleDesign
 
                 // alert the user
 
-                TaskDialog.Show("Complete", "Renamed " + counter.ToString() + " views.");               
+                string msgText = "Renamed " + counter.ToString() + " views.";
+                string msgTitle = "Complete";
+                Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OK;
+
+                Forms.MessageBox.Show(msgText, msgTitle, msgButtons, Forms.MessageBoxImage.Information);
 
                 // commit the changes
 

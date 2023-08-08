@@ -29,7 +29,7 @@ namespace LifestyleDesign
             Document curDoc = uidoc.Document;
 
             // open form
-            frmReplaceElevation curForm = new frmReplaceElevation()
+            frmElevDesignation curForm = new frmElevDesignation()
             {
                 Width = 340,
                 Height = 200,

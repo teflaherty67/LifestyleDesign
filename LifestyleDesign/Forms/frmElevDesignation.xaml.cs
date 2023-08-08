@@ -19,9 +19,9 @@ namespace LifestyleDesign
     /// <summary>
     /// Interaction logic for Window.xaml
     /// </summary>
-    public partial class frmReplaceElevation : Window
+    public partial class frmElevDesignation : Window
     {
-        public frmReplaceElevation()
+        public frmElevDesignation()
         {
             InitializeComponent();
 

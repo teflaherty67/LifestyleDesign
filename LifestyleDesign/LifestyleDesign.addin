@@ -18,6 +18,15 @@
     <VendorId>T Edward</VendorId>
     <VendorDescription>T Edward Coder</VendorDescription>
   </AddIn>
+  <AddIn Type="Command">
+    <Text>Replace Elevation Designation</Text>
+    <Description>Creates .txt file for revision log journal</Description>
+    <Assembly>LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdElevDesignation</FullClassName>
+    <ClientId>4AF31C0B-4E51-4BB8-97D8-5F4E1967F60D</ClientId>
+    <VendorId>T Edward</VendorId>
+    <VendorDescription>T Edward Coder</VendorDescription>
+  </AddIn>
   <AddIn Type="Application">
     <Name>Application LifestyleDesign</Name>
     <Assembly>LifestyleDesign.dll</Assembly>

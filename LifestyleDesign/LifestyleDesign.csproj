@@ -29,7 +29,7 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2023\Revit.exe</StartProgram>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 2023|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -67,8 +67,8 @@
     <Compile Include="Commands\cmdElevationRename.cs" />
     <Compile Include="Commands\cmdNewSheetGroup.cs" />
     <Compile Include="Commands\cmdRevitMirror.cs" />
-    <Compile Include="Forms\frmReplaceElevation.xaml.cs">
-      <DependentUpon>frmReplaceElevation.xaml</DependentUpon>
+    <Compile Include="Forms\frmElevDesignation.xaml.cs">
+      <DependentUpon>frmElevDesignation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Classes\JournalData.cs" />
@@ -170,7 +170,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\frmReplaceElevation.xaml">
+    <Page Include="Forms\frmElevDesignation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

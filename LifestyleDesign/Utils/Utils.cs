@@ -374,6 +374,25 @@ namespace LifestyleDesign
 
         #endregion
 
+        #region Titleblocks
+
+        internal static FamilySymbol GetTitleBlockByNameContains(Document curDoc, string tBlockName)
+        {
+            FilteredElementCollector m_tBlocks = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_TitleBlocks)
+                .WhereElementIsElementType();
+
+            foreach (FamilySymbol curTBlock in m_tBlocks)
+            {
+                if (curTBlock.Name.Contains(tBlockName))
+                    return curTBlock;
+            }
+
+            return null;
+        }
+
+        #endregion
+
         #region Views
 
         public static List<View> GetAllViews(Document curDoc)
@@ -436,6 +455,8 @@ namespace LifestyleDesign
 
             return m_vpList;
         }
+
+        
 
         #endregion
     }

@@ -65,10 +65,13 @@
     <Compile Include="Commands\cmdDeleteRevisions.cs" />
     <Compile Include="Commands\cmdReverseDoorSwings.cs" />
     <Compile Include="Commands\cmdElevationRename.cs" />
-    <Compile Include="Commands\cmdNewSheetGroup.cs" />
+    <Compile Include="Commands\cmdNewElevation.cs" />
     <Compile Include="Commands\cmdRevitMirror.cs" />
     <Compile Include="Forms\frmElevDesignation.xaml.cs">
       <DependentUpon>frmElevDesignation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmNewElevation.xaml.cs">
+      <DependentUpon>frmNewElevation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Classes\JournalData.cs" />
@@ -167,6 +170,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\frmElevDesignation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\frmNewElevation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,16 +5,36 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifestyleDesign", "LifestyleDesign\LifestyleDesign.csproj", "{172DB331-F8EF-482B-ADFA-6B650FC90CAB}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LifestyleDesign_Install", "LifestyleDesign_Install\LifestyleDesign_Install.vdproj", "{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Release 2023|Any CPU = Release 2023|Any CPU
+		Debug2023|Any CPU = Debug2023|Any CPU
+		Debug2024|Any CPU = Debug2024|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Release2023|Any CPU = Release2023|Any CPU
+		Release2024|Any CPU = Release2024|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release 2023|Any CPU.ActiveCfg = Release 2023|Any CPU
-		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release 2023|Any CPU.Build.0 = Release 2023|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug|Any CPU.ActiveCfg = Debug2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug|Any CPU.Build.0 = Debug2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug2023|Any CPU.ActiveCfg = Debug2023|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug2023|Any CPU.Build.0 = Debug2023|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug2024|Any CPU.ActiveCfg = Debug2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Debug2024|Any CPU.Build.0 = Debug2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release|Any CPU.ActiveCfg = Release2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release|Any CPU.Build.0 = Release2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release2023|Any CPU.ActiveCfg = Release2023|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release2023|Any CPU.Build.0 = Release2023|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release2024|Any CPU.ActiveCfg = Release2024|Any CPU
+		{172DB331-F8EF-482B-ADFA-6B650FC90CAB}.Release2024|Any CPU.Build.0 = Release2024|Any CPU
+		{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}.Debug|Any CPU.ActiveCfg = Debug
+		{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}.Debug2023|Any CPU.ActiveCfg = Debug
+		{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}.Debug2024|Any CPU.ActiveCfg = Debug
+		{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}.Release|Any CPU.ActiveCfg = Release
+		{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}.Release2023|Any CPU.ActiveCfg = Release
+		{66BAEF98-9DEE-4DF4-B184-3BDCB86B77AB}.Release2024|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

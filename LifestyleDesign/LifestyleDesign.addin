@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>LifestyleDesign - Command 1</Text>
+    <Description>Some description</Description>
+    <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.Command1</FullClassName>
+    <ClientId>c238a1ef-81e7-4463-9f04-00b1983a1de3</ClientId>
+    <VendorId>com.YOUR COMPANY NAME</VendorId>
+    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>LifestyleDesign - Command 2</Text>
+    <Description>Some description</Description>
+    <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.Command2</FullClassName>
+    <ClientId>cbc38b23-c8ac-46c3-8174-fb79241355e6</ClientId>
+    <VendorId>com.YOUR COMPANY NAME</VendorId>
+    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>LifestyleDesign</Name>
+    <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.App</FullClassName>
+    <ClientId>fbb58006-3997-45a8-8c55-cd04af22b0ba</ClientId>
+    <VendorId>com.YOUR COMPANY NAME</VendorId>
+    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+  </AddIn>
+</RevitAddIns>

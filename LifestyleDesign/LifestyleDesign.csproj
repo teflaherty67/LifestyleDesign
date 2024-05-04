@@ -121,9 +121,5 @@ copy "$(TargetDir)*.dll" "$(AppData)\Autodesk\REVIT\Addins\$(RevitVersion)\Lifes
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="Forms\" />
-	</ItemGroup>
   
 </Project>

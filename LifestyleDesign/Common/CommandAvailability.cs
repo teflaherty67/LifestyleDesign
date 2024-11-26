@@ -1,4 +1,4 @@
-﻿namespace LifestyleDesign.Common
+﻿namespace LifestyleDesign
 {
     internal class CommandAvailability : IExternalCommandAvailability
     {

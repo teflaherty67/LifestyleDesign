@@ -3,7 +3,7 @@
 namespace LifestyleDesign
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command2 : IExternalCommand
+    public class cmdDeleteRevisions : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -14,22 +14,21 @@ namespace LifestyleDesign
 
             // Your code goes here
 
-
             return Result.Succeeded;
         }
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
-            string buttonInternalName = "btnCommand2";
-            string buttonTitle = "Button 2";
+            string buttonInternalName = "btnCommand1";
+            string buttonTitle = "Button 1";
 
-            ButtonDataClass myButtonData = new Common.ButtonDataClass(
+            clsButtonData myButtonData = new clsButtonData(
                 buttonInternalName,
                 buttonTitle,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
                 Properties.Resources.Blue_32,
                 Properties.Resources.Blue_16,
-                "This is a tooltip for Button 2");
+                "This is a tooltip for Button 1");
 
             return myButtonData.Data;
         }

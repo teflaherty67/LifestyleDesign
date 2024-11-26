@@ -8,7 +8,6 @@ namespace LifestyleDesign.Classes
 {
     internal class clsFamilyLoadOptions : IFamilyLoadOptions
     {
-
         public bool OnFamilyFound(bool familyInUse, out bool overwriteParameterValues)
         {
             if (!familyInUse)

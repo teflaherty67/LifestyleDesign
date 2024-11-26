@@ -3,7 +3,7 @@
 namespace LifestyleDesign
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command1 : IExternalCommand
+    public class cmdDeleteRevisions : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -22,7 +22,7 @@ namespace LifestyleDesign
             string buttonInternalName = "btnCommand1";
             string buttonTitle = "Button 1";
 
-            ButtonDataClass myButtonData = new Common.ButtonDataClass(
+            clsButtonData myButtonData = new clsButtonData(
                 buttonInternalName,
                 buttonTitle,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,

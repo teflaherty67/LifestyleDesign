@@ -3,16 +3,30 @@
 namespace LifestyleDesign
 {
     [Transaction(TransactionMode.Manual)]
-    public class cmdDeleteRevisions : IExternalCommand
+    public class cmdFlipPlan : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             // Revit application and document variables
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
+            Document curDoc = uidoc.Document;
 
-            // Your code goes here
+            // run door swing reversal
+            cmdReverseDoorSwings com_1 = new cmdReverseDoorSwings();
+            com_1.Execute(commandData, ref message, elements);
+
+            // run elevation rename
+            cmdElevRename com_2 = new cmdElevRename();
+            com_2.Execute(commandData, ref message, elements);
+
+            // run sheet swap
+            cmdElevSheetSwap com_3 = new cmdElevSheetSwap();
+            com_3.Execute(commandData, ref message, elements);
+
+            // run boundary shake
+            cmdShakeAreaBoundary com_4 = new cmdShakeAreaBoundary();
+            com_4.Execute(commandData, ref message, elements);
 
             return Result.Succeeded;
         }

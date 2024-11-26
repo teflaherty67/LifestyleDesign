@@ -1,30 +1,48 @@
+using FilterTreeControlWPF;
+
 namespace LifestyleDesign
 {
     internal class App : IExternalApplication
     {
         public Result OnStartup(UIControlledApplication app)
         {
-            //// 1. Create ribbon tab
-            //string tabName = "My First Revit Add-in";
-            //try
-            //{
-            //    app.CreateRibbonTab(tabName);
-            //}
-            //catch (Exception)
-            //{
-            //    Debug.Print("Tab already exists.");
-            //}
+            // create ribbon tab
+            try
+            {
+                app.CreateRibbonTab("Lifestyle Design");
+            }
+            catch (Exception)
+            {
+                Debug.Print("Tab already exists");
+            }
 
-            //// 2. Create ribbon panel 
-            //RibbonPanel panel = Common.Utils.CreateRibbonPanel(app, tabName, "Revit Tools");
+            // create ribbon panel 
+            RibbonPanel panel1 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Mirror Plans");
+            RibbonPanel panel2 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Management");
+            RibbonPanel panel3 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Setup");
 
-            //// 3. Create button data instances
-            //PushButtonData btnData1 = Command1.GetButtonData();
-            //PushButtonData btnData2 = Command2.GetButtonData();
+            // create button data instances for Panel 1
+            PushButtonData btnData1_1 = cmdRevitMirror.GetButtonData();
+            //PushButtonData btnData2_1 = cmdReverseDoorSwings.GetButtonData();
+            //PushButtonData btnData3_1 = cmdElevationRename.GetButtonData();
+            //PushButtonData btnData4_1 = cmdElevationSheetSwap.GetButtonData();
+            //PushButtonData btnData5_1 = cmdShakeAreaBoundary.GetButtonData();
+            PushButtonData btnData2_1 = cmdFlipPlan.GetButtonData();
 
-            //// 4. Create buttons
-            //PushButton myButton1 = panel.AddItem(btnData1) as PushButton;
-            //PushButton myButton2 = panel.AddItem(btnData2) as PushButton;
+            // create button data instances for Panel 2
+            //PushButtonData btnData1_2 = cmdProjectCleanUp.GetButtonData();
+
+            // create buttons for panel 1
+            PushButton myButton1_1 = panel1.AddItem(btnData1_1) as PushButton;
+            //PushButton myButton2_2 = panel1.AddItem(btnData2_1) as PushButton;
+            //PushButton myButton3_1 = panel1.AddItem(btnData3_1) as PushButton;
+            //PushButton myButton4_1 = panel1.AddItem(btnData4_1) as PushButton;
+            //PushButton myButton5_1 = panel1.AddItem(btnData5_1) as PushButton;
+            PushButton myButton2_1 = panel1.AddItem(btnData2_1) as PushButton;
+
+            // create buttons for panel 2
+            //PushButton myButton1_2 = panel2.AddItem(btnData1_2) as PushButton;
+
 
             // NOTE:
             // To create a new tool, copy lines 35 and 39 and rename the variables to "btnData3" and "myButton3". 

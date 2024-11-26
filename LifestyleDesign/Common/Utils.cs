@@ -4,7 +4,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
 
-namespace LifestyleDesign
+namespace LifestyleDesign.Common
 {
     internal static class Utils
     {

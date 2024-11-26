@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 		<UseWPF>true</UseWPF>
@@ -128,6 +128,13 @@
 	  <None Update="RegisterAddin.addin">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Create_Schedules\" />
+	  <Folder Include="Create_SheetGroup\" />
+	  <Folder Include="Revision_Journal\" />
+	  <Folder Include="Project_Cleanup\" />
 	</ItemGroup>
   
 </Project>

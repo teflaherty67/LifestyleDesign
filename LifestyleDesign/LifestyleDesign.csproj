@@ -131,9 +131,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Folder Include="Create_Schedules\" />
-	  <Folder Include="Create_SheetGroup\" />
-	  <Folder Include="Revision_Journal\" />
 	  <Folder Include="Project_Cleanup\" />
 	</ItemGroup>
   

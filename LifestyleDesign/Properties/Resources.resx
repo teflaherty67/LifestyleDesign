@@ -124,11 +124,23 @@
   <data name="Blue_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Blue_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="FlipPlan_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlipPlan_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FlipPlan_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlipPlan_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Green_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Green_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Green_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Green_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MirrorProject_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MirrorProject_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MirrorProject_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MirrorProject_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Red_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Red_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -137,7 +149,7 @@
     <value>..\Resources\Red_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RevisionJournal_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RevisionJournal_16.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\RevisionJournal_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RevisionJournal_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RevisionJournal_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

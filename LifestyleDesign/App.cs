@@ -22,11 +22,7 @@ namespace LifestyleDesign
             RibbonPanel panel3 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Setup");
 
             // create button data instances for Panel 1
-            PushButtonData btnData1_1 = cmdRevitMirror.GetButtonData();
-            //PushButtonData btnData2_1 = cmdReverseDoorSwings.GetButtonData();
-            //PushButtonData btnData3_1 = cmdElevationRename.GetButtonData();
-            //PushButtonData btnData4_1 = cmdElevationSheetSwap.GetButtonData();
-            //PushButtonData btnData5_1 = cmdShakeAreaBoundary.GetButtonData();
+            PushButtonData btnData1_1 = cmdRevitMirror.GetButtonData();            
             PushButtonData btnData2_1 = cmdFlipPlan.GetButtonData();
 
             // create button data instances for Panel 2

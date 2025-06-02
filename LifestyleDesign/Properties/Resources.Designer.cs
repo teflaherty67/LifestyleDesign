@@ -83,6 +83,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] FlipPlan_16 {
+            get {
+                object obj = ResourceManager.GetObject("FlipPlan_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FlipPlan_32 {
+            get {
+                object obj = ResourceManager.GetObject("FlipPlan_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Green_16 {
             get {
                 object obj = ResourceManager.GetObject("Green_16", resourceCulture);
@@ -96,6 +116,26 @@ namespace LifestyleDesign.Properties {
         internal static byte[] Green_32 {
             get {
                 object obj = ResourceManager.GetObject("Green_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MirrorProject_16 {
+            get {
+                object obj = ResourceManager.GetObject("MirrorProject_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MirrorProject_32 {
+            get {
+                object obj = ResourceManager.GetObject("MirrorProject_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -15,5 +15,6 @@ global using TaskDialog = Autodesk.Revit.UI.TaskDialog;
 global using Icon = Autodesk.Revit.UI.TaskDialogIcon;
 global using Forms = System.Windows;
 global using Controls = System.Windows.Controls;
+global using CheckBox = System.Windows.Controls.CheckBox;
 
 

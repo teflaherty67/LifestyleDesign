@@ -83,6 +83,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] DeleteRevisions_16 {
+            get {
+                object obj = ResourceManager.GetObject("DeleteRevisions_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] DeleteRevisions_32 {
+            get {
+                object obj = ResourceManager.GetObject("DeleteRevisions_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] FlipPlan_16 {
             get {
                 object obj = ResourceManager.GetObject("FlipPlan_16", resourceCulture);

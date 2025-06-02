@@ -23,18 +23,14 @@ namespace LifestyleDesign
 
             // create button data instances for Panel 1
             PushButtonData btnData1_1 = cmdRevitMirror.GetButtonData();            
-            PushButtonData btnData2_1 = cmdFlipPlan.GetButtonData();
+            PushButtonData btnData1_2 = cmdFlipPlan.GetButtonData();
 
             // create button data instances for Panel 2
-            //PushButtonData btnData1_2 = cmdProjectCleanUp.GetButtonData();
+            PushButtonData btnData2_1 = cmdDeleteRevisions.GetButtonData();
 
             // create buttons for panel 1
-            PushButton myButton1_1 = panel1.AddItem(btnData1_1) as PushButton;
-            //PushButton myButton2_2 = panel1.AddItem(btnData2_1) as PushButton;
-            //PushButton myButton3_1 = panel1.AddItem(btnData3_1) as PushButton;
-            //PushButton myButton4_1 = panel1.AddItem(btnData4_1) as PushButton;
-            //PushButton myButton5_1 = panel1.AddItem(btnData5_1) as PushButton;
-            PushButton myButton2_1 = panel1.AddItem(btnData2_1) as PushButton;
+            PushButton myButton1_1 = panel1.AddItem(btnData1_1) as PushButton;            
+            PushButton myButton2_1 = panel1.AddItem(btnData1_2) as PushButton;
 
             // create buttons for panel 2
             //PushButton myButton1_2 = panel2.AddItem(btnData1_2) as PushButton;

@@ -1,8 +1,9 @@
 ﻿using LifestyleDesign.Classes;
 using System.Text.RegularExpressions;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 namespace LifestyleDesign.Common
 {

@@ -71,6 +71,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\DeleteRevisions_16.png" />
+	  <None Remove="Resources\DeleteRevisions_32.png" />
 	  <None Remove="Resources\FlipPlan_16.png" />
 	  <None Remove="Resources\FlipPlan_32.png" />
 	  <None Remove="Resources\MirrorProject_16.png" />
@@ -82,6 +84,8 @@
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\Blue_16.png" />
 	  <EmbeddedResource Include="Resources\Blue_32.png" />
+	  <EmbeddedResource Include="Resources\DeleteRevisions_16.png" />
+	  <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
 	  <EmbeddedResource Include="Resources\FlipPlan_16.png" />
 	  <EmbeddedResource Include="Resources\FlipPlan_32.png" />
 	  <EmbeddedResource Include="Resources\Green_16.png" />

@@ -18,7 +18,7 @@ namespace LifestyleDesign
         }
         internal static PushButtonData GetButtonData()
         {
-            string buttonInternalName = "btnComd2_1";
+            string buttonInternalName = "btnCmd2_1";
             string buttonTitle = "Delete\rRevisions";
             string methodBase = MethodBase.GetCurrentMethod().DeclaringType?.FullName;
 
@@ -28,7 +28,7 @@ namespace LifestyleDesign
             }
             else
             {
-                clsButtonData myButtonData1 = new Classes.clsButtonData(
+                clsButtonData myBtnData1 = new Classes.clsButtonData(
                     buttonInternalName,
                     buttonTitle,
                     methodBase,
@@ -36,7 +36,7 @@ namespace LifestyleDesign
                     Properties.Resources.DeleteRevisions_16,
                     "Deletes all revisions from project");
 
-                return myButtonData1.Data;
+                return myBtnData1.Data;
             }
         }
     }

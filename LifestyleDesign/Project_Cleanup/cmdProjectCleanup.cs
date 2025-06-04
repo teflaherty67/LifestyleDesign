@@ -195,12 +195,12 @@ namespace LifestyleDesign
                 #region Rename Schedules
 
                 // create lists for schedules by name contains
-                List<ViewSchedule> veneerList = Utils.GetScheduleByNameContains(doc, "Exterior Veneer Calculations");
-                List<ViewSchedule> floorList = Utils.GetScheduleByNameContains(doc, "Floor Areas");
-                List<ViewSchedule> frameList = Utils.GetScheduleByNameContains(doc, "Frame Areas");
-                List<ViewSchedule> atticList = Utils.GetScheduleByNameContains(doc, "Roof Ventilation Calculations");
-                List<ViewSchedule> equipmentList = Utils.GetScheduleByNameContains(doc, "Roof Ventilation Equipment");
-                List<ViewSchedule> indexList = Utils.GetScheduleByNameContains(doc, "Sheet Index");
+                List<ViewSchedule> veneerList = Utils.GetScheduleToRenameByNameContains(doc, "Exterior Veneer Calculations");
+                List<ViewSchedule> floorList = Utils.GetScheduleToRenameByNameContains(doc, "Floor Areas");
+                List<ViewSchedule> frameList = Utils.GetScheduleToRenameByNameContains(doc, "Frame Areas");
+                List<ViewSchedule> atticList = Utils.GetScheduleToRenameByNameContains(doc, "Roof Ventilation Calculations");
+                List<ViewSchedule> equipmentList = Utils.GetScheduleToRenameByNameContains(doc, "Roof Ventilation Equipment");
+                List<ViewSchedule> indexList = Utils.GetScheduleToRenameByNameContains(doc, "Sheet Index");
 
                 // create a counter for the schedules that will be renamed
                 int countRenamed = 0;

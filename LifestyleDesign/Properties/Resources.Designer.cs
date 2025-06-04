@@ -83,6 +83,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] CreateSchedules_16 {
+            get {
+                object obj = ResourceManager.GetObject("CreateSchedules_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CreateSchedules_32 {
+            get {
+                object obj = ResourceManager.GetObject("CreateSchedules_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] DeleteRevisions_16 {
             get {
                 object obj = ResourceManager.GetObject("DeleteRevisions_16", resourceCulture);
@@ -176,6 +196,26 @@ namespace LifestyleDesign.Properties {
         internal static byte[] Red_32 {
             get {
                 object obj = ResourceManager.GetObject("Red_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ReplaceDesignation_16 {
+            get {
+                object obj = ResourceManager.GetObject("ReplaceDesignation_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ReplaceDesignation_32 {
+            get {
+                object obj = ResourceManager.GetObject("ReplaceDesignation_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -860,19 +860,28 @@ namespace LifestyleDesign
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
-            string buttonInternalName = "btnCommand1";
-            string buttonTitle = "Button 1";
+            string buttonInternalName = "btnCmd3_2";
+            string buttonTitle = "Create\rSchedules";
+            string methodBase = MethodBase.GetCurrentMethod().DeclaringType?.FullName;
 
-            clsButtonData myButtonData = new clsButtonData(
-                buttonInternalName,
-                buttonTitle,
-                MethodBase.GetCurrentMethod().DeclaringType?.FullName,
-                Properties.Resources.Blue_32,
-                Properties.Resources.Blue_16,
-                "This is a tooltip for Button 1");
+            if (methodBase == null)
+            {
+                throw new InvalidOperationException("MethodBase.GetCurrentMethod().DeclaringType?.FullName is null");
+            }
+            else
+            {
+                clsButtonData myBtnData1 = new clsButtonData(
+                    buttonInternalName,
+                    buttonTitle,
+                    methodBase,
+                    Properties.Resources.CreateSchedules_32,
+                    Properties.Resources.CreateSchedules_16,
+                    "Creates all schedules for specified elevation");
 
-            return myButtonData.Data;
+                return myBtnData1.Data;
+            }
         }
+
     }
 
 }

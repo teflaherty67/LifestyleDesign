@@ -1,4 +1,5 @@
 using FilterTreeControlWPF;
+using LifestyleDesign.Commands;
 
 namespace LifestyleDesign
 {
@@ -27,13 +28,23 @@ namespace LifestyleDesign
 
             // create button data instances for Panel 2
             PushButtonData btnData2_1 = cmdDeleteRevisions.GetButtonData();
+            PushButtonData btnData2_2 = cmdRevisionJournal.GetButtonData();
+
+            // create button data instances for Panel 3
+            PushButtonData btnData3_1 = cmdElevDesignation.GetButtonData();
+            PushButtonData btnData3_2 = cmdCreateSchedules.GetButtonData();
 
             // create buttons for panel 1
-            PushButton myButton1_1 = panel1.AddItem(btnData1_1) as PushButton;            
-            PushButton myButton2_1 = panel1.AddItem(btnData1_2) as PushButton;
+            PushButton myBtn1_1 = panel1.AddItem(btnData1_1) as PushButton;            
+            PushButton myBtn1_2 = panel1.AddItem(btnData1_2) as PushButton;
 
             // create buttons for panel 2
-            //PushButton myButton1_2 = panel2.AddItem(btnData1_2) as PushButton;
+            PushButton myBtn2_1 = panel2.AddItem(btnData2_1) as PushButton;
+            PushButton myBtn2_2 = panel2.AddItem(btnData2_2) as PushButton;
+
+            // create buttons for panel 3
+            PushButton myBtn3_1 = panel2.AddItem(btnData3_1) as PushButton;
+            PushButton myBtn3_2 = panel2.AddItem(btnData3_2) as PushButton;
 
 
             // NOTE:

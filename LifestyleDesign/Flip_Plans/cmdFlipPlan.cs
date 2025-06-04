@@ -1,4 +1,5 @@
 ﻿using LifestyleDesign.Classes;
+using LifestyleDesign.Common;
 
 namespace LifestyleDesign
 {
@@ -47,8 +48,8 @@ namespace LifestyleDesign
                     buttonInternalName,
                     buttonTitle,
                     methodBase,
-                    Properties.Resources.MirrorProject_32,
-                    Properties.Resources.MirrorProject_16,
+                    Properties.Resources.FlipPlan_32,
+                    Properties.Resources.FlipPlan_16,
                     "Completes the flipping process after the project is mirrored.");
 
                 return myBtnData1.Data;

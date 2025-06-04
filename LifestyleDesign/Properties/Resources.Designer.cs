@@ -63,26 +63,6 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Blue_16 {
-            get {
-                object obj = ResourceManager.GetObject("Blue_16", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Blue_32 {
-            get {
-                object obj = ResourceManager.GetObject("Blue_32", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] CreateSchedules_16 {
             get {
                 object obj = ResourceManager.GetObject("CreateSchedules_16", resourceCulture);
@@ -136,26 +116,6 @@ namespace LifestyleDesign.Properties {
         internal static byte[] FlipPlan_32 {
             get {
                 object obj = ResourceManager.GetObject("FlipPlan_32", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Green_16 {
-            get {
-                object obj = ResourceManager.GetObject("Green_16", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Green_32 {
-            get {
-                object obj = ResourceManager.GetObject("Green_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -236,26 +196,6 @@ namespace LifestyleDesign.Properties {
         internal static byte[] RevisionJournal_32 {
             get {
                 object obj = ResourceManager.GetObject("RevisionJournal_32", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Yellow_16 {
-            get {
-                object obj = ResourceManager.GetObject("Yellow_16", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Yellow_32 {
-            get {
-                object obj = ResourceManager.GetObject("Yellow_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }

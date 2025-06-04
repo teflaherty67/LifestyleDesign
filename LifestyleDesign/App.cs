@@ -43,8 +43,8 @@ namespace LifestyleDesign
             PushButton myBtn2_2 = panel2.AddItem(btnData2_2) as PushButton;
 
             // create buttons for panel 3
-            PushButton myBtn3_1 = panel2.AddItem(btnData3_1) as PushButton;
-            PushButton myBtn3_2 = panel2.AddItem(btnData3_2) as PushButton;
+            PushButton myBtn3_1 = panel3.AddItem(btnData3_1) as PushButton;
+            PushButton myBtn3_2 = panel3.AddItem(btnData3_2) as PushButton;
 
 
             // NOTE:

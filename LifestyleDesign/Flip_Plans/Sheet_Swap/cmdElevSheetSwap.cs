@@ -1,7 +1,7 @@
 ﻿using LifestyleDesign.Classes;
 using LifestyleDesign.Common;
 
-namespace LifestyleDesign
+namespace LifestyleDesign.Flip_Plans
 {
     [Transaction(TransactionMode.Manual)]
     public class cmdElevSheetSwap : IExternalCommand
@@ -41,7 +41,7 @@ namespace LifestyleDesign
             {
                 Width = 375,
                 Height = 275,
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
+                WindowStartupLocation = Forms.WindowStartupLocation.CenterScreen,
                 Topmost = true,
             };
 
@@ -112,6 +112,6 @@ namespace LifestyleDesign
             }
 
             return Result.Succeeded;
-        }        
+        }
     }
 }

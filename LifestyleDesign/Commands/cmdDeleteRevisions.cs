@@ -11,11 +11,49 @@ namespace LifestyleDesign
             // Revit application and document variables
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
+            Document curDoc = uidoc.Document;
 
-            // Your code goes here
+            string msgText = "About to delete all Revisions.";
+            string msgTitle = "Warning";
+            Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OKCancel;
 
-            return Result.Succeeded;
+            Forms.MessageBoxResult result = Forms.MessageBox.Show(msgText, msgTitle, msgButtons, Forms.MessageBoxImage.Warning);
+
+            if (result == Forms.MessageBoxResult.OK)
+            {
+                // start the transaction
+                using (Transaction t = new Transaction(curDoc))
+                {
+                    t.Start("Delete Revisions");
+
+                    // add a blank revision
+                    Revision newRevision = Revision.Create(curDoc);
+
+                    // get all the revisions in the project
+                    IList<ElementId> revisions = Revision.GetAllRevisionIds(curDoc);
+
+                    // remove the last revision from the list
+                    revisions.RemoveAt(revisions.Count - 1);
+
+                    // delete the remaining revisions
+                    curDoc.Delete(revisions);
+
+                    t.Commit();
+
+                    string msgText2 = "All Revisions have been deleted.";
+                    string msgTitle2 = "Complete";
+                    Forms.MessageBoxButton msgButtons2 = Forms.MessageBoxButton.OK;
+
+                    Forms.MessageBox.Show(msgText2, msgTitle2, msgButtons2, Forms.MessageBoxImage.Information);
+                }
+                return Result.Succeeded;
+            }
+
+            else
+            {
+                // exit the command
+                return Result.Failed;
+            }
         }
         internal static PushButtonData GetButtonData()
         {

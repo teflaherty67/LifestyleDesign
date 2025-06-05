@@ -1,5 +1,5 @@
 using FilterTreeControlWPF;
-using LifestyleDesign.Commands;
+using LifestyleDesign.Elevation_Designation;
 
 namespace LifestyleDesign
 {
@@ -33,6 +33,7 @@ namespace LifestyleDesign
             // create button data instances for Panel 3
             PushButtonData btnData3_1 = cmdElevDesignation.GetButtonData();
             PushButtonData btnData3_2 = cmdCreateSchedules.GetButtonData();
+            PushButtonData btnData3_3 = cmdCreateSheetGroup.GetButtonData();
 
             // create buttons for panel 1
             PushButton myBtn1_1 = panel1.AddItem(btnData1_1) as PushButton;            
@@ -45,7 +46,7 @@ namespace LifestyleDesign
             // create buttons for panel 3
             PushButton myBtn3_1 = panel3.AddItem(btnData3_1) as PushButton;
             PushButton myBtn3_2 = panel3.AddItem(btnData3_2) as PushButton;
-
+            PushButton myBtn3_3 = panel3.AddItem(btnData3_3) as PushButton;
 
             // NOTE:
             // To create a new tool, copy lines 35 and 39 and rename the variables to "btnData3" and "myButton3". 

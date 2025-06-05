@@ -1,5 +1,6 @@
 ﻿using LifestyleDesign.Classes;
 using LifestyleDesign.Common;
+using LifestyleDesign.Flip_Plans;
 
 namespace LifestyleDesign
 {

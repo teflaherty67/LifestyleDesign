@@ -124,6 +124,12 @@
   <data name="CreateSchedules_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreateSchedules_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="CreateSheetGroup_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CreateSheetGroup_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CreateSheetGroup_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CreateSheetGroup_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="DeleteRevisions_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DeleteRevisions_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -1,7 +1,8 @@
 ﻿using LifestyleDesign.Classes;
 using LifestyleDesign.Common;
 using System.ComponentModel;
-using OfficeOpenXml;
+using System.Data;
+using ExcelDataReader;
 
 namespace LifestyleDesign
 {
@@ -10,6 +11,9 @@ namespace LifestyleDesign
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            // Register encoding provider for Excel Data Reader (required for .NET Core/.NET 5+)
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
             // Revit application and document variables
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
@@ -34,8 +38,7 @@ namespace LifestyleDesign
             // get data from the form
             string newElev = curForm.GetComboboxElevation();
 
-            // set some variables for paramter values
-
+            // set some variables for parameter values
             string newFilter = "";
 
             if (newElev == "A")
@@ -51,49 +54,57 @@ namespace LifestyleDesign
             else if (newElev == "T")
                 newFilter = "6";
 
-            using (var package = new ExcelPackage(excelFile))
+            using (var stream = File.Open(excelFile, FileMode.Open, FileAccess.Read))
             {
-                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-
-                ExcelWorkbook wb = package.Workbook;
-
-                ExcelWorksheet ws;
-
-                if (curForm.GetComboboxFoundation() == "Basement" && curForm.GetComboboxFloors() == "1")
-                    ws = wb.Worksheets[0];
-                else if (curForm.GetComboboxFoundation() == "Basement" && curForm.GetComboboxFloors() == "2")
-                    ws = wb.Worksheets[1];
-                else if (curForm.GetComboboxFoundation() == "Crawlspace" && curForm.GetComboboxFloors() == "1")
-                    ws = wb.Worksheets[2];
-                else if (curForm.GetComboboxFoundation() == "Crawlspace" && curForm.GetComboboxFloors() == "2")
-                    ws = wb.Worksheets[3];
-                else if (curForm.GetComboboxFoundation() == "Slab" && curForm.GetComboboxFloors() == "1")
-                    ws = wb.Worksheets[4];
-                else
-                    ws = wb.Worksheets[5];
-
-                // get row & column count
-
-                int rows = ws.Dimension.Rows;
-                int columns = ws.Dimension.Columns;
-
-                // read Excel data into a list                
-
-                for (int i = 1; i <= rows; i++)
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    List<string> rowData = new List<string>();
-                    for (int j = 1; j <= columns; j++)
+                    // Convert to DataSet to access worksheets
+                    var dataSet = reader.AsDataSet(new ExcelDataSetConfiguration()
                     {
-                        string cellContent = ws.Cells[i, j].Value.ToString();
-                        rowData.Add(cellContent);
-                    }
-                    dataSheets.Add(rowData);
-                }
+                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true // Set to true if first row contains headers
+                        }
+                    });
 
-                dataSheets.RemoveAt(0);
+                    // Select worksheet based on foundation and floors
+                    DataTable ws;
+                    if (curForm.GetComboboxFoundation() == "Basement" && curForm.GetComboboxFloors() == "1")
+                        ws = dataSet.Tables[0];
+                    else if (curForm.GetComboboxFoundation() == "Basement" && curForm.GetComboboxFloors() == "2")
+                        ws = dataSet.Tables[1];
+                    else if (curForm.GetComboboxFoundation() == "Crawlspace" && curForm.GetComboboxFloors() == "1")
+                        ws = dataSet.Tables[2];
+                    else if (curForm.GetComboboxFoundation() == "Crawlspace" && curForm.GetComboboxFloors() == "2")
+                        ws = dataSet.Tables[3];
+                    else if (curForm.GetComboboxFoundation() == "Slab" && curForm.GetComboboxFloors() == "1")
+                        ws = dataSet.Tables[4];
+                    else
+                        ws = dataSet.Tables[5];
+
+                    // get row & column count
+                    int rows = ws.Rows.Count;
+                    int columns = ws.Columns.Count;
+
+                    // read Excel data into a list                
+                    for (int i = 0; i < rows; i++)
+                    {
+                        List<string> rowData = new List<string>();
+                        for (int j = 0; j < columns; j++)
+                        {
+                            string cellContent = ws.Rows[i][j]?.ToString() ?? string.Empty;
+                            rowData.Add(cellContent);
+                        }
+                        dataSheets.Add(rowData);
+                    }
+
+                    // Remove header row (equivalent to RemoveAt(0))
+                    if (dataSheets.Count > 0)
+                        dataSheets.RemoveAt(0);
+                }
             }
 
-            // create sheets with specifed titleblock
+            // create sheets with specified titleblock
             using (Transaction t = new Transaction(curDoc))
             {
                 t.Start("Create Sheets");
@@ -122,6 +133,7 @@ namespace LifestyleDesign
 
             return Result.Succeeded;
         }
+
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
@@ -147,5 +159,4 @@ namespace LifestyleDesign
             }
         }
     }
-
 }

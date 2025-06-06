@@ -13,10 +13,10 @@ namespace LifestyleDesign
             // Revit application and document variables
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
+            Document curDoc = uidoc.Document;
 
             // get sheet groups in Inactive category
-            List<string> uniqueGroups = Utils.GetAllSheetGroupsByCategory(doc, "Inactive");
+            List<string> uniqueGroups = Utils.GetAllSheetGroupsByCategory(curDoc, "Inactive");
 
             // open form
             frmProjectCleanup curForm = new frmProjectCleanup(uniqueGroups)
@@ -57,9 +57,9 @@ namespace LifestyleDesign
             else if (txtClient == "West Virginia")
                 nameClient = "LGI-WV";
 
-            ProjectInfo clientInfo = doc.ProjectInformation;
+            ProjectInfo clientInfo = curDoc.ProjectInformation;
 
-            using (Transaction t = new Transaction(doc))
+            using (Transaction t = new Transaction(curDoc))
             {
                 t.Start("Project Cleanup");
 
@@ -83,11 +83,11 @@ namespace LifestyleDesign
                         {
                             string stringValue = checkBox.Content.ToString();
 
-                            List<ViewSheet> viewSheets = Utils.GetSheetsByGroupName(doc, stringValue);
+                            List<ViewSheet> viewSheets = Utils.GetSheetsByGroupName(curDoc, stringValue);
 
                             foreach (ViewSheet curSheet in viewSheets)
                             {
-                                doc.Delete(curSheet.Id);
+                                curDoc.Delete(curSheet.Id);
                             }
                         }
                     }
@@ -102,17 +102,17 @@ namespace LifestyleDesign
 
                 // get all the views in the project by category
                 List<View> listViews = new List<View>();
-                List<View> listCat01 = Utils.GetAllViewsByCategory(doc, "01:Floor Plans");
-                List<View> listCat02 = Utils.GetAllViewsByCategory(doc, "02:Elevations");
-                List<View> listCat03 = Utils.GetAllViewsByCategory(doc, "03:Roof Plans");
-                List<View> listCat04 = Utils.GetAllViewsByCategory(doc, "04:Sections");
-                List<View> listCat05 = Utils.GetAllViewsByCategory(doc, "05:Interior Elevations");
-                List<View> listCat06 = Utils.GetAllViewsByCategory(doc, "06:Electrical Plans");
-                List<View> listCat07 = Utils.GetAllViewsByCategory(doc, "07:Form/Foundation Plans");
-                List<View> listCat08 = Utils.GetAllViewsByCategory(doc, "08:Ceiling Framing Plans");
-                List<View> listCat09 = Utils.GetAllViewsByCategory(doc, "09:Roof Framing Plans");
-                List<View> listCat13 = Utils.GetAllViewsByCategoryAndViewTemplate(doc, "13:Presentation Views", "13-Elevation Presentation");
-                List<View> listCat14 = Utils.GetAllViewsByCategoryAndViewTemplate(doc, "14:Ceiling Views", "14-Soffit");
+                List<View> listCat01 = Utils.GetAllViewsByCategory(curDoc, "01:Floor Plans");
+                List<View> listCat02 = Utils.GetAllViewsByCategory(curDoc, "02:Elevations");
+                List<View> listCat03 = Utils.GetAllViewsByCategory(curDoc, "03:Roof Plans");
+                List<View> listCat04 = Utils.GetAllViewsByCategory(curDoc, "04:Sections");
+                List<View> listCat05 = Utils.GetAllViewsByCategory(curDoc, "05:Interior Elevations");
+                List<View> listCat06 = Utils.GetAllViewsByCategory(curDoc, "06:Electrical Plans");
+                List<View> listCat07 = Utils.GetAllViewsByCategory(curDoc, "07:Form/Foundation Plans");
+                List<View> listCat08 = Utils.GetAllViewsByCategory(curDoc, "08:Ceiling Framing Plans");
+                List<View> listCat09 = Utils.GetAllViewsByCategory(curDoc, "09:Roof Framing Plans");
+                List<View> listCat13 = Utils.GetAllViewsByCategoryAndViewTemplate(curDoc, "13:Presentation Views", "13-Elevation Presentation");
+                List<View> listCat14 = Utils.GetAllViewsByCategoryAndViewTemplate(curDoc, "14:Ceiling Views", "14-Soffit");
 
                 // combine the lists together
                 listViews.AddRange(listCat01);
@@ -138,7 +138,7 @@ namespace LifestyleDesign
 
 
                 // get all the sheets in the project
-                FilteredElementCollector sheetColl = new FilteredElementCollector(doc);
+                FilteredElementCollector sheetColl = new FilteredElementCollector(curDoc);
                 sheetColl.OfClass(typeof(ViewSheet));
 
                 if (curForm.GetCheckBoxViews() == true)
@@ -147,7 +147,7 @@ namespace LifestyleDesign
                     foreach (View curView in listViews)
                     {
                         // check if view is already on sheet
-                        if (Viewport.CanAddViewToSheet(doc, sheetColl.FirstElementId(), curView.Id))
+                        if (Viewport.CanAddViewToSheet(curDoc, sheetColl.FirstElementId(), curView.Id))
                         {
                             // check if view has dependent views
                             if (curView.GetDependentViewIds().Count() == 0)
@@ -162,7 +162,7 @@ namespace LifestyleDesign
                     foreach (View deleteView in viewsToDelete)
                     {
                         // delete the view
-                        doc.Delete(deleteView.Id);
+                        curDoc.Delete(deleteView.Id);
                     }
                 }
 
@@ -171,22 +171,22 @@ namespace LifestyleDesign
                 #region Delete Unused Schedules
 
                 // create a list of all schedules by name
-                List<string> schedNames = Utils.GetAllScheduleNames(doc);
+                List<string> schedNames = Utils.GetAllScheduleNames(curDoc);
 
                 // create a list of the names of all sheet schedule instances
-                List<string> schedInstances = Utils.GetAllSSINames(doc);
+                List<string> schedInstances = Utils.GetAllSSINames(curDoc);
 
                 // compare the 2 lists and create a list of schedules not used by name
                 List<string> schedNotUsed = Utils.GetSchedulesNotUsed(schedNames, schedInstances);
 
                 // convert the list of schedule names to a list of View Schedules
-                List<ViewSchedule> SchedulesToDelete = Utils.GetSchedulesToDelete(doc, schedNotUsed);
+                List<ViewSchedule> SchedulesToDelete = Utils.GetSchedulesToDelete(curDoc, schedNotUsed);
 
                 if (curForm.GetCheckBoxSchedules() == true)
                 {
                     foreach (ViewSchedule curSched in SchedulesToDelete)
                     {
-                        doc.Delete(curSched.Id);
+                        curDoc.Delete(curSched.Id);
                     }
                 }
 
@@ -195,12 +195,12 @@ namespace LifestyleDesign
                 #region Rename Schedules
 
                 // create lists for schedules by name contains
-                List<ViewSchedule> veneerList = Utils.GetScheduleByNameContains(doc, "Exterior Veneer Calculations");
-                List<ViewSchedule> floorList = Utils.GetScheduleByNameContains(doc, "Floor Areas");
-                List<ViewSchedule> frameList = Utils.GetScheduleByNameContains(doc, "Frame Areas");
-                List<ViewSchedule> atticList = Utils.GetScheduleByNameContains(doc, "Roof Ventilation Calculations");
-                List<ViewSchedule> equipmentList = Utils.GetScheduleByNameContains(doc, "Roof Ventilation Equipment");
-                List<ViewSchedule> indexList = Utils.GetScheduleByNameContains(doc, "Sheet Index");
+                List<ViewSchedule> veneerList = new List<ViewSchedule> { Utils.GetScheduleByNameContains(curDoc, "Exterior Veneer Calculations") };
+                List<ViewSchedule> floorList = new List<ViewSchedule> { Utils.GetScheduleByNameContains(curDoc, "Floor Areas") };
+                List<ViewSchedule> frameList = new List<ViewSchedule> { Utils.GetScheduleByNameContains(curDoc, "Frame Areas") };
+                List<ViewSchedule> atticList = new List<ViewSchedule> { Utils.GetScheduleByNameContains(curDoc, "Roof Ventilation Calculations") };
+                List<ViewSchedule> equipmentList = new List<ViewSchedule> { Utils.GetScheduleByNameContains(curDoc, "Roof Ventilation Equipment") };
+                List<ViewSchedule> indexList = new List<ViewSchedule> { Utils.GetScheduleByNameContains(curDoc, "Sheet Index") };
 
                 // create a counter for the schedules that will be renamed
                 int countRenamed = 0;
@@ -420,7 +420,7 @@ namespace LifestyleDesign
                 #region Delete Code Bracing Parameter
 
                 string paramName = "Code Bracing";
-                IEnumerable<ParameterElement> _params = new FilteredElementCollector(doc)
+                IEnumerable<ParameterElement> _params = new FilteredElementCollector(curDoc)
                         .WhereElementIsNotElementType()
                         .OfClass(typeof(ParameterElement))
                         .Cast<ParameterElement>();
@@ -438,7 +438,7 @@ namespace LifestyleDesign
 
                 if (curForm.GetCheckBoxCode() == true)
                 {
-                    doc.Delete(projectParam.Id);
+                    curDoc.Delete(projectParam.Id);
                 }
 
                 #endregion
@@ -446,7 +446,7 @@ namespace LifestyleDesign
                 #region Remove Code Filter From Sheet Name
 
                 // get all the sheets
-                List<ViewSheet> activeSheets = Utils.GetAllSheets(doc);
+                List<ViewSheet> activeSheets = Utils.GetAllSheets(curDoc);
 
                 if (curForm.GetCheckBoxSheets() == true)
                 {
@@ -492,16 +492,16 @@ namespace LifestyleDesign
 
                 if (curForm.GetCheckBoxRoomTag() == true)
                 {
-                    if (Utils.DoesProjectParamExist(doc, paramClgName))
+                    if (Utils.DoesProjectParamExist(curDoc, paramClgName))
                     {
                         return Result.Cancelled;
                     }
                     else
                     {
-                        Utils.CreateSharedParam(doc, "Rooms", paramClgName, BuiltInCategory.OST_Rooms);
+                        Utils.CreateSharedParam(curDoc, "Rooms", paramClgName, BuiltInCategory.OST_Rooms);
                     }
 
-                    doc.LoadFamily(tagPath, famRoomTagLoadOptions, out family);
+                    curDoc.LoadFamily(tagPath, famRoomTagLoadOptions, out family);
                 }
 
                 #endregion
@@ -532,7 +532,7 @@ namespace LifestyleDesign
 
                         //load the family
 
-                        doc.LoadFamily(famPath, familyLoadOptions, out family);
+                        curDoc.LoadFamily(famPath, familyLoadOptions, out family);
                     }
 
                     foreach (string curFamString in famListKitchen)
@@ -541,7 +541,7 @@ namespace LifestyleDesign
 
                         // load the family
 
-                        doc.LoadFamily(famPath, familyLoadOptions, out family);
+                        curDoc.LoadFamily(famPath, familyLoadOptions, out family);
                     }
 
                     foreach (string curFamString in famListLighting)
@@ -550,7 +550,7 @@ namespace LifestyleDesign
 
                         // load the family
 
-                        doc.LoadFamily(famPath, familyLoadOptions, out family);
+                        curDoc.LoadFamily(famPath, familyLoadOptions, out family);
                     }
 
                     foreach (string curFamString in famListShelving)
@@ -559,7 +559,7 @@ namespace LifestyleDesign
 
                         // load the family
 
-                        doc.LoadFamily(famPath, familyLoadOptions, out family);
+                        curDoc.LoadFamily(famPath, familyLoadOptions, out family);
                     }
                 }
 
@@ -568,10 +568,10 @@ namespace LifestyleDesign
                 #region Update Line Styles
 
                 // get the line style called <Centerline>
-                GraphicsStyle curCenterline = Utils.GetLinestyleByName(doc, "<Centerline>");
+                GraphicsStyle curCenterline = Utils.GetLinestyleByName(curDoc, "<Centerline>");
 
                 // get the line pattern called: Center 1/8"
-                LinePatternElement newCenterLP = Utils.GetLinePatternByName(doc, "Center 1/8\"");
+                LinePatternElement newCenterLP = Utils.GetLinePatternByName(curDoc, "Center 1/8\"");
 
                 if (curForm.GetCheckBoxLinestyles() == true)
                 {
@@ -587,15 +587,15 @@ namespace LifestyleDesign
 
                 // create variables to hold family names
 
-                Family elWall = Utils.GetFamilyByName(doc, "EL-Wall Base");
-                Family elNoBase = Utils.GetFamilyByName(doc, "EL-No Base");
-                Family ltNoBase = Utils.GetFamilyByName(doc, "LT-No Base");
+                Family elWall = Utils.GetFamilyByName(curDoc, "EL-Wall Base");
+                Family elNoBase = Utils.GetFamilyByName(curDoc, "EL-No Base");
+                Family ltNoBase = Utils.GetFamilyByName(curDoc, "LT-No Base");
 
                 // create lists to hold families
 
-                List<Family> listEL_Wall = Utils.GetFamilyByNameContains(doc, "EL-Wall Base");
-                List<Family> listEL_NoBase = Utils.GetFamilyByNameContains(doc, "EL-No Base");
-                List<Family> listLT_NoBase = Utils.GetFamilyByNameContains(doc, "LT-No Base");
+                List<Family> listEL_Wall = Utils.GetFamilyByNameContains(curDoc, "EL-Wall Base");
+                List<Family> listEL_NoBase = Utils.GetFamilyByNameContains(curDoc, "EL-No Base");
+                List<Family> listLT_NoBase = Utils.GetFamilyByNameContains(curDoc, "LT-No Base");
 
                 if (curForm.GetCheckBoxElectrical() == true)
                 {

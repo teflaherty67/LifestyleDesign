@@ -1,5 +1,6 @@
 ﻿using System.Windows.Media.Imaging;
 
+
 namespace LifestyleDesign.Classes
 {
     internal class clsButtonData
@@ -18,7 +19,7 @@ namespace LifestyleDesign.Classes
 
             // set command availability
             string nameSpace = GetType().Namespace;
-            Data.AvailabilityClassName = $"{nameSpace}.CommandAvailability";
+            Data.AvailabilityClassName = "LifestyleDesign.Common.CommandAvailability";
         }
         public clsButtonData(string name, string text, string className,
             byte[] largeImage,

@@ -1,8 +1,9 @@
 ﻿using LifestyleDesign.Classes;
 using System.Text.RegularExpressions;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 namespace LifestyleDesign.Common
 {
@@ -760,6 +761,21 @@ namespace LifestyleDesign.Common
             }
 
             return null;
+        }
+
+        internal static List<ViewSchedule> GetScheduleToRenameByNameContains(Document curDoc, string scheduleString)
+        {
+            List<ViewSchedule> m_scheduleList = GetAllSchedules(curDoc);
+
+            List<ViewSchedule> m_returnList = new List<ViewSchedule>();
+
+            foreach (ViewSchedule curSchedule in m_scheduleList)
+            {
+                if (curSchedule.Name.Contains(scheduleString))
+                    m_returnList.Add(curSchedule);
+            }
+
+            return m_returnList;
         }
 
         internal static List<string> GetAllScheduleNames(Document curDoc)

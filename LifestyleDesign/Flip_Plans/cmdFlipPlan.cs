@@ -1,4 +1,6 @@
 ﻿using LifestyleDesign.Classes;
+using LifestyleDesign.Common;
+using LifestyleDesign.Flip_Plans;
 
 namespace LifestyleDesign
 {
@@ -33,18 +35,26 @@ namespace LifestyleDesign
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
-            string buttonInternalName = "btnCommand1";
-            string buttonTitle = "Button 1";
+            string buttonInternalName = "btnCmd1_2";
+            string buttonTitle = "Flip\rPlan";
+            string methodBase = MethodBase.GetCurrentMethod().DeclaringType?.FullName;
 
-            clsButtonData myButtonData = new clsButtonData(
-                buttonInternalName,
-                buttonTitle,
-                MethodBase.GetCurrentMethod().DeclaringType?.FullName,
-                Properties.Resources.Blue_32,
-                Properties.Resources.Blue_16,
-                "This is a tooltip for Button 1");
+            if (methodBase == null)
+            {
+                throw new InvalidOperationException("MethodBase.GetCurrentMethod().DeclaringType?.FullName is null");
+            }
+            else
+            {
+                clsButtonData myBtnData1 = new Classes.clsButtonData(
+                    buttonInternalName,
+                    buttonTitle,
+                    methodBase,
+                    Properties.Resources.FlipPlan_32,
+                    Properties.Resources.FlipPlan_16,
+                    "Completes the flipping process after the project is mirrored.");
 
-            return myButtonData.Data;
+                return myBtnData1.Data;
+            }
         }
     }
 

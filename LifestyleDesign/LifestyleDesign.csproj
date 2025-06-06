@@ -71,14 +71,39 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Blue_16.png" />
-	  <EmbeddedResource Include="Resources\Blue_32.png" />
-	  <EmbeddedResource Include="Resources\Green_16.png" />
-	  <EmbeddedResource Include="Resources\Green_32.png" />
+	  <None Remove="Resources\CreateSchedules_16.png" />
+	  <None Remove="Resources\CreateSchedules_32.png" />
+	  <None Remove="Resources\CreateSheetGroup_16.png" />
+	  <None Remove="Resources\CreateSheetGroup_32.png" />
+	  <None Remove="Resources\DeleteRevisions_16.png" />
+	  <None Remove="Resources\DeleteRevisions_32.png" />
+	  <None Remove="Resources\FlipPlan_16.png" />
+	  <None Remove="Resources\FlipPlan_32.png" />
+	  <None Remove="Resources\MirrorProject_16.png" />
+	  <None Remove="Resources\MirrorProject_32.png" />
+	  <None Remove="Resources\ReplaceDesignation_16.png" />
+	  <None Remove="Resources\ReplaceDesignation_32.png" />
+	  <None Remove="Resources\RevisionJournal_16.png" />
+	  <None Remove="Resources\RevisionJournal_32.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\CreateSchedules_16.png" />
+	  <EmbeddedResource Include="Resources\CreateSchedules_32.png" />
+	  <EmbeddedResource Include="Resources\CreateSheetGroup_16.png" />
+	  <EmbeddedResource Include="Resources\CreateSheetGroup_32.png" />
+	  <EmbeddedResource Include="Resources\DeleteRevisions_16.png" />
+	  <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
+	  <EmbeddedResource Include="Resources\FlipPlan_16.png" />
+	  <EmbeddedResource Include="Resources\FlipPlan_32.png" />
+	  <EmbeddedResource Include="Resources\MirrorProject_16.png" />
+	  <EmbeddedResource Include="Resources\MirrorProject_32.png" />
 	  <EmbeddedResource Include="Resources\Red_16.png" />
 	  <EmbeddedResource Include="Resources\Red_32.png" />
-	  <EmbeddedResource Include="Resources\Yellow_16.png" />
-	  <EmbeddedResource Include="Resources\Yellow_32.png" />
+	  <EmbeddedResource Include="Resources\ReplaceDesignation_16.png" />
+	  <EmbeddedResource Include="Resources\ReplaceDesignation_32.png" />
+	  <EmbeddedResource Include="Resources\RevisionJournal_16.png" />
+	  <EmbeddedResource Include="Resources\RevisionJournal_32.png" />
 	</ItemGroup>
 	
 	<ItemGroup>

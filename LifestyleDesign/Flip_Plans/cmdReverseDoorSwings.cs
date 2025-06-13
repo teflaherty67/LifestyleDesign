@@ -15,7 +15,7 @@ namespace LifestyleDesign
 
             // set the active view to the Door Schedule
             View curView;
-            curView = Utils.GetScheduleByName(curDoc, "Door Schedule");
+            curView = Utils.GetScheduleByNameContains(curDoc, "Door Schedule");
 
             uidoc.ActiveView = curView;
 

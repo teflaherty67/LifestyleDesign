@@ -4,7 +4,7 @@
     <Text>LifestyleDesign - Command 1</Text>
     <Description>Some description</Description>
     <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
-    <FullClassName>LifestyleDesign.Command1</FullClassName>
+    <FullClassName>LifestyleDesign.cmdStripIt</FullClassName>
     <ClientId>c0d708e9-a33c-405e-98f6-2e02b23d0a51</ClientId>
     <VendorId>com.YOUR COMPANY NAME</VendorId>
     <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>

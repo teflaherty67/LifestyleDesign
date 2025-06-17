@@ -85,6 +85,8 @@
 	  <None Remove="Resources\ReplaceDesignation_32.png" />
 	  <None Remove="Resources\RevisionJournal_16.png" />
 	  <None Remove="Resources\RevisionJournal_32.png" />
+	  <None Remove="Resources\StripIt_16.png" />
+	  <None Remove="Resources\StripIt_32.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -104,6 +106,8 @@
 	  <EmbeddedResource Include="Resources\ReplaceDesignation_32.png" />
 	  <EmbeddedResource Include="Resources\RevisionJournal_16.png" />
 	  <EmbeddedResource Include="Resources\RevisionJournal_32.png" />
+	  <EmbeddedResource Include="Resources\StripIt_16.png" />
+	  <EmbeddedResource Include="Resources\StripIt_32.png" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -155,6 +159,10 @@
 	  <None Update="RegisterAddin.addin">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Report_Bugs\" />
 	</ItemGroup>
   
 </Project>

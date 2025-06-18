@@ -71,6 +71,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\BugReport_16.png" />
+	  <None Remove="Resources\BugReport_32.png" />
 	  <None Remove="Resources\CreateSchedules_16.png" />
 	  <None Remove="Resources\CreateSchedules_32.png" />
 	  <None Remove="Resources\CreateSheetGroup_16.png" />
@@ -90,6 +92,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\BugReport_16.png" />
+	  <EmbeddedResource Include="Resources\BugReport_32.png" />
 	  <EmbeddedResource Include="Resources\CreateSchedules_16.png" />
 	  <EmbeddedResource Include="Resources\CreateSchedules_32.png" />
 	  <EmbeddedResource Include="Resources\CreateSheetGroup_16.png" />
@@ -159,10 +163,6 @@
 	  <None Update="RegisterAddin.addin">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="Report_Bugs\" />
 	</ItemGroup>
   
 </Project>

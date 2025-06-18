@@ -11,6 +11,8 @@ namespace LifestyleDesign
             // Revit application and document variables
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document curDoc = uidoc.Document;
+
             try
             {
                 // Launch the bug report WPF window

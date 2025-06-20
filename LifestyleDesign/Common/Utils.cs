@@ -101,10 +101,12 @@ namespace LifestyleDesign.Common
             ElementId areaCatId = new ElementId(BuiltInCategory.OST_Areas);
             ElementId curLegendId = view.GetColorFillSchemeId(areaCatId);
 
+            XYZ curOrigin = view.Origin + view.RightDirection * 10 + view.UpDirection * 5;
+
             if (curLegendId == ElementId.InvalidElementId)
                 view.SetColorFillSchemeId(areaCatId, scheme.Id);
 
-            ColorFillLegend.Create(view.Document, view.Id, areaCatId, XYZ.Zero);
+            ColorFillLegend.Create(view.Document, view.Id, areaCatId, curOrigin);
         }
 
         #endregion
@@ -1704,6 +1706,28 @@ namespace LifestyleDesign.Common
             return m_schedList;
         }
 
+        internal static List<ViewSchedule> GetAllScheduleTemplates(Document curDoc)
+        {
+            List<ViewSchedule> m_schedList = new List<ViewSchedule>();
+
+            FilteredElementCollector curCollector = new FilteredElementCollector(curDoc);
+            curCollector.OfClass(typeof(ViewSchedule));
+            curCollector.WhereElementIsNotElementType();
+
+            foreach (ViewSchedule curView in curCollector)
+            {
+                if (curView.ViewType == ViewType.Schedule)
+                {
+                    if (curView.IsTemplate == true) // Only templates
+                    {
+                        m_schedList.Add((ViewSchedule)curView);
+                    }
+                }
+            }
+
+            return m_schedList;
+        }
+
         internal static ViewSchedule GetScheduleByName(Document curDoc, string v)
         {
             FilteredElementCollector collector = new FilteredElementCollector(curDoc);
@@ -1736,7 +1760,7 @@ namespace LifestyleDesign.Common
         private static List<ViewSchedule> GetAllViewScheduleTemplates(Document curDoc)
         {
             List<ViewSchedule> returnList = new List<ViewSchedule>();
-            List<ViewSchedule> viewList = GetAllSchedules(curDoc);
+            List<ViewSchedule> viewList = GetAllScheduleTemplates(curDoc);
 
             //loop through views and check if is view template
             foreach (ViewSchedule v in viewList)

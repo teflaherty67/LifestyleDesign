@@ -86,6 +86,9 @@ namespace LifestyleDesign
                     curDoc.Delete(curSheet.Id);
                 }
 
+                // 01b. delete all sheet collections
+                Utils.DeleteAllSheetCollections(curDoc);
+
                 // 02a. loop through the views & delete them
                 foreach (View deleteView in viewsToDelete)
                 {

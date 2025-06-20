@@ -2200,6 +2200,31 @@ namespace LifestyleDesign.Common
 
         #endregion
 
+        #region Sheet Collections
+
+        internal static void DeleteAllSheetCollections(Document curDoc)
+        {
+            try
+            {
+                // Alternative approach - delete all ViewSheetSet elements (sheet collections)
+                var m_colSheets = new FilteredElementCollector(curDoc)
+                    .OfClass(typeof(SheetCollection))
+                    .ToList();
+
+                foreach (var curSheetCol in m_colSheets)
+                {
+                    try
+                    {
+                        curDoc.Delete(curSheetCol.Id);
+                    }
+                    catch { }
+                }
+            }
+            catch { }
+        }
+
+        #endregion
+
         #region Strings
 
         internal static string GetLastCharacterInString(string grpName, string curElev, string newElev)

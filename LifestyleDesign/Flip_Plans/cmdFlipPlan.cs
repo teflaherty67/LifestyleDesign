@@ -14,6 +14,25 @@ namespace LifestyleDesign
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document curDoc = uidoc.Document;
 
+            // verify the exterior elevation sheets are named correctly
+            List<ViewSheet> extrSheets = Utils.GetAllSheetsByNameContains(curDoc, "Exterior Elevations");
+
+            if(extrSheets.Count == 0)
+            {
+                // if the sheets are named wrong, alert the user & exit
+                TaskDialog tdNewSchedError = new TaskDialog("Error");
+                tdNewSchedError.MainIcon = Icon.TaskDialogIconWarning;
+                tdNewSchedError.Title = "Flip Plans";
+                tdNewSchedError.TitleAutoPrefix = false;
+                tdNewSchedError.MainContent = "The exterior elevation sheets do not exist, or do not follow the proper naming convention; " +
+                    "please create, or correct the sheet names, and try again.";
+                tdNewSchedError.CommonButtons = TaskDialogCommonButtons.Close;
+
+                TaskDialogResult tdNewErrorRes = tdNewSchedError.Show();
+
+                return Result.Cancelled;
+            }               
+
             // run door swing reversal
             cmdReverseDoorSwings com_1 = new cmdReverseDoorSwings();
             com_1.Execute(commandData, ref message, elements);

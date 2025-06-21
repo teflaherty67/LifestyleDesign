@@ -2198,6 +2198,21 @@ namespace LifestyleDesign.Common
             return m_returnGroups;
         }
 
+        internal static List<ViewSheet> GetAllSheetsByNameContains(Document curDoc, string sheetName)
+        {
+            List<ViewSheet> m_viewSheets = GetAllSheets(curDoc);
+
+            List<ViewSheet> m_returnSheets = new List<ViewSheet>();
+
+            foreach (ViewSheet curSheet in m_viewSheets)
+            {
+                if(curSheet.Name == sheetName)
+                m_returnSheets.Add(curSheet);
+            }
+
+            return m_returnSheets;
+        }
+
         #endregion
 
         #region Sheet Collections
@@ -2647,5 +2662,7 @@ namespace LifestyleDesign.Common
                 return false;
             }
         }
+
+       
     }
 }

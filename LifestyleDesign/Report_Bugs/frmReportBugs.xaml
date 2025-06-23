@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LifestyleDesign"
         mc:Ignorable="d"
-                Title="Bug Report" Height="450" Width="500">
+        Title="Bug Report" Height="450" Width="500">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

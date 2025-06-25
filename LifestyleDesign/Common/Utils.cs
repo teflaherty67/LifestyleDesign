@@ -1634,6 +1634,23 @@ namespace LifestyleDesign.Common
             return null;
         }
 
+        internal static List<string> GetCommandsFromRibbonTab(UIApplication uiapp, string tabName)
+        {
+            List<string> m_cmdList = new List<string>();
+
+            RibbonPanel targetPanel = uiapp.GetRibbonPanels(tabName).FirstOrDefault(panel => panel.Name == tabName);
+
+            if(targetPanel != null)
+            {
+                foreach(RibbonItem curItem in targetPanel.GetItems())
+                {
+                    m_cmdList.Add(curItem.Name);
+                }
+            }
+
+            return m_cmdList;
+        }
+
         internal static BitmapImage BitmapToImageSource(Bitmap bm)
         {
             using (MemoryStream mem = new MemoryStream())

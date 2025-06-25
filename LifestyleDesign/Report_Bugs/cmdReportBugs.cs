@@ -13,6 +13,9 @@ namespace LifestyleDesign
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document curDoc = uidoc.Document;
 
+            // get command list for form
+            List<string> listCommands = Utils.GetCommandsFromRibbonTab(uiapp, "Lifestyle Design");
+
             try
             {
                 // Launch the bug report WPF window

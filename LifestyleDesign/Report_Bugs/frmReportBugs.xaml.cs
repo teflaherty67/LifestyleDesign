@@ -28,18 +28,20 @@ namespace LifestyleDesign
 
             CommandData = new ObservableCollection<string>(CommandList);
 
-            // Set focus to command name textbox when window loads
-            this.Loaded += (s, e) => CommandNameTextBox.Focus();
+            cmbCommands.ItemsSource = CommandData;
+
+            // Set focus to command name combobox when window loads
+            this.Loaded += (s, e) => cmbCommands.Focus();
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             // Validate input
-            if (string.IsNullOrWhiteSpace(CommandNameTextBox.Text))
+            if (string.IsNullOrWhiteSpace(cmbCommands.Text))
             {
                 System.Windows.MessageBox.Show("Please enter the command name.", "Validation Error",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
-                CommandNameTextBox.Focus();
+                cmbCommands.Focus();
                 return;
             }
 
@@ -72,12 +74,12 @@ namespace LifestyleDesign
 
         private void SendBugReport()
         {
-            string subject = $"Bug Report - {CommandNameTextBox.Text}";
+            string subject = $"Bug Report - {cmbCommands.Text}";
             string body = $@"
 Bug Report Details:
 ==================
 
-Command Name: {CommandNameTextBox.Text}
+Command Name: {cmbCommands.Text}
 Date/Time: {DateTime.Now:yyyy-MM-dd HH:mm:ss}
 User: {Environment.UserName}
 Computer: {Environment.MachineName}

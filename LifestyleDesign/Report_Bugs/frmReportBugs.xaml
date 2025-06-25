@@ -20,10 +20,11 @@
                FontWeight="Bold" 
                Margin="0,0,0,5"/>
 
-        <TextBox Grid.Row="1" 
-                 Name="CommandNameTextBox"
+        <ComboBox Grid.Row="1" 
+                 Name="cmbCommands"
                  Height="25" 
                  Margin="0,0,0,15"
+                 IsReadOnly="False"                 
                  VerticalContentAlignment="Center"/>
 
         <!-- Error Description Section -->

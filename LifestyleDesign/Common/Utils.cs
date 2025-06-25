@@ -2661,8 +2661,6 @@ namespace LifestyleDesign.Common
 
                 return false;
             }
-        }
-
-       
+        }       
     }
 }

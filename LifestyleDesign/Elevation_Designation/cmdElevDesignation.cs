@@ -413,11 +413,10 @@ namespace LifestyleDesign.Elevation_Designation
                     methodBase,
                     Properties.Resources.ReplaceDesignation_32,
                     Properties.Resources.ReplaceDesignation_16,
-                    "Replaces the existing elevaiton designation");
+                    "Replaces the existing elevation designation");
 
                 return myBtnData1.Data;
             }
         }
     }
-
 }

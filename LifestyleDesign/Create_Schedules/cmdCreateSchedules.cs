@@ -848,9 +848,9 @@ namespace LifestyleDesign
             tdSchedSuccess.MainIcon = Icon.TaskDialogIconInformation;
             tdSchedSuccess.Title = "Create Schedules";
             tdSchedSuccess.TitleAutoPrefix = false;
-            tdSchedSuccess.MainContent = "The specified schedules have been created. However, the API is not capable of setting the Design Option or adding calculated paramters. " +
+            tdSchedSuccess.MainContent = "The specified schedules have been created. However, the API is not capable of setting the Design Option or adding calculated parameters. " +
                 "The Design Option for the Exterior Veneer Calculations and the Roof Ventilation Equipment schedules will need to be set manually. Also," +
-                "the calculated parameters, Ratio & Required Free Ventilation Area, for the Roof Ventilation Calculaitons schedule will need to be added.";
+                "the calculated parameters, Ratio & Required Free Ventilation Area, for the Roof Ventilation Calculations schedule will need to be added.";
             tdSchedSuccess.CommonButtons = TaskDialogCommonButtons.Close;
 
             TaskDialogResult tdSchedSuccessRes = tdSchedSuccess.Show();

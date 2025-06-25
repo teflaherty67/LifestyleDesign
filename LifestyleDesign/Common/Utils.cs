@@ -1638,13 +1638,36 @@ namespace LifestyleDesign.Common
         {
             List<string> m_cmdList = new List<string>();
 
-            RibbonPanel targetPanel = uiapp.GetRibbonPanels(tabName).FirstOrDefault(panel => panel.Name == tabName);
-
-            if(targetPanel != null)
+            foreach (RibbonPanel curPanel in uiapp.GetRibbonPanels(tabName))
             {
-                foreach(RibbonItem curItem in targetPanel.GetItems())
+                foreach (RibbonItem curItem in curPanel.GetItems())
                 {
-                    m_cmdList.Add(curItem.Name);
+                    if (curItem is PushButton pushButton)
+                    {
+                        m_cmdList.Add(pushButton.ItemText);
+                    }
+                    else if (curItem is PulldownButton pulldownButton)
+                    {
+                        m_cmdList.Add(pulldownButton.ItemText);
+                        foreach (RibbonItem pulldownItem in pulldownButton.GetItems())
+                        {
+                            if (pulldownItem is PushButton subButton)
+                            {
+                                m_cmdList.Add(subButton.ItemText);
+                            }
+                        }
+                    }
+                    else if (curItem is SplitButton splitButton)
+                    {
+                        m_cmdList.Add(splitButton.ItemText);
+                        foreach (RibbonItem splitButtonItem in splitButton.GetItems())
+                        {
+                            if (splitButtonItem is PushButton subButton)
+                            {
+                                m_cmdList.Add(subButton.ItemText);
+                            }
+                        }
+                    }
                 }
             }
 

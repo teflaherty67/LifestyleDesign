@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,13 @@ namespace LifestyleDesign
     /// </summary>
     public partial class frmReportBugs : Window
     {
-        public frmReportBugs()
+        ObservableCollection<string> CommandData {  get; set; }
+
+        public frmReportBugs(List<string> CommandList)
         {
             InitializeComponent();
+
+            CommandData = new ObservableCollection<string>(CommandList);
 
             // Set focus to command name textbox when window loads
             this.Loaded += (s, e) => CommandNameTextBox.Focus();

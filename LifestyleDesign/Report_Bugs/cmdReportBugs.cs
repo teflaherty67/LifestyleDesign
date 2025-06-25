@@ -19,7 +19,7 @@ namespace LifestyleDesign
             try
             {
                 // Launch the bug report WPF window
-                frmReportBugs curForm = new frmReportBugs();
+                frmReportBugs curForm = new frmReportBugs(listCommands);
                 bool? result = curForm.ShowDialog();
 
                 if (result == true)

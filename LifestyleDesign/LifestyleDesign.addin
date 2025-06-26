@@ -1,23 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RevitAddIns>
-  <AddIn Type="Command">
-    <Text>LifestyleDesign - Command 1</Text>
-    <Description>Some description</Description>
-    <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
-    <FullClassName>LifestyleDesign.cmdStripIt</FullClassName>
-    <ClientId>c0d708e9-a33c-405e-98f6-2e02b23d0a51</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Text>LifestyleDesign - Command 2</Text>
-    <Description>Some description</Description>
-    <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
-    <FullClassName>LifestyleDesign.Command2</FullClassName>
-    <ClientId>f7b003d4-9cfc-4696-b00a-fada833964ee</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
-  </AddIn>
+<RevitAddIns>  
   <AddIn Type="Application">
     <Name>LifestyleDesign</Name>
     <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>

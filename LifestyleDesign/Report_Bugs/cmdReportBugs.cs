@@ -19,13 +19,13 @@ namespace LifestyleDesign
             try
             {
                 // Launch the bug report WPF window
-                frmReportBugs curForm = new frmReportBugs(listCommands);
-                bool? result = curForm.ShowDialog();
-
-                if (result == true)
+                frmReportBugs curForm = new frmReportBugs(listCommands)
                 {
-                    TaskDialog.Show("Success", "Bug report sent successfully!");
-                }
+                    Width = 450,
+                    Height = 400,
+                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
+                    Topmost = true,
+                };
 
                 return Result.Succeeded;
             }

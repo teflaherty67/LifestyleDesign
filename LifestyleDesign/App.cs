@@ -21,7 +21,11 @@ namespace LifestyleDesign
             RibbonPanel panel1 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Mirror Plans");
             RibbonPanel panel2 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Management");
             RibbonPanel panel3 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Project Setup");
-            RibbonPanel panel4 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Support Tools");
+            RibbonPanel panel4 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Selection");
+            RibbonPanel panel5 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Modify");
+            RibbonPanel panel6 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Views");
+            RibbonPanel panel7 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Sheets");
+            RibbonPanel panel8 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Support Tools");
 
             // create button data instances for Panel 1
             PushButtonData btnData1_1 = cmdRevitMirror.GetButtonData();            
@@ -35,10 +39,12 @@ namespace LifestyleDesign
             // create button data instances for Panel 3
             PushButtonData btnData3_1 = cmdElevDesignation.GetButtonData();
             PushButtonData btnData3_2 = cmdCreateSchedules.GetButtonData();
-            PushButtonData btnData3_3 = cmdCreateSheetGroup.GetButtonData();
 
-            // create button data instances for Panel 4
-            PushButtonData btnData4_1 = cmdReportBugs.GetButtonData();
+            // create button data instances for panel 7
+            PushButtonData btnData7_1 = cmdCreateSheetGroup.GetButtonData();
+
+            // create button data instances for Panel 8
+            PushButtonData btnData8_1 = cmdReportBugs.GetButtonData();
 
             // create buttons for panel 1
             PushButton myBtn1_1 = panel1.AddItem(btnData1_1) as PushButton;            
@@ -52,15 +58,13 @@ namespace LifestyleDesign
             // create buttons for panel 3
             PushButton myBtn3_1 = panel3.AddItem(btnData3_1) as PushButton;
             PushButton myBtn3_2 = panel3.AddItem(btnData3_2) as PushButton;
-            PushButton myBtn3_3 = panel3.AddItem(btnData3_3) as PushButton;
 
-            // create buttons for panel 4
-            PushButton myBtn4_1 = panel4.AddItem(btnData4_1) as PushButton;
+            // create buttons for panel 7
+            PushButton myBtn7_1 = panel7.AddItem(btnData7_1) as PushButton;
 
-            // NOTE:
-            // To create a new tool, copy lines 35 and 39 and rename the variables to "btnData3" and "myButton3". 
-            // Change the name of the tool in the arguments of line 
-
+            // create buttons for panel 8
+            PushButton myBtn8_1 = panel8.AddItem(btnData8_1) as PushButton;
+           
             return Result.Succeeded;
         }
 
@@ -69,5 +73,4 @@ namespace LifestyleDesign
             return Result.Succeeded;
         }
     }
-
 }

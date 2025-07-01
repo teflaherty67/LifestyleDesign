@@ -72,6 +72,8 @@
 	  <None Remove="Resources\RevisionJournal_32.png" />
 	  <None Remove="Resources\StripIt_16.png" />
 	  <None Remove="Resources\StripIt_32.png" />
+	  <None Remove="Resources\UpdateVTs_16.png" />
+	  <None Remove="Resources\UpdateVTs_32.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -95,6 +97,8 @@
 	  <EmbeddedResource Include="Resources\RevisionJournal_32.png" />
 	  <EmbeddedResource Include="Resources\StripIt_16.png" />
 	  <EmbeddedResource Include="Resources\StripIt_32.png" />
+	  <EmbeddedResource Include="Resources\UpdateVTs_16.png" />
+	  <EmbeddedResource Include="Resources\UpdateVTs_32.png" />
 	</ItemGroup>
 	
 	<ItemGroup>

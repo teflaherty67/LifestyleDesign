@@ -259,5 +259,25 @@ namespace LifestyleDesign.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] UpdateVTs_16 {
+            get {
+                object obj = ResourceManager.GetObject("UpdateVTs_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] UpdateVTs_32 {
+            get {
+                object obj = ResourceManager.GetObject("UpdateVTs_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -21,44 +21,17 @@ namespace LifestyleDesign
     /// </summary>
     public partial class frmRevisionJournal : Window
     {
-        string folderPath = "";
+        
         string journalFilePath = "";
-        string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs";
-        string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs";
-
+        
         BindingList<clsJournalData> journalDataList = new BindingList<clsJournalData>();
         clsJournalData curEdit;
 
-        public frmRevisionJournal(string filePath)
+        public frmRevisionJournal(string filePath, string folderPath)
         {
             InitializeComponent();
 
-            string[] directory1 = Directory.GetDirectories(searchPath1);
-            string[] directory2 = Directory.GetDirectories(searchPath2);
-
-            // search path 1
-
-            foreach (string dir in directory1)
-            {
-                if (dir.Contains(GlobalVars.JobNumber))
-                    folderPath = dir;
-            }
-
-            // search path 2
-
-            if (folderPath == "")
-            {
-                foreach (string dir in directory2)
-                {
-                    if (dir.Contains(GlobalVars.JobNumber))
-                        folderPath = dir;
-                }
-            }
-
-            if (folderPath == "")
-            {
-                folderPath = searchPath1;
-            }
+            
 
             tbFileNmae.Text = System.IO.Path.GetFileName(filePath);
 

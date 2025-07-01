@@ -13,6 +13,10 @@ namespace LifestyleDesign
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document curDoc = uidoc.Document;
 
+            string folderPath = "";            
+            string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs";
+            string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs";
+
             frmJobNumber curForm1 = new frmJobNumber();
 
             curForm1.Width = 375;
@@ -23,7 +27,36 @@ namespace LifestyleDesign
 
             curForm1.ShowDialog();
 
-            frmRevisionJournal curForm = new frmRevisionJournal(curDoc.PathName);
+            string[] directory1 = Directory.GetDirectories(searchPath1);
+            string[] directory2 = Directory.GetDirectories(searchPath2);
+
+            // search path 1
+
+            foreach (string dir in directory1)
+            {
+                if (dir.Contains(GlobalVars.JobNumber))
+                    folderPath = dir;
+            }
+
+            // search path 2
+
+            if (folderPath == "")
+            {
+                foreach (string dir in directory2)
+                {
+                    if (dir.Contains(GlobalVars.JobNumber))
+                        folderPath = dir;
+                }
+            }
+
+            if (folderPath == "")
+            {
+                // add task dialog to warn user job doesn't exist
+
+                return Result.Failed;
+            }
+
+            frmRevisionJournal curForm = new frmRevisionJournal(curDoc.PathName, folderPath);
 
             curForm.Width = 700;
             curForm.Height = 500;

@@ -74,9 +74,13 @@ namespace LifestyleDesign
                         // start the 1st transaction
                         t.Start("Delete View Templates");
 
+                        // create instance of progress bar
+
                         // delete all view templates that start with a letter or a number
                         foreach (View curVT in curVTs)
                         {
+                            // increment the progress bar
+
                             // get the name of the view template
                             string curName = curVT.Name;
 
@@ -110,6 +114,8 @@ namespace LifestyleDesign
                             }
                         }
 
+                        // close progress bar
+
                         // commit the 1st transaction
                         t.Commit();
 
@@ -130,9 +136,13 @@ namespace LifestyleDesign
                         // start the 2nd transaction
                         t.Start("Transfer View Teamplates");
 
+                        // create instance of progress bar
+
                         // transfer the vew templates from the source document
                         foreach (View sourceTemplate in listViewTemplates)
                         {
+                            // increment progress bar
+
                             // check if template with exact same name already exists
                             View existingTemplate = new FilteredElementCollector(curDoc)
                                 .OfClass(typeof(View))
@@ -150,6 +160,8 @@ namespace LifestyleDesign
                             }
                         }
 
+                        // close progress bar
+
                         t.Commit();
 
                         #endregion                        
@@ -165,14 +177,20 @@ namespace LifestyleDesign
                         // start the 3rd transaction 
                         t.Start("Assign View Teamplates");
 
+                        // create insatnce of progress bar
+
                         foreach (var curMap in mapVTs)
                         {
+                            // increment progress bar
+
                             if (viewsByTemplate.ContainsKey(curMap.OldTemplateName))
                             {
                                 var allViews = viewsByTemplate[curMap.OldTemplateName];
                                 Utils.AssignTemplateToView(allViews, curMap.NewTemplateName, curDoc, ref viewsUpdated);
                             }
                         }
+
+                        // close progress bar
 
                         // commit the 3rd transaction
                         t.Commit();

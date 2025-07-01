@@ -52,6 +52,15 @@ namespace LifestyleDesign
             if (folderPath == "")
             {
                 // add task dialog to warn user job doesn't exist
+                // Show final report
+                TaskDialog tdJobNumber = new TaskDialog("Job Number");
+                tdJobNumber.MainIcon = Icon.TaskDialogIconInformation;
+                tdJobNumber.Title = "Folder Not Found";
+                tdJobNumber.TitleAutoPrefix = false;
+                tdJobNumber.MainContent = $"No job folder found for job number {GlobalVars.JobNumber} in the Job Log. Contact a project manager to verify the job number and try again.";
+                tdJobNumber.CommonButtons = TaskDialogCommonButtons.Close;
+
+                TaskDialogResult tdSchedSuccessRes = tdJobNumber.Show();
 
                 return Result.Failed;
             }

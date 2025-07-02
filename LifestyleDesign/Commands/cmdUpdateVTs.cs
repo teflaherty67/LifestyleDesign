@@ -98,7 +98,7 @@ namespace LifestyleDesign
                                 View curVT = curVTs[i];
 
                                 // update the progress bar
-                                deleteProgressHelper.UpdateProgress(i + 1, $"Deleting {i + 1} of {curVTs.Count} View Templates");
+                                deleteProgressHelper.UpdateProgress(i + 1, "Deleting View Templates");
 
                                 // get the name of the view template
                                 string curName = curVT.Name;
@@ -157,37 +157,58 @@ namespace LifestyleDesign
 
                         #region Transfer View Templates
 
-                        // start the 2nd transaction
-                        t.Start("Transfer View Teamplates");
+                        // initialize progress bar for deletion phase
+                        ProgressBarHelper importProgressHelper = new ProgressBarHelper();
+                        importProgressHelper.ShowProgress(listViewTemplates.Count);
 
-                        // create instance of progress bar
-
-                        // transfer the vew templates from the source document
-                        foreach (View sourceTemplate in listViewTemplates)
+                        try
                         {
-                            // increment progress bar
+                            // start the 2nd transaction
+                            t.Start("Transfer View Teamplates");
 
-                            // check if template with exact same name already exists
-                            View existingTemplate = new FilteredElementCollector(curDoc)
-                                .OfClass(typeof(View))
-                                .Cast<View>()
-                                .FirstOrDefault(v => v.IsTemplate && v.Name.Equals(sourceTemplate.Name));
+                            // transfer the view templates from the source document
+                            for (int i = 0; i < listViewTemplates.Count; i++)
+                            {
+                                // Check for cancellation
+                                if (importProgressHelper.IsCancelled())
+                                {
+                                    importProgressHelper.CloseProgress();
+                                    t.RollBack();
+                                    tGroup.RollBack();
+                                    return Result.Cancelled;
+                                }
 
-                            if (existingTemplate == null)
-                            {
-                                ElementId newTemplateID = Utils.ImportViewTemplates(sourceDoc, sourceTemplate, targetDoc);
-                                templatesImported++; // increment the counter
+                                View sourceTemplate = listViewTemplates[i];
+
+                                // update progress for import phase
+                                importProgressHelper.UpdateProgress(i + 1, "Importing View Templates");
+
+                                // check if template with exact same name already exists
+                                View existingTemplate = new FilteredElementCollector(curDoc)
+                                    .OfClass(typeof(View))
+                                    .Cast<View>()
+                                    .FirstOrDefault(v => v.IsTemplate && v.Name.Equals(sourceTemplate.Name));
+
+                                if (existingTemplate == null)
+                                {
+                                    ElementId newTemplateID = Utils.ImportViewTemplates(sourceDoc, sourceTemplate, targetDoc);
+                                    templatesImported++; // increment the counter
+                                }
+                                else
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Skipping existing template: {sourceTemplate.Name}");
+                                }
                             }
-                            else
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Skipping existing template: {sourceTemplate.Name}");
-                            }
+
+                            t.Commit();
                         }
 
-                        // close progress bar
-
-                        t.Commit();
-
+                        finally
+                        {
+                            // close import progress bar
+                            importProgressHelper.CloseProgress();
+                        }
+                        
                         #endregion                        
 
                         #region Assign View Templates                                               

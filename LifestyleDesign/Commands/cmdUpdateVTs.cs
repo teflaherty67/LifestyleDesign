@@ -208,37 +208,63 @@ namespace LifestyleDesign
                             // close import progress bar
                             importProgressHelper.CloseProgress();
                         }
-                        
-                        #endregion                        
 
-                        #region Assign View Templates                                               
+                        #endregion
 
-                        // get all the new view templates in the project
-                        List<View> newVTs = Utils.GetAllViewTemplates(curDoc);
+                        #region Assign View Templates
 
-                        // get the template map
-                        var mapVTs = Utils.GetViewTemplateMap();
+                        // initialize progress bar for assignment phase
+                        ProgressBarHelper assignProgressHelper = new ProgressBarHelper();
+                        assignProgressHelper.ShowProgress(totalViews);
 
-                        // start the 3rd transaction 
-                        t.Start("Assign View Teamplates");
-
-                        // create insatnce of progress bar
-
-                        foreach (var curMap in mapVTs)
+                        try
                         {
-                            // increment progress bar
+                            // get all the new view templates in the project
+                            List<View> newVTs = Utils.GetAllViewTemplates(curDoc);
 
-                            if (viewsByTemplate.ContainsKey(curMap.OldTemplateName))
+                            // get the template map
+                            var mapVTs = Utils.GetViewTemplateMap();
+
+                            // start the 3rd transaction 
+                            t.Start("Assign View Templates");
+
+                            int viewsProcessed = 0;
+                            foreach (var curMap in mapVTs)
                             {
-                                var allViews = viewsByTemplate[curMap.OldTemplateName];
-                                Utils.AssignTemplateToView(allViews, curMap.NewTemplateName, curDoc, ref viewsUpdated);
+                                if (viewsByTemplate.ContainsKey(curMap.OldTemplateName))
+                                {
+                                    var allViews = viewsByTemplate[curMap.OldTemplateName];
+
+                                    foreach (var view in allViews)
+                                    {
+                                        // Check for cancellation
+                                        if (assignProgressHelper.IsCancelled())
+                                        {
+                                            assignProgressHelper.CloseProgress();
+                                            t.RollBack();
+                                            tGroup.RollBack();
+                                            return Result.Cancelled;
+                                        }
+
+                                        viewsProcessed++;
+
+                                        // update progress for assignment phase
+                                        assignProgressHelper.UpdateProgress(viewsProcessed, "Assigning View Templates");
+                                    }
+
+                                    Utils.AssignTemplateToView(allViews, curMap.NewTemplateName, curDoc, ref viewsUpdated);
+                                }
                             }
+
+                            // commit the 3rd transaction
+                            t.Commit();
                         }
 
-                        // close progress bar
-
-                        // commit the 3rd transaction
-                        t.Commit();
+                        finally
+                        {
+                            // close assignment progress bar
+                            assignProgressHelper.CloseProgress();
+                        }
 
                         #endregion
 

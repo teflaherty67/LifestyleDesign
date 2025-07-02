@@ -71,53 +71,77 @@ namespace LifestyleDesign
 
                         #region Delete View Templates
 
-                        // start the 1st transaction
-                        t.Start("Delete View Templates");
+                        // initialize progress bar for deletion phase
+                        ProgressBarHelper deleteProgressHelper = new ProgressBarHelper();
+                        deleteProgressHelper.ShowProgress(curVTs.Count);
 
-                        // create instance of progress bar
-
-                        // delete all view templates that start with a letter or a number
-                        foreach (View curVT in curVTs)
+                        try
                         {
-                            // increment the progress bar
+                            // start the 1st transaction
+                            t.Start("Delete View Templates");
 
-                            // get the name of the view template
-                            string curName = curVT.Name;
-
-                            // check view template name for deletion criteria
-                            if (!string.IsNullOrEmpty(curName))
+                            // create instance of progress bar
+                            for (int i = 0; i < curVTs.Count; i++)
                             {
-                                // check if first character is letter
-                                bool isLetter = Char.IsLetter(curName[0]);
-
-                                // check if starts with 01, 02, 03, 04, 05, 06, or 07                    
-                                bool isTargetNumber = curName.StartsWith("01") ||
-                                                      curName.StartsWith("02") ||
-                                                      curName.StartsWith("03") ||
-                                                      curName.StartsWith("04") ||
-                                                      curName.StartsWith("05") ||
-                                                      curName.StartsWith("06") ||
-                                                      curName.StartsWith("07");
-
-                                // if yes, delete it
-                                if (isLetter == true || isTargetNumber == true)
+                                // check for user cancellation
+                                if (deleteProgressHelper.IsCancelled())
                                 {
-                                    try
+                                    // close progress bar
+                                    deleteProgressHelper.CloseProgress();
+
+                                    // rollback the transaction
+                                    t.RollBack();
+                                    tGroup.RollBack();
+                                    return Result.Cancelled;
+                                }
+
+                                View curVT = curVTs[i];
+
+                                // update the progress bar
+                                deleteProgressHelper.UpdateProgress(i + 1, $"Deleting {i + 1} of {curVTs.Count} View Templates");
+
+                                // get the name of the view template
+                                string curName = curVT.Name;
+
+                                // check view template name for deletion criteria
+                                if (!string.IsNullOrEmpty(curName))
+                                {
+                                    // check if first character is letter
+                                    bool isLetter = Char.IsLetter(curName[0]);
+
+                                    // check if starts with 01, 02, 03, 04, 05, 06, or 07                    
+                                    bool isTargetNumber = curName.StartsWith("01") ||
+                                                          curName.StartsWith("02") ||
+                                                          curName.StartsWith("03") ||
+                                                          curName.StartsWith("04") ||
+                                                          curName.StartsWith("05") ||
+                                                          curName.StartsWith("06") ||
+                                                          curName.StartsWith("07");
+
+                                    // if yes, delete it
+                                    if (isLetter == true || isTargetNumber == true)
                                     {
-                                        curDoc.Delete(curVT.Id);
-                                        templatesDeleted++; // increment the counter
-                                    }
-                                    catch (Exception)
-                                    {
+                                        try
+                                        {
+                                            curDoc.Delete(curVT.Id);
+                                            templatesDeleted++; // increment the counter
+                                        }
+                                        catch (Exception)
+                                        {
+                                        }
                                     }
                                 }
                             }
+
+                            // commit the 1st transaction
+                            t.Commit();
                         }
 
-                        // close progress bar
-
-                        // commit the 1st transaction
-                        t.Commit();
+                        finally
+                        {
+                            // close the progress bar for deletion phase
+                            deleteProgressHelper.CloseProgress();
+                        }
 
                         #endregion
 

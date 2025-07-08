@@ -22,6 +22,9 @@ namespace LifestyleDesign.Flip_Plans
             List<ViewSheet> lrSheets = new List<ViewSheet>();
             List<string> sheetNum = new List<string>();
 
+            // dictionary to track which sheets have left/right elevations
+            Dictionary<ElementId, List<string>> sheetElevations = new Dictionary<ElementId, List<string>>();
+
             foreach (Viewport vPort in vpCollector)
             {
                 ViewSheet curSheet = curDoc.GetElement(vPort.SheetId) as ViewSheet;
@@ -33,10 +36,44 @@ namespace LifestyleDesign.Flip_Plans
                 if (sName.Contains("Exterior Elevations"))
                 {
                     if (vName.Contains("Left") || vName.Contains("Right"))
+                    {
                         lrSheets.Add(curSheet);
+
+                        // Track elevations per sheet
+                        if (!sheetElevations.ContainsKey(curSheet.Id))
+                        {
+                            sheetElevations[curSheet.Id] = new List<string>();
+                        }
+
+                        if (vName.Contains("Left"))
+                            sheetElevations[curSheet.Id].Add("Left");
+                        if (vName.Contains("Right"))
+                            sheetElevations[curSheet.Id].Add("Right");
+                    }
                 }
             }
 
+            // Check for sheets with both left and right elevations
+            bool hasSheetswithBothElevations = false;
+            foreach (var kvp in sheetElevations)
+            {
+                if (kvp.Value.Contains("Left") && kvp.Value.Contains("Right"))
+                {
+                    hasSheetswithBothElevations = true;
+                    break;
+                }
+            }
+
+            // Remove duplicate sheets from lrSheets
+            lrSheets = lrSheets.GroupBy(s => s.Id).Select(g => g.First()).ToList();
+
+            // If sheets with both elevations are found OR no sheets to process, skip the form
+            if (hasSheetswithBothElevations || lrSheets.Count == 0)
+            {
+                return Result.Succeeded;
+            }
+
+            // launch the form if there are sheets to swap
             frmElevSheetSwap curForm = new frmElevSheetSwap(lrSheets)
             {
                 Width = 375,

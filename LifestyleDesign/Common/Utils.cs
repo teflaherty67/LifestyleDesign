@@ -2368,10 +2368,12 @@ namespace LifestyleDesign.Common
 
         public static List<View> GetAllNonTemplateViews(Document curDoc)
         {
-            FilteredElementCollector m_colviews = new FilteredElementCollector(curDoc);
-            m_colviews.OfCategory(BuiltInCategory.OST_Views);
+            FilteredElementCollector m_colviews = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_Views);
 
             List<View> m_returnViews = new List<View>();
+
+            // loop through views and check if not a template
             foreach (View curView in m_colviews.ToElements())
             {
                 m_returnViews.Add(curView);
@@ -2451,10 +2453,12 @@ namespace LifestyleDesign.Common
 
         internal static List<View> GetAllViews(Document curDoc)
         {
-            FilteredElementCollector m_colviews = new FilteredElementCollector(curDoc);
-            m_colviews.OfCategory(BuiltInCategory.OST_Views);
+            FilteredElementCollector m_colviews = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_Views);
 
             List<View> m_views = new List<View>();
+
+            // loop through views and add to list
             foreach (View x in m_colviews.ToElements())
             {
                 m_views.Add(x);

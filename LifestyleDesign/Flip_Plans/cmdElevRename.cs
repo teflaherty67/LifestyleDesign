@@ -80,7 +80,7 @@ namespace LifestyleDesign
                 }
 
                 // alert the user
-                string msgText = "Renamed " + counter.ToString() + " views.";
+                string msgText = "Renamed " + counter.ToString() + " elevation views.";
                 string msgTitle = "Complete";
                 Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OK;
 

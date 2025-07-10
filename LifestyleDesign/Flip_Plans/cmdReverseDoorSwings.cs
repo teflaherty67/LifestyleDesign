@@ -82,7 +82,7 @@ namespace LifestyleDesign
 
                     t.Commit();
 
-                    string msgText2 = "Reversed door swings.";
+                    string msgText2 = "Door swings reversed.";
                     string msgTitle2 = "Complete";
                     Forms.MessageBoxButton msgButtons2 = Forms.MessageBoxButton.OK;
 

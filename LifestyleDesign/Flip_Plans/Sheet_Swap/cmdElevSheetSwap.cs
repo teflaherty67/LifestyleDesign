@@ -60,15 +60,18 @@ namespace LifestyleDesign.Flip_Plans
                 string numRight1 = Utils.GetStringBetweenCharacters(curRightNum1, curRightNum1[0].ToString(),
                     curRightNum1[curRightNum1.Length - 1].ToString());
 
+                string numLeft2 = "";
+                string numRight2 = "";
+
                 if (curForm.GetCheckBox1() == true)
                 {
                     string curLeftNum2 = curForm.GetComboBoxLeft2Item();
                     string curRightNum2 = curForm.GetComboBoxRight2Item();
 
-                    string numLeft2 = Utils.GetStringBetweenCharacters(curLeftNum2, curLeftNum2[0].ToString(),
+                    numLeft2 = Utils.GetStringBetweenCharacters(curLeftNum2, curLeftNum2[0].ToString(),
                    curLeftNum2[curLeftNum2.Length - 1].ToString());
 
-                    string numRight2 = Utils.GetStringBetweenCharacters(curRightNum2, curRightNum2[0].ToString(),
+                    numRight2 = Utils.GetStringBetweenCharacters(curRightNum2, curRightNum2[0].ToString(),
                         curRightNum2[curRightNum2.Length - 1].ToString());
                 }
 
@@ -82,22 +85,42 @@ namespace LifestyleDesign.Flip_Plans
                 {
                     t.Start("Reorder Elevation Sheets");
 
-                    List<ViewSheet> matchingLeftSheets = Utils.GetSheetsByNumber(curDoc, numLeft1);
-                    List<ViewSheet> matchingRightSheets = Utils.GetSheetsByNumber(curDoc, numRight1);
+                    // swap logic for single elevation sheets & first pair of split elevation sheets
+                    List<ViewSheet> matchingLeft1Sheets = Utils.GetSheetsByNumber(curDoc, numLeft1);
+                    List<ViewSheet> matchingRight1Sheets = Utils.GetSheetsByNumber(curDoc, numRight1);              
 
-                    foreach (ViewSheet sheet in matchingLeftSheets)
+                    foreach (ViewSheet sheet in matchingLeft1Sheets)
                     {
                         sheet.SheetNumber = sheet.SheetNumber.Replace(numLeft1, numRight1 + "zz");
                     }
 
-                    foreach (ViewSheet sheet in matchingRightSheets)
+                    foreach (ViewSheet sheet in matchingRight1Sheets)
                     {
                         sheet.SheetNumber = sheet.SheetNumber.Replace(numRight1, numLeft1);
                     }
 
-                    foreach (ViewSheet sheet in matchingLeftSheets)
+                    foreach (ViewSheet sheet in matchingLeft1Sheets)
                     {
                         sheet.SheetNumber = sheet.SheetNumber.Replace(numRight1 + "zz", numRight1);
+                    }
+
+                    // swap logic for second pair of split elevation sheets
+                    List<ViewSheet> matchingLeft2Sheets = Utils.GetSheetsByNumber(curDoc, numLeft2);
+                    List<ViewSheet> matchingRight2Sheets = Utils.GetSheetsByNumber(curDoc, numRight2);
+
+                    foreach (ViewSheet sheet in matchingLeft2Sheets)
+                    {
+                        sheet.SheetNumber = sheet.SheetNumber.Replace(numLeft2, numRight2 + "zz");
+                    }
+
+                    foreach (ViewSheet sheet in matchingRight2Sheets)
+                    {
+                        sheet.SheetNumber = sheet.SheetNumber.Replace(numRight2, numLeft2);
+                    }
+
+                    foreach (ViewSheet sheet in matchingLeft2Sheets)
+                    {
+                        sheet.SheetNumber = sheet.SheetNumber.Replace(numRight2 + "zz", numRight2);
                     }
 
                     t.Commit();

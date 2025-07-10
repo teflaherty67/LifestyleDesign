@@ -257,6 +257,10 @@ namespace LifestyleDesign.Elevation_Designation
 
                         #endregion
 
+                        // reorder the code so the roof ventilation is first
+                        // add code for elevation specific door & window schedules
+                        // move cover sheet code to be last
+
                         // set the cover for newElev as the active view
                         ViewSheet newCover;
                         newCover = Utils.GetSheetByElevationAndNameContains(curDoc, newElev, "Cover");

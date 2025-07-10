@@ -104,24 +104,24 @@ namespace LifestyleDesign.Flip_Plans
                         sheet.SheetNumber = sheet.SheetNumber.Replace(numRight1 + "zz", numRight1);
                     }
 
-                    // swap logic for second pair of split elevation sheets
-                    List<ViewSheet> matchingLeft2Sheets = Utils.GetSheetsByNumber(curDoc, numLeft2);
-                    List<ViewSheet> matchingRight2Sheets = Utils.GetSheetsByNumber(curDoc, numRight2);
-
-                    foreach (ViewSheet sheet in matchingLeft2Sheets)
+                    if (curForm.GetCheckBox1() == true && numLeft2 != "" && numRight2 != "")
                     {
-                        sheet.SheetNumber = sheet.SheetNumber.Replace(numLeft2, numRight2 + "zz");
-                    }
-
-                    foreach (ViewSheet sheet in matchingRight2Sheets)
-                    {
-                        sheet.SheetNumber = sheet.SheetNumber.Replace(numRight2, numLeft2);
-                    }
-
-                    foreach (ViewSheet sheet in matchingLeft2Sheets)
-                    {
-                        sheet.SheetNumber = sheet.SheetNumber.Replace(numRight2 + "zz", numRight2);
-                    }
+                        // swap logic for second pair of split elevation sheets
+                        List<ViewSheet> matchingLeft2Sheets = Utils.GetSheetsByNumber(curDoc, numLeft2);
+                        List<ViewSheet> matchingRight2Sheets = Utils.GetSheetsByNumber(curDoc, numRight2);
+                        foreach (ViewSheet sheet in matchingLeft2Sheets)
+                        {
+                            sheet.SheetNumber = sheet.SheetNumber.Replace(numLeft2, numRight2 + "zz");
+                        }
+                        foreach (ViewSheet sheet in matchingRight2Sheets)
+                        {
+                            sheet.SheetNumber = sheet.SheetNumber.Replace(numRight2, numLeft2);
+                        }
+                        foreach (ViewSheet sheet in matchingLeft2Sheets)
+                        {
+                            sheet.SheetNumber = sheet.SheetNumber.Replace(numRight2 + "zz", numRight2);
+                        }
+                    }                   
 
                     t.Commit();
                     pB.Show();

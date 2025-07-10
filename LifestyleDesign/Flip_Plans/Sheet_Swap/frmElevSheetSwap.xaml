@@ -32,7 +32,7 @@
             <TextBlock x:Name="tbkRight2" Grid.Row="5" Text="Second Right Elevation Sheet:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" IsEnabled="False"/>
             <ComboBox x:Name="cbxRight2" Grid.Row="5" Grid.Column="1"/>
             <Button x:Name="btnOK" Grid.Row="8" Content="OK" Width="90" Height="25" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnOK_Click"/>
-            <Button x:Name="btnCancel" Grid.Row="8" Grid.Column="1" Width="90" Height="25" Content="Cancel" HorizontalAlignment="Left" Click="btnCancel_Click"/>
+            <Button x:Name="btnSkip" Grid.Row="8" Grid.Column="1" Width="90" Height="25" Content="Skip" HorizontalAlignment="Left" Click="btnSkip_Click"/>
         </Grid>
     </Border>
 </Window>

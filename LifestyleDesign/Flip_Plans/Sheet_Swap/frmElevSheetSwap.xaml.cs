@@ -85,8 +85,9 @@ namespace LifestyleDesign
             this.Close();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void btnSkip_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false; // Indicates skip
             this.Close();
         }
     }

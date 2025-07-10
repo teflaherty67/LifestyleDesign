@@ -49,6 +49,16 @@ namespace LifestyleDesign
             cmdShakeAreaBoundary com_4 = new cmdShakeAreaBoundary();
             com_4.Execute(commandData, ref message, elements);
 
+            // Show final report
+            TaskDialog tdPlanFlipped = new TaskDialog("Complete");
+            tdPlanFlipped.MainIcon = Icon.TaskDialogIconInformation;
+            tdPlanFlipped.Title = "Flip Plan";
+            tdPlanFlipped.TitleAutoPrefix = false;
+            tdPlanFlipped.MainContent = "The plan was successfully flipped.";
+            tdPlanFlipped.CommonButtons = TaskDialogCommonButtons.Close;
+
+            TaskDialogResult tdSchedSuccessRes = tdPlanFlipped.Show();
+
             return Result.Succeeded;
         }
         internal static PushButtonData GetButtonData()

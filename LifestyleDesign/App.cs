@@ -36,6 +36,7 @@ namespace LifestyleDesign
             PushButtonData btnData2_2 = cmdRevisionJournal.GetButtonData();
             PushButtonData btnData2_3 = cmdStripIt.GetButtonData();
             PushButtonData btnData2_4 = cmdUpdateVTs.GetButtonData();
+            PushButtonData btnData2_5 = cmdUpdateRoomTags.GetButtonData();
 
             // create button data instances for Panel 3
             PushButtonData btnData3_1 = cmdElevDesignation.GetButtonData();
@@ -56,6 +57,7 @@ namespace LifestyleDesign
             PushButton myBtn2_2 = panel2.AddItem(btnData2_2) as PushButton;
             PushButton myBtn2_3 = panel2.AddItem(btnData2_3) as PushButton;
             PushButton myBtn2_4 = panel2.AddItem(btnData2_4) as PushButton;
+            PushButton myBtn2_5 = panel2.AddItem(btnData2_5) as PushButton;
 
             // create buttons for panel 3
             PushButton myBtn3_1 = panel3.AddItem(btnData3_1) as PushButton;

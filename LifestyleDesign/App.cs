@@ -1,4 +1,6 @@
+using Autodesk.Revit.DB.Events;
 using FilterTreeControlWPF;
+using LifestyleDesign.Common;
 using LifestyleDesign.Elevation_Designation;
 
 namespace LifestyleDesign
@@ -68,13 +70,28 @@ namespace LifestyleDesign
 
             // create buttons for panel 8
             PushButton myBtn8_1 = panel8.AddItem(btnData8_1) as PushButton;
-           
+
+            app.ControlledApplication.DocumentOpened += OnDocumentOpened;
+
             return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication a)
         {
+            a.ControlledApplication.DocumentOpened -= OnDocumentOpened;
             return Result.Succeeded;
+        }
+
+        private void OnDocumentOpened(object sender, DocumentOpenedEventArgs e)
+        {
+            Document curDoc = e.Document;
+
+            // skip if document is a fmialy document
+            if (curDoc.IsFamilyDocument)
+                return;
+
+            // check all standards
+            AppUtils.CheckAllStandards(curDoc);
         }
     }
 }

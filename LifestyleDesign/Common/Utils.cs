@@ -113,6 +113,77 @@ namespace LifestyleDesign.Common
 
         #endregion
 
+        #region Convert
+
+        internal static double ConvertINToFT(double INDim)
+        {
+            double convert = INDim / 12;
+
+            return convert;
+        }
+
+        #endregion
+
+        #region Elements - Architectural
+
+        //return list of all doors in the current model
+        public static List<FamilyInstance> GetAllDoors(Document curDoc)
+        {
+            //get all doors
+            var returnList = new FilteredElementCollector(curDoc)
+                .OfClass(typeof(FamilyInstance))
+                .OfCategory(BuiltInCategory.OST_Doors)
+                .Cast<FamilyInstance>()
+                .ToList();
+
+            return returnList;
+        }
+
+        internal static List<FamilyInstance> GetAllDoorsInActiveView(Document curDoc)
+        {
+            // get all the doors in the current view
+            var m_returnList = new FilteredElementCollector(curDoc, curDoc.ActiveView.Id)
+                 .OfClass(typeof(FamilyInstance))
+                 .OfCategory(BuiltInCategory.OST_Doors)
+                 .Cast<FamilyInstance>()
+                 .ToList();
+
+            // return the list
+            return m_returnList;
+        }
+
+        //return list of all windows in the current model
+        public static List<FamilyInstance> GetAllWindows(Document curDoc)
+        {
+            //get all windows
+            var returnList = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_Windows)
+                .OfClass(typeof(FamilyInstance))
+                .Cast<FamilyInstance>()
+                .ToList();
+
+            return returnList;
+        }
+
+        internal static List<FamilyInstance> GetWindowsByLevel(Document curDoc, string levelName)
+        {
+            // get all windows
+            List<FamilyInstance> m_allWindows = Utils.GetAllWindows(curDoc);
+
+            // filter list by level name
+            List<FamilyInstance> m_windowsByLevel = m_allWindows
+                .Where(win => win.LevelId != null)
+                .Where(win => {
+                    var level = curDoc.GetElement(win.LevelId) as Level;
+                    return level != null && level.Name == levelName;
+                })
+                .ToList();
+
+            return m_windowsByLevel;
+        }
+
+        #endregion
+
         #region Families
 
         internal static Family LoadFamilyFromLibrary(Document curDoc, String filePath, string familyName)
@@ -263,6 +334,18 @@ namespace LifestyleDesign.Common
             }
 
             return null;
+        }
+
+        internal static List<Level> GetFilteredAndSortedLevels(Document curDoc)
+        {
+            // get all the levels
+            List<Level> m_listLevels = Utils.GetAllLevels(curDoc);
+
+            // filter and sort using ProjectConstants
+            return m_listLevels
+                .Where(level => !ProjectConstants.ExcludedLevelNames.Contains(level.Name))
+                .OrderBy(level => level.Elevation)
+                .ToList();
         }
 
         #endregion
@@ -2586,6 +2669,30 @@ namespace LifestyleDesign.Common
             return returnList;
         }
 
+        public static List<View> GetAllSectionViews(Document curDoc)
+        {
+            //get all ViewSection views
+            FilteredElementCollector m_colViews = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_Views)
+                .OfClass(typeof(ViewSection));
+
+            // create an empty list to hold the views
+            List<View> m_Views = new List<View>();
+
+            // loop through each view & add it to the list
+            foreach (View x in m_colViews)
+            {
+                if (x.IsTemplate == false)
+                {
+                    m_Views.Add(x);
+                }
+            }
+
+            // return the list of views
+            return m_Views;
+        }
+
+
         internal static List<View> GetAllViewsByCategory(Document curDoc, string catName)
         {
             List<View> m_colViews = GetAllViews(curDoc);
@@ -2780,111 +2887,6 @@ namespace LifestyleDesign.Common
             return null;
         }
 
-        #endregion
-
-        internal static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                if (child != null && child is T)
-                    return (T)child;
-                else
-                {
-                    T foundChild = FindVisualChild<T>(child);
-                    if (foundChild != null)
-                        return foundChild;
-                }
-            }
-            return null;
-        }
-
-        internal static bool SaveToLuisFolder(Document doc, string fileName = null)
-        {
-            try
-            {
-                // Target directory
-                string targetDirectory = @"S:\Shared Folders\Lifestyle USA Design\LGI Homes\!Luis";
-
-                // Generate filename if not provided
-                if (string.IsNullOrEmpty(fileName))
-                {
-                    string originalName = Path.GetFileNameWithoutExtension(doc.Title);
-
-                    // Extract plan name and region code (remove lot dimensions and anything after)
-                    // Example: "Torres(R)-CTX(50-5-29'11)" should become "Torres(R)-CTX"
-
-                    // Find the pattern: look for the first hyphen followed by letters, then a parenthesis
-                    // This should identify the region code section
-                    // int regionCodeStart = -1;
-                    for (int i = originalName.Length - 1; i >= 0; i--)
-                    {
-                        if (originalName[i] == '-')
-                        {
-                            // Check if this is followed by letters (region code)
-                            int letterStart = i + 1;
-                            int letterEnd = letterStart;
-                            while (letterEnd < originalName.Length && char.IsLetter(originalName[letterEnd]))
-                            {
-                                letterEnd++;
-                            }
-
-                            if (letterEnd > letterStart && letterEnd < originalName.Length && originalName[letterEnd] == '(')
-                            {
-                                // Found region code pattern, keep everything up to the opening parenthesis after region
-                                originalName = originalName.Substring(0, letterEnd);
-                                break;
-                            }
-                        }
-                    }
-
-                    fileName = $"{originalName}.rvt";
-                }
-
-                // Ensure filename has .rvt extension
-                if (!fileName.EndsWith(".rvt", StringComparison.OrdinalIgnoreCase))
-                {
-                    fileName += ".rvt";
-                }
-
-                string fullPath = Path.Combine(targetDirectory, fileName);
-
-                // Ensure the directory exists
-                if (!Directory.Exists(targetDirectory))
-                {
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
-                // Configure save options
-                SaveAsOptions saveAsOptions = new SaveAsOptions();
-                saveAsOptions.OverwriteExistingFile = true;
-
-                // Perform the Save As operation
-                doc.SaveAs(fullPath, saveAsOptions);
-
-                // Optional: Show success message
-                TaskDialog tdSuccess = new TaskDialog("Save Complete");
-                tdSuccess.MainIcon = Icon.TaskDialogIconWarning;
-                tdSuccess.Title = "Save Complete";
-                tdSuccess.TitleAutoPrefix = false;
-                tdSuccess.MainContent = $"File successfully saved to:\n{fullPath}";
-                tdSuccess.CommonButtons = TaskDialogCommonButtons.Close;
-
-                TaskDialogResult tdSuccessRes = tdSuccess.Show();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // Show error message
-                TaskDialog errorDialog = new TaskDialog("Save Error");
-                errorDialog.MainContent = $"Failed to save file:\n{ex.Message}";
-                errorDialog.Show();
-
-                return false;
-            }
-        }
-
         internal static List<View> GetViewsByViewTemplateName(Document curDoc, string templateName)
         {
             // Find the template by name
@@ -2899,7 +2901,7 @@ namespace LifestyleDesign.Common
                 .ToList();
         }
 
-       public static List<clsViewTemplateMapping> GetViewTemplateMap()
+        public static List<clsViewTemplateMapping> GetViewTemplateMap()
         {
             return new List<clsViewTemplateMapping>
             {
@@ -2934,5 +2936,26 @@ namespace LifestyleDesign.Common
                 }
             }
         }
+
+        #endregion
+
+        internal static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                if (child != null && child is T)
+                    return (T)child;
+                else
+                {
+                    T foundChild = FindVisualChild<T>(child);
+                    if (foundChild != null)
+                        return foundChild;
+                }
+            }
+            return null;
+        }
+
+             
     }
 }

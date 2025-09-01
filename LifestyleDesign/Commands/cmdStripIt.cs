@@ -128,7 +128,7 @@ namespace LifestyleDesign
             }
 
             // 07. save file to Luis' folder
-            Utils.SaveToLuisFolder(curDoc);
+            SaveToLuisFolder(curDoc);
 
             // 08. switch to Manage ribbon tab before running Purge command
             try
@@ -156,6 +156,85 @@ namespace LifestyleDesign
             uiapp.PostCommand(commandId);
 
             return Result.Succeeded;
+        }
+
+        internal static bool SaveToLuisFolder(Document doc, string fileName = null)
+        {
+            try
+            {
+                // Target directory
+                string targetDirectory = @"S:\Shared Folders\Lifestyle USA Design\LGI Homes\!Luis";
+
+                // Generate filename if not provided
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    string originalName = Path.GetFileNameWithoutExtension(doc.Title);
+
+                    // Extract plan name and region code (remove lot dimensions and anything after)
+                    // Example: "Torres(R)-CTX(50-5-29'11)" should become "Torres(R)-CTX"
+
+                    // Find the pattern: look for the first hyphen followed by letters, then a parenthesis
+                    // This should identify the region code section
+                    // int regionCodeStart = -1;
+                    for (int i = originalName.Length - 1; i >= 0; i--)
+                    {
+                        if (originalName[i] == '-')
+                        {
+                            // Check if this is followed by letters (region code)
+                            int letterStart = i + 1;
+                            int letterEnd = letterStart;
+                            while (letterEnd < originalName.Length && char.IsLetter(originalName[letterEnd]))
+                            {
+                                letterEnd++;
+                            }
+
+                            if (letterEnd > letterStart && letterEnd < originalName.Length && originalName[letterEnd] == '(')
+                            {
+                                // Found region code pattern, keep everything up to the opening parenthesis after region
+                                originalName = originalName.Substring(0, letterEnd);
+                                break;
+                            }
+                        }
+                    }
+
+                    fileName = $"{originalName}.rvt";
+                }
+
+                // Ensure filename has .rvt extension
+                if (!fileName.EndsWith(".rvt", StringComparison.OrdinalIgnoreCase))
+                {
+                    fileName += ".rvt";
+                }
+
+                string fullPath = Path.Combine(targetDirectory, fileName);
+
+                // Ensure the directory exists
+                if (!Directory.Exists(targetDirectory))
+                {
+                    Directory.CreateDirectory(targetDirectory);
+                }
+
+                // Configure save options
+                SaveAsOptions saveAsOptions = new SaveAsOptions();
+                saveAsOptions.OverwriteExistingFile = true;
+
+                // Perform the Save As operation
+                doc.SaveAs(fullPath, saveAsOptions);
+
+                // Optional: Show success message
+                Utils.TaskDialogInformation("Save Complete", "Strip It", $"File successfully saved to:\n{fullPath}");               
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Show error message
+                TaskDialog errorDialog = new TaskDialog("Save Error");
+                errorDialog.MainContent = $"Failed to save file:\n{ex.Message}";
+                errorDialog.Show();
+
+                return false;
+            }
         }
 
         internal static PushButtonData GetButtonData()

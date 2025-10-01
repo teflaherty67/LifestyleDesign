@@ -86,8 +86,12 @@ namespace LifestyleDesign
         {
             Document curDoc = e.Document;
 
-            // skip if document is a fmialy document
+            // skip if document is a family document
             if (curDoc.IsFamilyDocument)
+                return;
+
+            // check file is not project Standards
+            if (curDoc.PathName.Contains("Project Standards"))
                 return;
 
             // check all standards

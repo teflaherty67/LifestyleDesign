@@ -64,6 +64,8 @@
 	  <None Remove="Resources\DeleteRevisions_32.png" />
 	  <None Remove="Resources\FlipPlan_16.png" />
 	  <None Remove="Resources\FlipPlan_32.png" />
+	  <None Remove="Resources\LevelManager_16.png" />
+	  <None Remove="Resources\LevelManager_32.png" />
 	  <None Remove="Resources\MirrorProject_16.png" />
 	  <None Remove="Resources\MirrorProject_32.png" />
 	  <None Remove="Resources\ReplaceDesignation_16.png" />
@@ -89,6 +91,8 @@
 	  <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
 	  <EmbeddedResource Include="Resources\FlipPlan_16.png" />
 	  <EmbeddedResource Include="Resources\FlipPlan_32.png" />
+	  <EmbeddedResource Include="Resources\LevelManager_16.png" />
+	  <EmbeddedResource Include="Resources\LevelManager_32.png" />
 	  <EmbeddedResource Include="Resources\MirrorProject_16.png" />
 	  <EmbeddedResource Include="Resources\MirrorProject_32.png" />
 	  <EmbeddedResource Include="Resources\Red_16.png" />

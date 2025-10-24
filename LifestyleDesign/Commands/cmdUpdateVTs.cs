@@ -51,7 +51,7 @@ namespace LifestyleDesign
             int totalViews = allViewsToUpdate.Count;
 
             // set the path to the view template file
-            string templateDoc = "S:\\Shared Folders\\Lifestyle USA Design\\Library 2025\\Template\\View Templates.rvt";
+            string templateDoc = "S:\\Shared Folders\\Lifestyle USA Design\\Library 2025\\Template\\Project Standards.rvt";
 
             // create a variable for the source document
             Document sourceDoc = null;

@@ -20,4 +20,19 @@ namespace LifestyleDesign.Classes
 
         // Other constants that multiple commands might use...
     }
+
+    public static class RevitPaths
+    {
+#if REVIT2025
+
+        public const string SharedParamFile = @"S:\Shared Folders\Lifestyle USA Design\Library 2025\Parameter.txt";
+
+#endif
+
+#if REVIT2026
+
+    public const string SharedParamFile = @"S:\Shared Folders\Lifestyle USA Design\Library 2026\Parameter.txt"
+
+#endif
+    }
 }

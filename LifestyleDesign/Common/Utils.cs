@@ -2980,6 +2980,22 @@ namespace LifestyleDesign.Common
                 }
             }
             return null;
-        }             
+        }
+
+        internal static BitmapImage GetEmbeddedImage(string resourcePath)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
+            {
+                if (stream == null) return null;
+
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = stream;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                return image;
+            }
+        }
     }
 }

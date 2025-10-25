@@ -1,4 +1,5 @@
 using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.UI;
 using FilterTreeControlWPF;
 using LifestyleDesign.Common;
 using LifestyleDesign.Elevation_Designation;
@@ -18,6 +19,8 @@ namespace LifestyleDesign
             {
                 Debug.Print("Tab already exists");
             }
+
+            
 
             // create ribbon panel 
             RibbonPanel panel1 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Mirror Plans");
@@ -46,6 +49,7 @@ namespace LifestyleDesign
 
             // create button data instances for panel 7
             PushButtonData btnData7_1 = cmdCreateSheetGroup.GetButtonData();
+            PulldownButtonData btnPullDn7_2 = new PulldownButtonData("btnPullDn7_2", "Sheet\rTools");
 
             // create button data instances for Panel 8
             PushButtonData btnData8_1 = cmdReportBugs.GetButtonData();
@@ -67,9 +71,14 @@ namespace LifestyleDesign
 
             // create buttons for panel 7
             PushButton myBtn7_1 = panel7.AddItem(btnData7_1) as PushButton;
+            PulldownButton myPulldn7_2 = panel7.AddItem(btnPullDn7_2) as PulldownButton;
 
             // create buttons for panel 8
             PushButton myBtn8_1 = panel8.AddItem(btnData8_1) as PushButton;
+
+            // assign images to pulldown buttons
+            myPulldn7_2.LargeImage = Utils.GetEmbeddedImage("Lifestyle.Resources.Sheets_32.png");
+            myPulldn7_2.Image = Utils.GetEmbeddedImage("Lifestyle.Resources.Sheets_16.png");
 
             app.ControlledApplication.DocumentOpened += OnDocumentOpened;
 

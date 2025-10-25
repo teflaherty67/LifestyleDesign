@@ -263,6 +263,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Sheets_16 {
+            get {
+                object obj = ResourceManager.GetObject("Sheets_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Sheets_32 {
+            get {
+                object obj = ResourceManager.GetObject("Sheets_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] StripIt_16 {
             get {
                 object obj = ResourceManager.GetObject("StripIt_16", resourceCulture);
@@ -296,6 +316,26 @@ namespace LifestyleDesign.Properties {
         internal static byte[] UpdateRoomTags_32 {
             get {
                 object obj = ResourceManager.GetObject("UpdateRoomTags_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] UpdateSchedules_16 {
+            get {
+                object obj = ResourceManager.GetObject("UpdateSchedules_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] UpdateSchedules_32 {
+            get {
+                object obj = ResourceManager.GetObject("UpdateSchedules_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }

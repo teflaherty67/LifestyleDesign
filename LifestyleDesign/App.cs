@@ -50,6 +50,7 @@ namespace LifestyleDesign
             // create button data instances for panel 7
             PushButtonData btnData7_1 = cmdCreateSheetGroup.GetButtonData();
             PulldownButtonData btnPullDn7_2 = new PulldownButtonData("btnPullDn7_2", "Sheet\rTools");
+            PushButtonData btnData7_2a = cmdSelectSheets.GetButtonData();
 
             // create button data instances for Panel 8
             PushButtonData btnData8_1 = cmdReportBugs.GetButtonData();
@@ -72,13 +73,14 @@ namespace LifestyleDesign
             // create buttons for panel 7
             PushButton myBtn7_1 = panel7.AddItem(btnData7_1) as PushButton;
             PulldownButton myPulldn7_2 = panel7.AddItem(btnPullDn7_2) as PulldownButton;
+            PushButton myBtn7_2a = myPulldn7_2.AddPushButton(btnData7_2a) as PushButton;
 
             // create buttons for panel 8
             PushButton myBtn8_1 = panel8.AddItem(btnData8_1) as PushButton;
 
             // assign images to pulldown buttons
-            myPulldn7_2.LargeImage = Utils.GetEmbeddedImage("Lifestyle.Resources.Sheets_32.png");
-            myPulldn7_2.Image = Utils.GetEmbeddedImage("Lifestyle.Resources.Sheets_16.png");
+            myPulldn7_2.LargeImage = Utils.GetEmbeddedImage("LifestyleDesign.Resources.Sheets_32.png");
+            myPulldn7_2.Image = Utils.GetEmbeddedImage("LifestyleDesign.Resources.Sheets_16.png");
 
             app.ControlledApplication.DocumentOpened += OnDocumentOpened;
 

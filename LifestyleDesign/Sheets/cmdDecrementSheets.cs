@@ -190,8 +190,8 @@ namespace LifestyleDesign
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
-            string buttonInternalName = "btnCommand2";
-            string buttonTitle = "Button 2";
+            string buttonInternalName = "btnCmd7_2c";
+            string buttonTitle = "Decrement Selected\rSheet Numbers";
 
             clsButtonData myButtonData = new clsButtonData(
                 buttonInternalName,

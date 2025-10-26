@@ -54,6 +54,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Convert_Spec_Level\**" />
+	  <EmbeddedResource Remove="Convert_Spec_Level\**" />
+	  <None Remove="Convert_Spec_Level\**" />
+	  <Page Remove="Convert_Spec_Level\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\BugReport_16.png" />
 	  <None Remove="Resources\BugReport_32.png" />
 	  <None Remove="Resources\CreateSchedules_16.png" />
@@ -161,7 +168,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Folder Include="Convert_Spec_Level\" />
 	  <Folder Include="Update_Schedules\" />
 	</ItemGroup>
   

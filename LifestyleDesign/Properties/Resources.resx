@@ -136,6 +136,12 @@
   <data name="CreateSheetGroup_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreateSheetGroup_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="DecrementSheets_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DecrementSheets_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DecrementSheets_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DecrementSheets_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="DeleteRevisions_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DeleteRevisions_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -147,6 +153,12 @@
   </data>
   <data name="FlipPlan_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FlipPlan_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IncrementSheets_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IncrementSheets_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IncrementSheets_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IncrementSheets_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="LevelManager_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LevelManager_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -177,6 +189,12 @@
   </data>
   <data name="RevisionJournal_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RevisionJournal_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SelectSheets_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SelectSheets_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SelectSheets_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SelectSheets_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Sheets_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Sheets_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

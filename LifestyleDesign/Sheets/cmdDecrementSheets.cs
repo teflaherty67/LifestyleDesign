@@ -197,8 +197,8 @@ namespace LifestyleDesign
                 buttonInternalName,
                 buttonTitle,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
-                Properties.Resources.Red_32,
-                Properties.Resources.Red_16,
+                Properties.Resources.DecrementSheets_32,
+                Properties.Resources.DecrementSheets_16,
                 "This is a tooltip for Button 2");
 
             return myButtonData.Data;

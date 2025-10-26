@@ -123,6 +123,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] DecrementSheets_16 {
+            get {
+                object obj = ResourceManager.GetObject("DecrementSheets_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] DecrementSheets_32 {
+            get {
+                object obj = ResourceManager.GetObject("DecrementSheets_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] DeleteRevisions_16 {
             get {
                 object obj = ResourceManager.GetObject("DeleteRevisions_16", resourceCulture);
@@ -156,6 +176,26 @@ namespace LifestyleDesign.Properties {
         internal static byte[] FlipPlan_32 {
             get {
                 object obj = ResourceManager.GetObject("FlipPlan_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] IncrementSheets_16 {
+            get {
+                object obj = ResourceManager.GetObject("IncrementSheets_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] IncrementSheets_32 {
+            get {
+                object obj = ResourceManager.GetObject("IncrementSheets_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -256,6 +296,26 @@ namespace LifestyleDesign.Properties {
         internal static byte[] RevisionJournal_32 {
             get {
                 object obj = ResourceManager.GetObject("RevisionJournal_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SelectSheets_16 {
+            get {
+                object obj = ResourceManager.GetObject("SelectSheets_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SelectSheets_32 {
+            get {
+                object obj = ResourceManager.GetObject("SelectSheets_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }

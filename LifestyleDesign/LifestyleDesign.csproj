@@ -79,10 +79,14 @@
 	  <None Remove="Resources\ReplaceDesignation_32.png" />
 	  <None Remove="Resources\RevisionJournal_16.png" />
 	  <None Remove="Resources\RevisionJournal_32.png" />
+	  <None Remove="Resources\Sheets_16.png" />
+	  <None Remove="Resources\Sheets_32.png" />
 	  <None Remove="Resources\StripIt_16.png" />
 	  <None Remove="Resources\StripIt_32.png" />
 	  <None Remove="Resources\UpdateRoomTags_16.png" />
 	  <None Remove="Resources\UpdateRoomTags_32.png" />
+	  <None Remove="Resources\UpdateSchedules_16.png" />
+	  <None Remove="Resources\UpdateSchedules_32.png" />
 	  <None Remove="Resources\UpdateVTs_16.png" />
 	  <None Remove="Resources\UpdateVTs_32.png" />
 	</ItemGroup>
@@ -108,10 +112,14 @@
 	  <EmbeddedResource Include="Resources\ReplaceDesignation_32.png" />
 	  <EmbeddedResource Include="Resources\RevisionJournal_16.png" />
 	  <EmbeddedResource Include="Resources\RevisionJournal_32.png" />
+	  <EmbeddedResource Include="Resources\Sheets_16.png" />
+	  <EmbeddedResource Include="Resources\Sheets_32.png" />
 	  <EmbeddedResource Include="Resources\StripIt_16.png" />
 	  <EmbeddedResource Include="Resources\StripIt_32.png" />
 	  <EmbeddedResource Include="Resources\UpdateRoomTags_16.png" />
 	  <EmbeddedResource Include="Resources\UpdateRoomTags_32.png" />
+	  <EmbeddedResource Include="Resources\UpdateSchedules_16.png" />
+	  <EmbeddedResource Include="Resources\UpdateSchedules_32.png" />
 	  <EmbeddedResource Include="Resources\UpdateVTs_16.png" />
 	  <EmbeddedResource Include="Resources\UpdateVTs_32.png" />
 	</ItemGroup>

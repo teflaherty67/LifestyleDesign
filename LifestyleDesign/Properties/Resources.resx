@@ -178,6 +178,12 @@
   <data name="RevisionJournal_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RevisionJournal_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Sheets_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sheets_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Sheets_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sheets_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="StripIt_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StripIt_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -189,6 +195,12 @@
   </data>
   <data name="UpdateRoomTags_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UpdateRoomTags_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UpdateSchedules_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UpdateSchedules_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UpdateSchedules_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UpdateSchedules_32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="UpdateVTs_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UpdateVTs_16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

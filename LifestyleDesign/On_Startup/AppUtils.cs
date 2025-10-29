@@ -268,11 +268,10 @@ namespace LifestyleDesign.Common
 
         private static void UncatagorizedViewsWarning(Document curDoc)
         {
-            var views = new FilteredElementCollector(doc)
+            var views = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(View))
                 .Cast<View>()
-                .Where(v => !v.IsTemplate && !v.ViewType.Equals(ViewType.ProjectBrowser))
-                .Where(v => !v.IsPlacedOnSheet())
+                .Where(v => !v.IsTemplate && !v.ViewType.Equals(ViewType.ProjectBrowser))                
                 .ToList();
 
             if (views.Any())
@@ -290,5 +289,19 @@ namespace LifestyleDesign.Common
             }
         }
 
+        private static bool IsUncategorized(View view)
+        {
+            foreach (Parameter param in view.Parameters)
+            {
+                if (param.Definition.Name == "Category" &&
+                    param.StorageType == StorageType.String &&
+                    string.IsNullOrWhiteSpace(param.AsValueString()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

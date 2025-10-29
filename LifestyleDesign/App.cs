@@ -83,8 +83,8 @@ namespace LifestyleDesign
             PushButton myBtn8_1 = panel8.AddItem(btnData8_1) as PushButton;
 
             // assign images to pulldown buttons
-            myPulldn7_2.LargeImage = Utils.GetEmbeddedImage("LifestyleDesign.Resources.Sheets_32.png");
-            myPulldn7_2.Image = Utils.GetEmbeddedImage("LifestyleDesign.Resources.Sheets_16.png");
+            myPulldn7_2.LargeImage = Utils.GetEmbeddedImage("LifestyleDesign.Resources.SheetTools_32.png");
+            myPulldn7_2.Image = Utils.GetEmbeddedImage("LifestyleDesign.Resources.SheetTools_16.png");
 
             app.ControlledApplication.DocumentOpened += OnDocumentOpened;
 

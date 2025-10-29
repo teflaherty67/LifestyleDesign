@@ -87,6 +87,8 @@
 	  <None Remove="Resources\SelectSheets_32.png" />
 	  <None Remove="Resources\Sheets_16.png" />
 	  <None Remove="Resources\Sheets_32.png" />
+	  <None Remove="Resources\SheetTools_16.png" />
+	  <None Remove="Resources\SheetTools_32.png" />
 	  <None Remove="Resources\StripIt_16.png" />
 	  <None Remove="Resources\StripIt_32.png" />
 	  <None Remove="Resources\UpdateRoomTags_16.png" />
@@ -126,6 +128,8 @@
 	  <EmbeddedResource Include="Resources\SelectSheets_32.png" />
 	  <EmbeddedResource Include="Resources\Sheets_16.png" />
 	  <EmbeddedResource Include="Resources\Sheets_32.png" />
+	  <EmbeddedResource Include="Resources\SheetTools_16.png" />
+	  <EmbeddedResource Include="Resources\SheetTools_32.png" />
 	  <EmbeddedResource Include="Resources\StripIt_16.png" />
 	  <EmbeddedResource Include="Resources\StripIt_32.png" />
 	  <EmbeddedResource Include="Resources\UpdateRoomTags_16.png" />

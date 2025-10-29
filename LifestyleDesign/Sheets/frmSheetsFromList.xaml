@@ -105,12 +105,12 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="checkall_b" Height="25"
                         Grid.Column="0" Grid.Row="0"
-                        Content="Check" Click="check_all"
+                        Content="Check All" Click="check_all"
                         VerticalAlignment="Center"
                         Margin="0,0,3,0"/>
                 <Button x:Name="uncheckall_b" Height="25"
                         Grid.Column="1" Grid.Row="0"
-                        Content="Uncheck" Click="uncheck_all"
+                        Content="Uncheck All" Click="uncheck_all"
                         VerticalAlignment="Center"
                         Margin="3,0,3,0"/>
                 <Button x:Name="help_b" Height="25"

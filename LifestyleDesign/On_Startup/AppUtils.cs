@@ -1,15 +1,19 @@
-﻿using System;
-using System.IO;
+﻿using Autodesk.Revit.DB;
+using LifestyleDesign.On_Startup;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.Revit.DB;
+using System.Windows.Controls;
 
 namespace LifestyleDesign.Common
 {
     public static class AppUtils
     {
+       
+
         public static void CheckAllStandards(Document curDoc)
         {
             // Create a dictionary to organize violations by category
@@ -250,5 +254,41 @@ namespace LifestyleDesign.Common
 
             return violations;
         }
+
+        public static void OnDocumentSaving(Document curDoc)
+        {
+            // launch the form
+            UncatagorizedViewsWarning(curDoc);
+        }        
+
+        public static void OnDocumentClosing(Document curDoc)
+        {
+            UncatagorizedViewsWarning(curDoc);
+        }
+
+        private static void UncatagorizedViewsWarning(Document curDoc)
+        {
+            var views = new FilteredElementCollector(doc)
+                .OfClass(typeof(View))
+                .Cast<View>()
+                .Where(v => !v.IsTemplate && !v.ViewType.Equals(ViewType.ProjectBrowser))
+                .Where(v => !v.IsPlacedOnSheet())
+                .ToList();
+
+            if (views.Any())
+            {
+                TaskDialog td = new TaskDialog("Uncategorized Views Found");
+                td.MainInstruction = $"{views.Count} view(s) are not placed on a sheet.";
+                td.MainContent = "Do you want to review or delete these views before saving/closing?";
+                td.CommonButtons = TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No;
+                var result = td.Show();
+
+                if (result == TaskDialogResult.Yes)
+                {
+                    // Optional: Show a custom form or log the views
+                }
+            }
+        }
+
     }
 }

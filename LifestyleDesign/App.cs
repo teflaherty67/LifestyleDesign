@@ -18,9 +18,7 @@ namespace LifestyleDesign
             catch (Exception)
             {
                 Debug.Print("Tab already exists");
-            }
-
-            
+            }            
 
             // create ribbon panel 
             RibbonPanel panel1 = Common.Utils.CreateRibbonPanel(app, "Lifestyle Design", "Mirror Plans");
@@ -99,18 +97,30 @@ namespace LifestyleDesign
 
         private void OnDocumentOpened(object sender, DocumentOpenedEventArgs e)
         {
-            Document curDoc = e.Document;
+            // null check
+            if (e.Document == null) return;
 
-            // skip if document is a family document
-            if (curDoc.IsFamilyDocument)
-                return;
+            Document curDoc = e.Document;           
 
-            // check file is not project Standards
-            if (curDoc.PathName.Contains("Project Standards"))
-                return;
+            // check if document should be skipped (Family Document, Project Standards)
+            if (ShouldSkipDocument(curDoc)) return;
 
             // check all standards
             AppUtils.CheckAllStandards(curDoc);
+        }
+
+        private void OnDocumentSaving(object sender, DocumentSavingEventArgs e)
+        {
+            if (e.Document == null) return;
+
+            Document curDoc = e.Document;
+
+            AppUtils.OnDocumentSaving(curDoc);
+        }
+
+        private bool ShouldSkipDocument(Document doc)
+        {
+            return doc.IsFamilyDocument || doc.PathName.Contains("Project Standards");
         }
     }
 }

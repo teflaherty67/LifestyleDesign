@@ -17,11 +17,14 @@ namespace LifestyleDesign.On_Startup
     /// <summary>
     /// Interaction logic for frmUncatagorizedViewsWarning.xaml
     /// </summary>
-    public partial class frmUncatagorizedViewsWarning : Window
+    public partial class frmUncategorizedViewsWarning : Window
     {
-        public frmUncatagorizedViewsWarning()
+        public frmUncategorizedViewsWarning(List<string> viewNames)
         {
             InitializeComponent();
+
+            // Assuming you have a ListBox or ListView in XAML named 'ViewList'
+            ViewList.ItemsSource = viewNames;
         }
     }
 }

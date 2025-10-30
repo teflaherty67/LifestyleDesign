@@ -268,26 +268,31 @@ namespace LifestyleDesign.Common
 
         private static void UncatagorizedViewsWarning(Document curDoc)
         {
-            var views = new FilteredElementCollector(curDoc)
+            var uncategorizedViews = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(View))
                 .Cast<View>()
-                .Where(v => !v.IsTemplate && !v.ViewType.Equals(ViewType.ProjectBrowser))                
+                .Where(v => !v.IsTemplate && !v.ViewType.Equals(ViewType.ProjectBrowser))
+                .Where(v => v.ViewType != ViewType.DrawingSheet)
+                .Where(IsUncategorized)
                 .ToList();
 
-            if (views.Any())
+            if (uncategorizedViews.Any())
             {
-                TaskDialog td = new TaskDialog("Uncategorized Views Found");
-                td.MainInstruction = $"{views.Count} view(s) are not placed on a sheet.";
-                td.MainContent = "Do you want to review or delete these views before saving/closing?";
-                td.CommonButtons = TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No;
-                var result = td.Show();
+                // You may want to pass a list of names, or the actual View elements
+                var viewNames = uncategorizedViews
+                    .Select(v => v.Name)
+                    .OrderBy(n => n)
+                    .ToList();
 
-                if (result == TaskDialogResult.Yes)
-                {
-                    // Optional: Show a custom form or log the views
-                }
+                // Create and show the WPF window (modeless or modal — your choice)
+                frmUncategorizedViewsWarning warningForm = new frmUncategorizedViewsWarning(viewNames);
+
+                // Show as modal to pause execution (recommended in saving/closing context)
+                warningForm.ShowDialog();
             }
         }
+
+
 
         private static bool IsUncategorized(View view)
         {

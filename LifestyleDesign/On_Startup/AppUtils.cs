@@ -1,6 +1,5 @@
 ﻿using Autodesk.Revit.DB;
 using LifestyleDesign.On_Startup;
-using LifestyleDesign.On_Startup.LifestyleDesign;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -267,7 +266,7 @@ namespace LifestyleDesign.Common
             UncatagorizedViewsWarning(curDoc);
         }
 
-        private static void UncatagorizedViewsWarning(Document curDoc)
+        internal static void UncatagorizedViewsWarning(Document curDoc)
         {
             var uncategorizedViews = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(View))
@@ -279,21 +278,10 @@ namespace LifestyleDesign.Common
 
             if (uncategorizedViews.Any())
             {
-                // You may want to pass a list of names, or the actual View elements
-                var viewNames = uncategorizedViews
-                    .Select(v => v.Name)
-                    .OrderBy(n => n)
-                    .ToList();
-
-                // Create and show the WPF window (modeless or modal — your choice)
-               frmUncatagorizedViewsWarning warningForm = new frmUncategorizedViewsWarning(viewNames);
-
-                // Show as modal to pause execution (recommended in saving/closing context)
-                warningForm.ShowDialog();
+                var form = new frmUncategorizedViewsWarning(uncategorizedViews);
+                form.ShowDialog();
             }
         }
-
-
 
         private static bool IsUncategorized(View view)
         {

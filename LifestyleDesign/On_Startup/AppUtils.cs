@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using LifestyleDesign.On_Startup;
+using LifestyleDesign.On_Startup.LifestyleDesign;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -285,7 +286,7 @@ namespace LifestyleDesign.Common
                     .ToList();
 
                 // Create and show the WPF window (modeless or modal — your choice)
-                frmUncategorizedViewsWarning warningForm = new frmUncategorizedViewsWarning(viewNames);
+               frmUncatagorizedViewsWarning warningForm = new frmUncategorizedViewsWarning(viewNames);
 
                 // Show as modal to pause execution (recommended in saving/closing context)
                 warningForm.ShowDialog();

@@ -271,8 +271,10 @@ namespace LifestyleDesign.Common
             var uncategorizedViews = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(View))
                 .Cast<View>()
-                .Where(v => !v.IsTemplate && !v.ViewType.Equals(ViewType.ProjectBrowser))
-                .Where(v => v.ViewType != ViewType.DrawingSheet)
+                .Where(v => !v.IsTemplate)
+                .Where(v => v.ViewType != ViewType.ProjectBrowser && 
+                    v.ViewType != ViewType.DrawingSheet && 
+                    v.ViewType != ViewType.Legend)
                 .Where(IsUncategorized)
                 .ToList();
 

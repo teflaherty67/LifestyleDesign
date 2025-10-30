@@ -85,6 +85,9 @@ namespace LifestyleDesign
             myPulldn7_2.Image = Utils.GetEmbeddedImage("LifestyleDesign.Resources.SheetTools_16.png");
 
             app.ControlledApplication.DocumentOpened += OnDocumentOpened;
+            app.ControlledApplication.DocumentSaving += OnDocumentSaving;
+            //app.ControlledApplication.DocumentClosing += OnDocumentClosing;
+            
 
             return Result.Succeeded;
         }

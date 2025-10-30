@@ -17,14 +17,39 @@ namespace LifestyleDesign.On_Startup
     /// <summary>
     /// Interaction logic for frmUncatagorizedViewsWarning.xaml
     /// </summary>
-    public partial class frmUncategorizedViewsWarning : Window
-    {
-        public frmUncategorizedViewsWarning(List<string> viewNames)
-        {
-            InitializeComponent();
+    using Autodesk.Revit.DB;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
 
-            // Assuming you have a ListBox or ListView in XAML named 'ViewList'
-            ViewList.ItemsSource = viewNames;
+    namespace LifestyleDesign
+    {
+        public partial class frmUncategorizedViewsWarning : Window
+        {
+            public bool Proceed { get; private set; } = false;
+
+            public frmUncategorizedViewsWarning(List<View> views)
+            {
+                InitializeComponent();
+
+                // Bind ordered list of view names
+                var viewNames = views.Select(v => v.Name).OrderBy(n => n).ToList();
+                ViewList.ItemsSource = viewNames;
+            }
+
+            private void OK_Click(object sender, RoutedEventArgs e)
+            {
+                Proceed = true;
+                this.DialogResult = true;
+                this.Close();
+            }
+
+            private void Cancel_Click(object sender, RoutedEventArgs e)
+            {
+                Proceed = false;
+                this.DialogResult = false;
+                this.Close();
+            }
         }
     }
 }

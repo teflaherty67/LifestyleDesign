@@ -121,6 +121,15 @@ namespace LifestyleDesign
             AppUtils.OnDocumentSaving(curDoc);
         }
 
+        private void OnDocumentClosing(object sender, DocumentSavingEventArgs e)
+        {
+            if (e.Document == null) return;
+
+            Document curDoc = e.Document;
+
+            AppUtils.OnDocumentClosing(curDoc);
+        }
+
         private bool ShouldSkipDocument(Document doc)
         {
             return doc.IsFamilyDocument || doc.PathName.Contains("Project Standards");

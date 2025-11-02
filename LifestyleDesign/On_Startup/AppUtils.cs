@@ -263,6 +263,7 @@ namespace LifestyleDesign.Common
 
         public static void OnDocumentClosing(Document curDoc)
         {
+            // launch the form
             UncatagorizedViewsWarning(curDoc);
         }
 

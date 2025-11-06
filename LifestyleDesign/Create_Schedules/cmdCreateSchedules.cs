@@ -39,7 +39,7 @@ namespace LifestyleDesign
             frmCreateSchedules curForm = new frmCreateSchedules()
             {
                 Width = 420,
-                Height = 400,
+                Height = 380,
                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
                 Topmost = true,
             };

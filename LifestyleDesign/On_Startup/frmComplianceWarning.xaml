@@ -8,7 +8,7 @@
                Title="Lifestyle Design Standards" 
         Height="200"
         Width="380"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         WindowStyle="ToolWindow"
         Background="White">

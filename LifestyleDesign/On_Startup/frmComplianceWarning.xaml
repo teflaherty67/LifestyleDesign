@@ -9,6 +9,7 @@
         Height="200"
         Width="380"
         WindowStartupLocation="CenterOwner"
+        Topmost="True"
         ResizeMode="NoResize"
         WindowStyle="ToolWindow"
         Background="White">

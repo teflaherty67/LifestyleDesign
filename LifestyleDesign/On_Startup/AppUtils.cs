@@ -1,5 +1,4 @@
 ﻿using Autodesk.Revit.DB;
-using LifestyleDesign.On_Startup;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,12 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace LifestyleDesign.Common
+namespace LifestyleDesign
 {
     public static class AppUtils
     {
-       
-
         public static void CheckAllStandards(Document curDoc)
         {
             // Create a dictionary to organize violations by category

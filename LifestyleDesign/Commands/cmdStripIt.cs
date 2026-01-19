@@ -12,21 +12,22 @@ namespace LifestyleDesign
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document curDoc = uidoc.Document;
-            // Step 1: check for the default 3D view
+            
+            // check for the default 3D view
             FilteredElementCollector collector = new FilteredElementCollector(curDoc);
             View3D default3DView = collector
                 .OfClass(typeof(View3D))
                 .Cast<View3D>()
                 .FirstOrDefault(v => !v.IsTemplate && v.Name == "{3D}");
 
-            // Step 2: if found, make it the active view
+            // if found, make it the active view
             if (default3DView != null)
             {
                 uidoc.ActiveView = default3DView;
                 return Result.Succeeded;
             }
 
-            // Step 3: if not found, get the 3D view family type
+            // if not found, get the 3D view family type
             ViewFamilyType viewFamilyType = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(ViewFamilyType))
                 .Cast<ViewFamilyType>()
@@ -38,7 +39,7 @@ namespace LifestyleDesign
                 return Result.Failed;
             }
 
-            // Step 4: create new 3D view
+            // create new 3D view
             using (Transaction tx = new Transaction(curDoc))
             {
                 tx.Start("Create Default 3D View");
@@ -49,13 +50,11 @@ namespace LifestyleDesign
                 tx.Commit();
             }
 
-            // Step 5: set active view
+            // set new 3D view as the active view
             uidoc.ActiveView = default3DView;
 
-            // 01. create list of all sheets
-            List<ViewSheet> allSheets = Utils.GetAllSheets(curDoc);
-
-            // 02. create view lists
+            // create list of all sheets
+            List<ViewSheet> allSheets = Utils.GetAllSheets(curDoc);            
 
             // create list of all views
             List<View> allViews = Utils.GetAllViews(curDoc);
@@ -69,27 +68,27 @@ namespace LifestyleDesign
             // create the filtered list using the ElementId for comparison
             List<View> viewsToDelete = allViews.Where(view => !viewsToKeepIds.Contains(view.Id)).ToList();
 
-            // 03. create list of all schedules
+            // create list of all schedules
             List<ViewSchedule> allSchedules = Utils.GetAllSchedules(curDoc);
 
-            // 04. get Revit Command Id for Purge
+            // get Revit Command Id for Purge
             RevitCommandId commandId = RevitCommandId.LookupPostableCommandId(PostableCommand.PurgeUnused);
 
-            // 05. create & start transaction
+            // create & start a transaction
             using (Transaction t = new Transaction(curDoc))
             {
                 t.Start("Strip the file");
 
-                // 01a. delete all sheets
+                // delete all sheets
                 foreach (ViewSheet curSheet in allSheets)
                 {
                     curDoc.Delete(curSheet.Id);
                 }
 
-                // 01b. delete all sheet collections
+                // delete all sheet collections
                 Utils.DeleteAllSheetCollections(curDoc);
 
-                // 02a. loop through the views & delete them
+                // loop through the views & delete them
                 foreach (View deleteView in viewsToDelete)
                 {
                     try
@@ -102,14 +101,14 @@ namespace LifestyleDesign
                     }
                 }
 
-                // 03a. loop through the schedules & delete them
+                // loop through the schedules & delete them
 
                 foreach (ViewSchedule deleteSched in allSchedules)
                 {
                     curDoc.Delete(deleteSched.Id);
                 }
 
-                // 06. purged unused elements programatically
+                // purged unused elements programatically
                 Utils.PurgeUnusedFamilySymbols(curDoc);
                 Utils.PurgeUnusedViewTemplates(curDoc);
                 Utils.PurgeUnusedFilters(curDoc);
@@ -127,16 +126,16 @@ namespace LifestyleDesign
                 t.Commit();
             }
 
-            // 07. save file to Luis' folder
+            // save file to Luis' folder
             SaveToLuisFolder(curDoc);
 
-            // 08. switch to Manage ribbon tab before running Purge command
+            // switch to Manage ribbon tab before running Purge command
             try
             {
-                // Get the ribbon control
+                // get the ribbon control
                 Autodesk.Windows.RibbonControl ribbon = Autodesk.Windows.ComponentManager.Ribbon;
 
-                // Find and activate the Manage tab
+                // find and activate the Manage tab
                 foreach (Autodesk.Windows.RibbonTab tab in ribbon.Tabs)
                 {
                     if (tab.Id == "Manage" || tab.Title == "Manage")
@@ -152,7 +151,7 @@ namespace LifestyleDesign
                 System.Diagnostics.Debug.WriteLine($"Failed to switch to Manage ribbon: {ex.Message}");
             }
 
-            // 06a. run the Purge Unused command using PostCommand
+            // run the Purge Unused command using PostCommand
             uiapp.PostCommand(commandId);
 
             return Result.Succeeded;
@@ -162,15 +161,15 @@ namespace LifestyleDesign
         {
             try
             {
-                // Target directory
+                // create variable for target directory
                 string targetDirectory = @"S:\Shared Folders\Lifestyle USA Design\LGI Homes\!Luis";
 
-                // Generate filename if not provided
+                // generate filename if not provided
                 if (string.IsNullOrEmpty(fileName))
                 {
                     string originalName = Path.GetFileNameWithoutExtension(doc.Title);
 
-                    // Extract plan name and region code (remove lot dimensions and anything after)
+                    // Extract plan name and region code (remove anything after)
                     // Example: "Torres(R)-CTX(50-5-29'11)" should become "Torres(R)-CTX"
 
                     // Find the pattern: look for the first hyphen followed by letters, then a parenthesis
@@ -190,7 +189,7 @@ namespace LifestyleDesign
 
                             if (letterEnd > letterStart && letterEnd < originalName.Length && originalName[letterEnd] == '(')
                             {
-                                // Found region code pattern, keep everything up to the opening parenthesis after region
+                                // found region code pattern, keep everything up to the opening parenthesis after region
                                 originalName = originalName.Substring(0, letterEnd);
                                 break;
                             }
@@ -200,7 +199,7 @@ namespace LifestyleDesign
                     fileName = $"{originalName}.rvt";
                 }
 
-                // Ensure filename has .rvt extension
+                // ensure filename has .rvt extension
                 if (!fileName.EndsWith(".rvt", StringComparison.OrdinalIgnoreCase))
                 {
                     fileName += ".rvt";
@@ -208,27 +207,27 @@ namespace LifestyleDesign
 
                 string fullPath = Path.Combine(targetDirectory, fileName);
 
-                // Ensure the directory exists
+                // verify the directory exists
                 if (!Directory.Exists(targetDirectory))
                 {
                     Directory.CreateDirectory(targetDirectory);
                 }
 
-                // Configure save options
+                // configure save options
                 SaveAsOptions saveAsOptions = new SaveAsOptions();
                 saveAsOptions.OverwriteExistingFile = true;
 
-                // Perform the Save As operation
+                // perform the Save As operation
                 doc.SaveAs(fullPath, saveAsOptions);
 
-                // Optional: Show success message
+                // show success message
                 Utils.TaskDialogInformation("Save Complete", "Strip It", $"File successfully saved to:\n{fullPath}");               
 
                 return true;
             }
             catch (Exception ex)
             {
-                // Show error message
+                // show error message
                 TaskDialog errorDialog = new TaskDialog("Save Error");
                 errorDialog.MainContent = $"Failed to save file:\n{ex.Message}";
                 errorDialog.Show();

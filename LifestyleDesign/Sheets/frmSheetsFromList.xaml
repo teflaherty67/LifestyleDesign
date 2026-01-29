@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LifestyleDesign"
         mc:Ignorable="d"
-                       ShowInTaskbar="False"
+        ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
         HorizontalContentAlignment="Center" Height="400" Width="350">
     <Window.Resources>

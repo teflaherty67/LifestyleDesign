@@ -2,11 +2,8 @@
 using LifestyleDesign.Common;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace LifestyleDesign
 {
@@ -63,7 +60,7 @@ namespace LifestyleDesign
 
                 if (hits.Count == 0)
                 {
-                    TaskDialog.Show("Find and Replace", $"No matches found for \"{findText}\".");
+                    Utils.TaskDialogInformation("Find and Replace", "Find and Replace", $"No matches found for \"{findText}\".");
                     return Result.Succeeded;
                 }
 
@@ -94,7 +91,7 @@ namespace LifestyleDesign
                     t.Commit();
                 }
 
-                TaskDialog.Show("Find and Replace", $"Updated {updatedCount} parameter value(s).");
+                Utils.TaskDialogInformation("Find and Replace", "Find and Replace", $"Updated {updatedCount} parameter value(s).");
                 return Result.Succeeded;
             }
             catch (Exception ex)
@@ -147,10 +144,7 @@ namespace LifestyleDesign
                         .Where(s => !s.IsPlaceholder);
 
                 default: // EntireProject
-                    return new FilteredElementCollector(curDoc)
-                        .OfClass(typeof(ViewSheet))
-                        .Cast<ViewSheet>()
-                        .Where(s => !s.IsPlaceholder);
+                    return Utils.GetAllSheets(curDoc).Where(s => !s.IsPlaceholder);
             }
         }
 

@@ -37,8 +37,7 @@ namespace LifestyleDesign
                 // Collect views for View Name and/or Title on Sheet
                 if (curForm.ReplaceViewName || curForm.ReplaceTitleOnSheet)
                 {
-                    var sheets = GetSheets(curDoc, uidoc, curForm.Scope);
-                    var viewIds = Utils.GetViewIds(curDoc, sheets);
+                    var viewIds = Utils.GetViewIds(curDoc, uidoc, curForm.Scope);
                     foreach (ElementId id in viewIds)
                     {
                         if (!(curDoc.GetElement(id) is View v)) continue;
@@ -54,7 +53,7 @@ namespace LifestyleDesign
                 // Collect sheets for Sheet Name
                 if (curForm.ReplaceSheetName)
                 {
-                    var sheets = GetSheets(curDoc, uidoc, curForm.Scope);
+                    var sheets = Utils.GetSheetsByScope(curDoc, uidoc, curForm.Scope);
                     foreach (ViewSheet sheet in sheets)
                         AddHit(sheet, BuiltInParameter.SHEET_NAME, pattern, replaceText, regexOptions, hits);
                 }
@@ -95,26 +94,6 @@ namespace LifestyleDesign
             {
                 message = ex.Message;
                 return Result.Failed;
-            }
-        }
-
-        private static IEnumerable<ViewSheet> GetSheets(Document curDoc, UIDocument uidoc, SearchScope scope)
-        {
-            switch (scope)
-            {
-                case SearchScope.CurrentView:
-                    if (uidoc.ActiveView is ViewSheet activeSheet)
-                        return new[] { activeSheet };
-                    return Enumerable.Empty<ViewSheet>();
-
-                case SearchScope.CurrentSelection:
-                    return uidoc.Selection.GetElementIds()
-                        .Select(id => curDoc.GetElement(id))
-                        .OfType<ViewSheet>()
-                        .Where(s => !s.IsPlaceholder);
-
-                default: // EntireProject
-                    return Utils.GetAllSheets(curDoc).Where(s => !s.IsPlaceholder);
             }
         }
 

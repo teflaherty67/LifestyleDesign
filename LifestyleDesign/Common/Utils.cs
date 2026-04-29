@@ -2649,9 +2649,88 @@ namespace LifestyleDesign.Common
         }
 
 
+
+        /// <summary>
+        /// Displays a Yes/No confirmation dialog and returns true if the user clicks Yes
+        /// </summary>
+        /// <param name="tdName">The internal name of the TaskDialog</param>
+        /// <param name="tdTitle">The title displayed in the dialog header</param>
+        /// <param name="mainInstruction">The short question or instruction displayed prominently</param>
+        /// <param name="textMessage">The detailed message content to display to the user</param>
+        /// <returns>True if the user clicked Yes; false if the user clicked No</returns>
+        internal static bool TaskDialogYesNo(string tdName, string tdTitle, string mainInstruction, string textMessage)
+        {
+            TaskDialog m_Dialog = new TaskDialog(tdName);
+
+            m_Dialog.MainIcon = Icon.TaskDialogIconNone;
+
+            m_Dialog.Title = tdTitle;
+
+            m_Dialog.TitleAutoPrefix = false;
+
+            m_Dialog.MainInstruction = mainInstruction;
+
+            m_Dialog.MainContent = textMessage;
+
+            m_Dialog.CommonButtons = TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No;
+
+            m_Dialog.DefaultButton = TaskDialogResult.Yes;
+
+            TaskDialogResult m_DialogResult = m_Dialog.Show();
+
+            return m_DialogResult == TaskDialogResult.Yes;
+        }
+
         #endregion
 
         #region Views
+
+        internal static HashSet<ElementId> GetViewIds(Document curDoc, UIDocument uidoc, SearchScope scope)
+        {
+            var viewIds = new HashSet<ElementId>();
+            var sheets = GetSheetsByScope(curDoc, uidoc, scope);
+
+            foreach (ViewSheet sheet in sheets)
+            {
+                foreach (ElementId vpId in sheet.GetAllViewports())
+                {
+                    if (curDoc.GetElement(vpId) is Viewport vp)
+                        viewIds.Add(vp.ViewId);
+                }
+
+                var schedules = new FilteredElementCollector(curDoc, sheet.Id)
+                    .OfClass(typeof(ScheduleSheetInstance))
+                    .Cast<ScheduleSheetInstance>();
+
+                foreach (var si in schedules)
+                {
+                    if (!si.IsTitleblockRevisionSchedule)
+                        viewIds.Add(si.ScheduleId);
+                }
+            }
+
+            return viewIds;
+        }
+
+        internal static IEnumerable<ViewSheet> GetSheetsByScope(Document curDoc, UIDocument uidoc, SearchScope scope)
+        {
+            switch (scope)
+            {
+                case SearchScope.CurrentView:
+                    if (uidoc.ActiveView is ViewSheet activeSheet)
+                        return new[] { activeSheet };
+                    return Enumerable.Empty<ViewSheet>();
+
+                case SearchScope.CurrentSelection:
+                    return uidoc.Selection.GetElementIds()
+                        .Select(id => curDoc.GetElement(id))
+                        .OfType<ViewSheet>()
+                        .Where(s => !s.IsPlaceholder);
+
+                default: // EntireProject
+                    return GetAllSheets(curDoc).Where(s => !s.IsPlaceholder);
+            }
+        }
 
         public static List<View> GetAllNonTemplateViews(Document curDoc)
         {

@@ -157,7 +157,7 @@ namespace LifestyleDesign
             return Result.Succeeded;
         }
 
-        internal static bool SaveToLuisFolder(Document doc, string fileName = null)
+        internal static bool SaveToLuisFolder(Document curDoc, string fileName = null)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace LifestyleDesign
                 // generate filename if not provided
                 if (string.IsNullOrEmpty(fileName))
                 {
-                    string originalName = Path.GetFileNameWithoutExtension(doc.Title);
+                    string originalName = Path.GetFileNameWithoutExtension(curDoc.Title);
 
                     // Extract plan name and region code (remove anything after)
                     // Example: "Torres(R)-CTX(50-5-29'11)" should become "Torres(R)-CTX"
@@ -218,7 +218,7 @@ namespace LifestyleDesign
                 saveAsOptions.OverwriteExistingFile = true;
 
                 // perform the Save As operation
-                doc.SaveAs(fullPath, saveAsOptions);
+                curDoc.SaveAs(fullPath, saveAsOptions);
 
                 // show success message
                 Utils.TaskDialogInformation("Save Complete", "Strip It", $"File successfully saved to:\n{fullPath}");               

@@ -37,7 +37,8 @@ namespace LifestyleDesign
                 // Collect views for View Name and/or Title on Sheet
                 if (curForm.ReplaceViewName || curForm.ReplaceTitleOnSheet)
                 {
-                    var viewIds = GetViewIds(curDoc, uidoc, curForm.Scope);
+                    var sheets = GetSheets(curDoc, uidoc, curForm.Scope);
+                    var viewIds = Utils.GetViewIds(curDoc, sheets);
                     foreach (ElementId id in viewIds)
                     {
                         if (!(curDoc.GetElement(id) is View v)) continue;
@@ -65,14 +66,10 @@ namespace LifestyleDesign
                 }
 
                 // Confirm
-                var confirm = new TaskDialog("Find and Replace: Confirm")
-                {
-                    MainInstruction = $"Update {hits.Count} parameter value(s)?",
-                    MainContent = $"Find: \"{findText}\"\nReplace with: \"{replaceText}\"\n\nMatch is case {(curForm.MatchCase ? "sensitive" : "insensitive")}.",
-                    CommonButtons = TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No,
-                    DefaultButton = TaskDialogResult.Yes
-                };
-                if (confirm.Show() != TaskDialogResult.Yes) return Result.Cancelled;
+                string instruction = $"Update {hits.Count} parameter value(s)?";
+                string details = $"Find: \"{findText}\"\nReplace with: \"{replaceText}\"\n\nMatch is case {(curForm.MatchCase ? "sensitive" : "insensitive")}.";
+                if (!Utils.TaskDialogYesNo("Find and Replace: Confirm", "Find and Replace", instruction, details))
+                    return Result.Cancelled;
 
                 // Apply
                 int updatedCount = 0;
@@ -99,33 +96,6 @@ namespace LifestyleDesign
                 message = ex.Message;
                 return Result.Failed;
             }
-        }
-
-        private static HashSet<ElementId> GetViewIds(Document curDoc, UIDocument uidoc, SearchScope scope)
-        {
-            var viewIds = new HashSet<ElementId>();
-            var sheets = GetSheets(curDoc, uidoc, scope);
-
-            foreach (ViewSheet sheet in sheets)
-            {
-                foreach (ElementId vpId in sheet.GetAllViewports())
-                {
-                    if (curDoc.GetElement(vpId) is Viewport vp)
-                        viewIds.Add(vp.ViewId);
-                }
-
-                var schedules = new FilteredElementCollector(curDoc, sheet.Id)
-                    .OfClass(typeof(ScheduleSheetInstance))
-                    .Cast<ScheduleSheetInstance>();
-
-                foreach (var si in schedules)
-                {
-                    if (!si.IsTitleblockRevisionSchedule)
-                        viewIds.Add(si.ScheduleId);
-                }
-            }
-
-            return viewIds;
         }
 
         private static IEnumerable<ViewSheet> GetSheets(Document curDoc, UIDocument uidoc, SearchScope scope)

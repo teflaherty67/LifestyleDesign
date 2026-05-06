@@ -180,8 +180,8 @@ namespace LifestyleDesign
                 buttonInternalName,
                 buttonTitle,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
-                Properties.Resources.Blue_32,
-                Properties.Resources.Blue_16,
+                Properties.Resources.FindReplace_32,
+                Properties.Resources.FindReplace_16,
                 "Find and replace text in View Name, Title on Sheet, or Sheet Name");
 
             return myButtonData.Data;

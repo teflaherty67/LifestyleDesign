@@ -19,7 +19,7 @@ namespace LifestyleDesign.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -156,6 +156,26 @@ namespace LifestyleDesign.Properties {
         internal static byte[] DeleteRevisions_32 {
             get {
                 object obj = ResourceManager.GetObject("DeleteRevisions_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FindReplace_16 {
+            get {
+                object obj = ResourceManager.GetObject("FindReplace_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FindReplace_32 {
+            get {
+                object obj = ResourceManager.GetObject("FindReplace_32", resourceCulture);
                 return ((byte[])(obj));
             }
         }

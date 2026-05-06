@@ -77,6 +77,8 @@
 	  <None Remove="Resources\DecrementSheets_32.png" />
 	  <None Remove="Resources\DeleteRevisions_16.png" />
 	  <None Remove="Resources\DeleteRevisions_32.png" />
+	  <None Remove="Resources\FindReplace_16.png" />
+	  <None Remove="Resources\FindReplace_32.png" />
 	  <None Remove="Resources\FlipPlan_16.png" />
 	  <None Remove="Resources\FlipPlan_32.png" />
 	  <None Remove="Resources\IncrementSheets_16.png" />
@@ -116,6 +118,8 @@
 	  <EmbeddedResource Include="Resources\DecrementSheets_32.png" />
 	  <EmbeddedResource Include="Resources\DeleteRevisions_16.png" />
 	  <EmbeddedResource Include="Resources\DeleteRevisions_32.png" />
+	  <EmbeddedResource Include="Resources\FindReplace_16.png" />
+	  <EmbeddedResource Include="Resources\FindReplace_32.png" />
 	  <EmbeddedResource Include="Resources\FlipPlan_16.png" />
 	  <EmbeddedResource Include="Resources\FlipPlan_32.png" />
 	  <EmbeddedResource Include="Resources\IncrementSheets_16.png" />

@@ -130,9 +130,9 @@ namespace LifestyleDesign
             AppUtils.OnDocumentClosing(curDoc);
         }
 
-        private bool ShouldSkipDocument(Document doc)
+        private bool ShouldSkipDocument(Document curDoc)
         {
-            return doc.IsFamilyDocument || doc.PathName.Contains("Project Standards");
+            return curDoc.IsFamilyDocument || curDoc.PathName.Contains("Project Standards");
         }
     }
 }

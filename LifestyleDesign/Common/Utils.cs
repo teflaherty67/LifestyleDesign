@@ -2100,6 +2100,57 @@ namespace LifestyleDesign.Common
             return m_returnList;
         }
 
+        // Renames schedules from the "X-#/X/X/#" format to "Title - Elevation X" format.
+        // Returns the number of schedules renamed.
+        internal static int RenameSchedulesToElevationFormat(Document curDoc)
+        {
+            var scheduleTypes = new[]
+            {
+                ("Exterior Veneer Calculations", 28),
+                ("Floor Areas",                  11),
+                ("Frame Areas",                  10),
+                ("Roof Ventilation Calculations", 29),
+                ("Roof Ventilation Equipment",    27),
+                ("Sheet Index",                   11),
+            };
+
+            int countRenamed = 0;
+
+            foreach (var (titleKey, titleLen) in scheduleTypes)
+            {
+                List<ViewSchedule> schedList = GetScheduleToRenameByNameContains(curDoc, titleKey);
+
+                foreach (ViewSchedule curSchedule in schedList)
+                {
+                    string originalName = curSchedule.Name;
+
+                    if (originalName.Length <= titleLen)
+                        continue;
+
+                    string schedElev = originalName.Substring(titleLen + 1);
+                    int elevIndex = GetIndexOfFirstLetter(schedElev);
+
+                    if (elevIndex >= schedElev.Length)
+                        continue;
+
+                    string curElev = schedElev.Substring(elevIndex, 1);
+
+                    // skip schedules already in "Elevation X" format
+                    if (curElev == "E")
+                        continue;
+
+                    try
+                    {
+                        curSchedule.Name = originalName.Substring(0, titleLen) + " - Elevation " + curElev;
+                        countRenamed++;
+                    }
+                    catch (Exception) { }
+                }
+            }
+
+            return countRenamed;
+        }
+
         internal static List<string> GetAllScheduleNames(Document curDoc)
         {
             List<ViewSchedule> m_schedList = GetAllSchedules(curDoc);

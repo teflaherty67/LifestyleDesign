@@ -54,6 +54,14 @@ namespace LifestyleDesign.Elevation_Designation
             List<View> viewsList = Utils.GetAllNonTemplateViews(curDoc);
             List<ViewSheet> sheetsList = Utils.GetAllSheets(curDoc);
 
+            // normalize any schedules still using the "X-#/X/X/#" format to "Title - Elevation X"
+            using (Transaction tRename = new Transaction(curDoc, "Normalize Schedule Names"))
+            {
+                tRename.Start();
+                Utils.RenameSchedulesToElevationFormat(curDoc);
+                tRename.Commit();
+            }
+
             // check if all the schedules exist for newElev
             List<ViewSchedule> curElevList = Utils.GetAllSchedulesByElevation(curDoc, curElev);
             List<ViewSchedule> newElevList = Utils.GetAllSchedulesByElevation(curDoc, newElev);

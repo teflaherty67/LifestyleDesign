@@ -2141,7 +2141,7 @@ namespace LifestyleDesign.Common
 
                     try
                     {
-                        curSchedule.Name = originalName.Substring(0, titleLen) + " - Elevation " + curElev;
+                        curSchedule.Name = originalName.Substring(0, titleLen) + " - Elevation " + curElev + "*";
                         countRenamed++;
                     }
                     catch (Exception) { }

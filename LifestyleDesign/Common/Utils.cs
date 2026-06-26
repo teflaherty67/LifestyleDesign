@@ -1892,7 +1892,8 @@ namespace LifestyleDesign.Common
 
             foreach (ViewSchedule curVS in m_scheduleList)
             {
-                if (curVS.Name.EndsWith(newElev) || curVS.Name.StartsWith(newElev + "-"))
+                string name = curVS.Name.TrimEnd('*');
+                if (name.EndsWith(newElev) || name.StartsWith(newElev + "-"))
                 {
                     m_returnList.Add(curVS);
                 }

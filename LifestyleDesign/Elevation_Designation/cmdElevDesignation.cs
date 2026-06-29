@@ -91,12 +91,14 @@ namespace LifestyleDesign.Elevation_Designation
                             try
                             {
                                 // rename the views
-                                if (curView.Name.Contains(curElev + " "))
+                                if (curView.Name.Contains(curElev + " - "))
+                                    curView.Name = curView.Name.Replace(curElev + " - ", newElev + " ");
+                                else if (curView.Name.Contains(curElev + " "))
                                     curView.Name = curView.Name.Replace(curElev + " ", newElev + " ");
                                 if (curView.Name.Contains(curElev + "-"))
-                                    curView.Name = curView.Name.Replace(curElev + "-", newElev + "-");
+                                    curView.Name = curView.Name.Replace(curElev + "-", newElev + " ");
                                 if (curView.Name.Contains(curElev + "_"))
-                                    curView.Name = curView.Name.Replace(curElev + "_", newElev + "_");
+                                    curView.Name = curView.Name.Replace(curElev + "_", newElev + " ");
                             }
                             catch (Autodesk.Revit.Exceptions.ArgumentException)
                             {

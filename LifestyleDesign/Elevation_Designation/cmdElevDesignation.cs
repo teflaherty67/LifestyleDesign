@@ -292,8 +292,9 @@ namespace LifestyleDesign.Elevation_Designation
                             {
                                 // set some variables
                                 ElementId newSheetId = newCover.Id;
+                                bool hasStar = curSchedule.Name.EndsWith("*");
                                 string schedName = curSchedule.Name.TrimEnd('*');
-                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
+                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev + (hasStar ? "*" : "");
 
                                 // get the schedule name
                                 ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName); // equal to ID of schedule to replace existing
@@ -336,8 +337,9 @@ namespace LifestyleDesign.Elevation_Designation
                             {
                                 // set some variables
                                 ElementId newSheetId = newRoof.Id;
+                                bool hasStar = curSchedule.Name.EndsWith("*");
                                 string schedName = curSchedule.Name.TrimEnd('*');
-                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
+                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev + (hasStar ? "*" : "");
 
                                 // get the schedule name
                                 ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName); // equal to ID of schedule to replace existing

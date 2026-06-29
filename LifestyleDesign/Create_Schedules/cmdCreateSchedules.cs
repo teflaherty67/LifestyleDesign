@@ -702,7 +702,7 @@ namespace LifestyleDesign
                             }
                             else if (typeFoundation == "Slab" && floorNum == 2)
                             {
-                                atticLevel = "Second Floor";
+                                atticLevel = "First Floor";
                             }
                             else
                             {

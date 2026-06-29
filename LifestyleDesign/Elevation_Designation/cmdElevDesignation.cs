@@ -206,17 +206,18 @@ namespace LifestyleDesign.Elevation_Designation
                                     {
                                     }
 
-                                    // update the masonry code
-                                    Utils.SetParameterByName(curSheet, "Code Masonry", codeMasonry);
-
-                                    // update the group name only if it uses the structured X-X|X|X|X format
-                                    string[] curGroup = curGrp.Split('-', '|');
-                                    if (curGroup.Length >= 5)
+                                    // update the masonry code and group name only when a real value was selected
+                                    if (codeMasonry != "N/A")
                                     {
-                                        string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
-                                        Utils.SetParameterByName(curSheet, "Group", newCode);
+                                        Utils.SetParameterByName(curSheet, "Code Masonry", codeMasonry);
+
+                                        string[] curGroup = curGrp.Split('-', '|');
+                                        if (curGroup.Length >= 5)
+                                        {
+                                            string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
+                                            Utils.SetParameterByName(curSheet, "Group", newCode);
+                                        }
                                     }
-                                    // else: "Elevation X" format — Code Masonry already set above, Group name doesn't need rebuilding
                                 }
                             }
                         }
@@ -245,20 +246,18 @@ namespace LifestyleDesign.Elevation_Designation
                                 if (curGrp.Contains(curElev))
                                     Utils.SetParameterByName(curSheet, "Code Filter", newFilter);
 
-                                // update the masonry code
-                                if (curGrp.Contains(curElev))
+                                // update the masonry code and group name only when a real value was selected
+                                if (codeMasonry != "N/A" && curGrp.Contains(curElev))
+                                {
                                     Utils.SetParameterByName(curSheet, "Code Masonry", codeMasonry);
 
-                                // replace masonry code in group name
-                                // Only reformat the group if it uses the structured X-X|X|X|X format
-                                string[] curGroup = grpNewName.Split('-', '|');
-
-                                if (curGroup.Length >= 5)
-                                {
-                                    string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
-                                    Utils.SetParameterByName(curSheet, "Group", newCode);
+                                    string[] curGroup = grpNewName.Split('-', '|');
+                                    if (curGroup.Length >= 5)
+                                    {
+                                        string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
+                                        Utils.SetParameterByName(curSheet, "Group", newCode);
+                                    }
                                 }
-                                // else: group is "Elevation X" format — name was already updated by GetLastCharacterInString, nothing more to do
                             }
                         }
 

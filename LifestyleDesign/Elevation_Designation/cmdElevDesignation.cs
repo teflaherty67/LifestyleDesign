@@ -292,7 +292,7 @@ namespace LifestyleDesign.Elevation_Designation
                             {
                                 // set some variables
                                 ElementId newSheetId = newCover.Id;
-                                string schedName = curSchedule.Name;
+                                string schedName = curSchedule.Name.TrimEnd('*');
                                 string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
 
                                 // get the schedule name
@@ -336,7 +336,7 @@ namespace LifestyleDesign.Elevation_Designation
                             {
                                 // set some variables
                                 ElementId newSheetId = newRoof.Id;
-                                string schedName = curSchedule.Name;
+                                string schedName = curSchedule.Name.TrimEnd('*');
                                 string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
 
                                 // get the schedule name

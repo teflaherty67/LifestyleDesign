@@ -315,7 +315,7 @@ namespace LifestyleDesign
                                 ScheduleSortGroupField catSort = new ScheduleSortGroupField(catField.FieldId, ScheduleSortOrder.Ascending);
                                 catSort.ShowFooter = true;
                                 catSort.ShowFooterTitle = true;
-                                catSort.ShowFooterCount = true;
+                                catSort.ShowFooterCount = false;
                                 catSort.ShowBlankLine = true;
                                 newFloorSched.Definition.AddSortGroupField(catSort);
 
@@ -382,7 +382,7 @@ namespace LifestyleDesign
                                 ScheduleSortGroupField catSort = new ScheduleSortGroupField(catField.FieldId, ScheduleSortOrder.Ascending);
                                 catSort.ShowFooter = true;
                                 catSort.ShowFooterTitle = true;
-                                catSort.ShowFooterCount = true;
+                                catSort.ShowFooterCount = false;
                                 catSort.ShowBlankLine = true;
                                 newFloorSched.Definition.AddSortGroupField(catSort);
 

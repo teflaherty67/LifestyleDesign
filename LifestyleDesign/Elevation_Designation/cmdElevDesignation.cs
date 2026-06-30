@@ -297,8 +297,9 @@ namespace LifestyleDesign.Elevation_Designation
                                 string schedName = curSchedule.Name.TrimEnd('*');
                                 string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
 
-                                // get the schedule name
-                                ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName);
+                                // get the schedule — try without star first, then with star
+                                ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName)
+                                    ?? Utils.GetScheduleByName(curDoc, newSchedName + "*");
 
                                 // get the schedule location
                                 XYZ instanceLoc = curSchedule.Point;
@@ -341,8 +342,9 @@ namespace LifestyleDesign.Elevation_Designation
                                 string schedName = curSchedule.Name.TrimEnd('*');
                                 string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
 
-                                // get the schedule name
-                                ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName);
+                                // get the schedule — try without star first, then with star
+                                ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName)
+                                    ?? Utils.GetScheduleByName(curDoc, newSchedName + "*");
 
                                 // get the schedule location
                                 XYZ instanceLoc = curSchedule.Point;

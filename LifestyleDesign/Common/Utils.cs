@@ -1892,10 +1892,23 @@ namespace LifestyleDesign.Common
 
             foreach (ViewSchedule curVS in m_scheduleList)
             {
-                string name = curVS.Name.TrimEnd('*');
-                if (name.EndsWith(" " + newElev) || name.StartsWith(newElev + "-"))
+                string elevDesignation = GetParameterValueByName(curVS, "Elevation Designation");
+
+                if (!string.IsNullOrEmpty(elevDesignation))
                 {
-                    m_returnList.Add(curVS);
+                    if (elevDesignation == newElev)
+                    {
+                        m_returnList.Add(curVS);
+                    }
+                }
+                else
+                {
+                    // fall back to name-based matching for schedules without the parameter set
+                    string name = curVS.Name.TrimEnd('*');
+                    if (name.EndsWith(" " + newElev) || name.StartsWith(newElev + "-"))
+                    {
+                        m_returnList.Add(curVS);
+                    }
                 }
             }
 

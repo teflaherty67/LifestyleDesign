@@ -19,5 +19,3 @@ global using CheckBox = System.Windows.Controls.CheckBox;
 global using Label = System.Windows.Controls.Label;
 global using Grid = System.Windows.Controls.Grid;
 global using TextBox = System.Windows.Controls.TextBox;
-
-

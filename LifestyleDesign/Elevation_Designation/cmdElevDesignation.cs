@@ -66,6 +66,20 @@ namespace LifestyleDesign.Elevation_Designation
             List<ViewSchedule> curElevList = Utils.GetAllSchedulesByElevation(curDoc, curElev);
             List<ViewSchedule> newElevList = Utils.GetAllSchedulesByElevation(curDoc, newElev);
 
+#if DEBUG
+            List<string> curNames = new List<string>();
+            foreach (ViewSchedule vs in curElevList) curNames.Add(vs.Name);
+            List<string> newNames = new List<string>();
+            foreach (ViewSchedule vs in newElevList) newNames.Add(vs.Name);
+
+            TaskDialog tdDebug = new TaskDialog("DEBUG");
+            tdDebug.MainContent = "curElev (" + curElev + ") matched " + curElevList.Count + ":\n" +
+                string.Join("\n", curNames) +
+                "\n\nnewElev (" + newElev + ") matched " + newElevList.Count + ":\n" +
+                string.Join("\n", newNames);
+            tdDebug.Show();
+#endif
+
             if (curElevList.Count != 0 && newElevList.Count == curElevList.Count)
             {
                 // create a transaction group

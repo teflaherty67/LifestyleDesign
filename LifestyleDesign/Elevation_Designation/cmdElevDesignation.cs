@@ -301,6 +301,23 @@ namespace LifestyleDesign.Elevation_Designation
                                 ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName)
                                     ?? Utils.GetScheduleByName(curDoc, newSchedName + "*");
 
+                                if (newSchedule == null)
+                                {
+                                    t.RollBack();
+                                    tGroup.RollBack();
+
+                                    TaskDialog tdNameMismatch = new TaskDialog("Error");
+                                    tdNameMismatch.MainIcon = Icon.TaskDialogIconWarning;
+                                    tdNameMismatch.Title = "Schedule Name Mismatch";
+                                    tdNameMismatch.TitleAutoPrefix = false;
+                                    tdNameMismatch.MainContent = "The schedule \"" + curSchedule.Name + "\" does not have a matching \"" +
+                                        newElev + "\" schedule. Please correct the schedule names so they match, then try again.";
+                                    tdNameMismatch.CommonButtons = TaskDialogCommonButtons.Close;
+                                    tdNameMismatch.Show();
+
+                                    return Result.Failed;
+                                }
+
                                 // get the schedule location
                                 XYZ instanceLoc = curSchedule.Point;
 
@@ -345,6 +362,23 @@ namespace LifestyleDesign.Elevation_Designation
                                 // get the schedule — try without star first, then with star
                                 ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName)
                                     ?? Utils.GetScheduleByName(curDoc, newSchedName + "*");
+
+                                if (newSchedule == null)
+                                {
+                                    t.RollBack();
+                                    tGroup.RollBack();
+
+                                    TaskDialog tdNameMismatch = new TaskDialog("Error");
+                                    tdNameMismatch.MainIcon = Icon.TaskDialogIconWarning;
+                                    tdNameMismatch.Title = "Schedule Name Mismatch";
+                                    tdNameMismatch.TitleAutoPrefix = false;
+                                    tdNameMismatch.MainContent = "The schedule \"" + curSchedule.Name + "\" does not have a matching \"" +
+                                        newElev + "\" schedule. Please correct the schedule names so they match, then try again.";
+                                    tdNameMismatch.CommonButtons = TaskDialogCommonButtons.Close;
+                                    tdNameMismatch.Show();
+
+                                    return Result.Failed;
+                                }
 
                                 // get the schedule location
                                 XYZ instanceLoc = curSchedule.Point;

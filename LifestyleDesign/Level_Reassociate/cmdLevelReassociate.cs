@@ -102,19 +102,47 @@ namespace LifestyleDesign
             int reassociatedElements = 0;
             int reassociatedParams = 0;
             Dictionary<ElementId, string> skippedElements = new Dictionary<ElementId, string>();
+            bool rolledBackEntirely = false;
 
             using (Transaction t = new Transaction(curDoc, "Reassociate Level"))
             {
                 t.Start();
 
+                // some elements (e.g. compound walls that can't extend their layers at the new
+                // elevation) will fail Revit's geometry validation. Isolate each element's change in
+                // its own sub-transaction so a single failure only rolls back that one element, and
+                // resolve failures silently instead of letting Revit pop up a blocking dialog.
+                FailureHandlingOptions failureOptions = t.GetFailureHandlingOptions();
+                failureOptions.SetFailuresPreprocessor(new SilentFailuresPreprocessor());
+                failureOptions.SetClearAfterRollback(true);
+                t.SetFailureHandlingOptions(failureOptions);
+
                 foreach (Element curElem in candidates)
                 {
-                    (int changed, bool hadUnresolvedReference) = ReassignLevelReferences(curElem, sourceId, targetId);
+                    int changed;
+                    bool hadUnresolvedReference;
 
-                    if (changed > 0)
+                    using (SubTransaction st = new SubTransaction(curDoc))
                     {
-                        reassociatedElements++;
-                        reassociatedParams += changed;
+                        st.Start();
+
+                        (changed, hadUnresolvedReference) = ReassignLevelReferences(curElem, sourceId, targetId);
+
+                        if (changed == 0)
+                        {
+                            st.RollBack();
+                        }
+                        else if (st.Commit() == TransactionStatus.Committed)
+                        {
+                            reassociatedElements++;
+                            reassociatedParams += changed;
+                        }
+                        else
+                        {
+                            // Revit couldn't resolve a geometry error caused by this change
+                            // (e.g. a compound wall that can't extend its layers) - rolled back
+                            hadUnresolvedReference = true;
+                        }
                     }
 
                     if (hadUnresolvedReference)
@@ -123,7 +151,14 @@ namespace LifestyleDesign
                     }
                 }
 
-                t.Commit();
+                rolledBackEntirely = t.Commit() != TransactionStatus.Committed;
+            }
+
+            if (rolledBackEntirely)
+            {
+                Utils.TaskDialogError("Error", "Reassociate Level",
+                    "Revit could not complete the reassociation and rolled back all changes. No elements were modified; nothing was deleted.");
+                return Result.Failed;
             }
 
             // verify: anything Revit still considers associated with the source level that wasn't
@@ -155,8 +190,9 @@ namespace LifestyleDesign
             {
                 summaryMessage.AppendLine();
                 summaryMessage.AppendLine($"The following {skippedElements.Count} element(s) still reference '{sourceLevel.Name}' and could not be updated " +
-                    "automatically because their level parameter is read-only in this project. " +
-                    $"Resolve these manually before '{sourceLevel.Name}' can be deleted:");
+                    "automatically - either their level parameter is read-only in this project, or Revit could not resolve a geometry " +
+                    $"error caused by the change (e.g. a compound wall that can't extend its layers). Resolve these manually before " +
+                    $"'{sourceLevel.Name}' can be deleted:");
 
                 foreach (string skipped in skippedElements.Values)
                 {
@@ -183,14 +219,30 @@ namespace LifestyleDesign
                 {
                     try
                     {
+                        TransactionStatus deleteStatus;
+
                         using (Transaction t = new Transaction(curDoc, "Delete Level"))
                         {
                             t.Start();
+
+                            FailureHandlingOptions failureOptions = t.GetFailureHandlingOptions();
+                            failureOptions.SetFailuresPreprocessor(new SilentFailuresPreprocessor());
+                            failureOptions.SetClearAfterRollback(true);
+                            t.SetFailureHandlingOptions(failureOptions);
+
                             curDoc.Delete(sourceId);
-                            t.Commit();
+                            deleteStatus = t.Commit();
                         }
 
-                        Utils.TaskDialogInformation("Summary", "Reassociate Level", $"'{sourceLevel.Name}' has been deleted.");
+                        if (deleteStatus == TransactionStatus.Committed)
+                        {
+                            Utils.TaskDialogInformation("Summary", "Reassociate Level", $"'{sourceLevel.Name}' has been deleted.");
+                        }
+                        else
+                        {
+                            Utils.TaskDialogError("Error", "Reassociate Level",
+                                $"'{sourceLevel.Name}' could not be deleted; Revit could not resolve an error and rolled back the deletion.");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -253,6 +305,36 @@ namespace LifestyleDesign
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Dismisses warnings and rolls back errors without ever showing Revit's interactive
+        /// failure dialog, so a single element that can't resolve (e.g. a compound wall that
+        /// can't extend its layers at the new elevation) doesn't block the whole command on a
+        /// modal prompt the user has no good way to answer.
+        /// </summary>
+        private class SilentFailuresPreprocessor : IFailuresPreprocessor
+        {
+            public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
+            {
+                bool hasUnresolvedError = false;
+
+                foreach (FailureMessageAccessor failure in failuresAccessor.GetFailureMessages())
+                {
+                    if (failure.GetSeverity() == FailureSeverity.Warning)
+                    {
+                        failuresAccessor.DeleteWarning(failure);
+                    }
+                    else
+                    {
+                        hasUnresolvedError = true;
+                    }
+                }
+
+                return hasUnresolvedError
+                    ? FailureProcessingResult.ProceedWithRollBack
+                    : FailureProcessingResult.Continue;
+            }
         }
 
         private static string DescribeElement(Element elem)

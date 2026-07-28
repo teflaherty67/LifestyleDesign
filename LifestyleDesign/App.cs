@@ -44,6 +44,7 @@ namespace LifestyleDesign
             // create button data instances for Panel 3
             PushButtonData btnData3_1 = cmdElevDesignation.GetButtonData();
             PushButtonData btnData3_2 = cmdCreateSchedules.GetButtonData();
+            PushButtonData btnData3_3 = cmdLevelReassociate.GetButtonData();
 
             // create button data instances for panel 7
             PushButtonData btnData7_1 = cmdCreateSheetGroup.GetButtonData();
@@ -69,6 +70,7 @@ namespace LifestyleDesign
             // create buttons for panel 3
             PushButton myBtn3_1 = panel3.AddItem(btnData3_1) as PushButton;
             PushButton myBtn3_2 = panel3.AddItem(btnData3_2) as PushButton;
+            PushButton myBtn3_3 = panel3.AddItem(btnData3_3) as PushButton;
 
             // create buttons for panel 7
             PushButton myBtn7_1 = panel7.AddItem(btnData7_1) as PushButton;

@@ -208,7 +208,7 @@ namespace LifestyleDesign
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
                 Properties.Resources.IncrementSheets_32,
                 Properties.Resources.IncrementSheets_16,
-                "This is a tooltip for Button 1");
+                "Increments the sheet number of selected sheets by the user provided value");
 
             return myButtonData.Data;
         }

@@ -87,7 +87,7 @@ namespace LifestyleDesign
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
                 Properties.Resources.SelectSheets_32,
                 Properties.Resources.SelectSheets_16,
-                "This is a tooltip for Button 1");
+                "Select sheets from a searchable list, optionally filtered by sheet set.");
 
             return myButtonData.Data;
         }

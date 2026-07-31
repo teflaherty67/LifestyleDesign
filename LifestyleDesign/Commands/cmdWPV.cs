@@ -95,6 +95,18 @@ namespace LifestyleDesign
                 }
             }
 
+            // find the Standard text note type
+            TextNoteType standardTextType = new FilteredElementCollector(curDoc)
+                .OfClass(typeof(TextNoteType))
+                .Cast<TextNoteType>()
+                .FirstOrDefault(tnt => tnt.Name == "Standard");
+
+            if (standardTextType == null)
+            {
+                Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a text note type named 'Standard' in the project.");
+                return Result.Failed;
+            }
+
             using (Transaction t = new Transaction(curDoc))
             {
                 t.Start("Create Visitability Plan");
@@ -117,6 +129,62 @@ namespace LifestyleDesign
 
                 // assign the view template
                 newView.ViewTemplateId = viewTemplate.Id;
+
+                // recreate the existing text notes using the Standard type, center justified
+                List<TextNote> existingTextNotes = new FilteredElementCollector(curDoc, newView.Id)
+                    .OfClass(typeof(TextNote))
+                    .Cast<TextNote>()
+                    .ToList();
+
+                List<(XYZ Coord, double Width, string Text)> textNoteData = existingTextNotes
+                    .Select(tn => (tn.Coord, tn.Width, tn.Text))
+                    .ToList();
+
+                curDoc.Delete(existingTextNotes.Select(tn => tn.Id).ToList());
+
+                foreach (var noteData in textNoteData)
+                {
+                    TextNoteOptions textOptions = new TextNoteOptions(standardTextType.Id)
+                    {
+                        HorizontalAlignment = HorizontalTextAlignment.Center
+                    };
+
+                    if (noteData.Width > 0.001)
+                    {
+                        TextNote.Create(curDoc, newView.Id, noteData.Coord, noteData.Width, noteData.Text, textOptions);
+                    }
+                    else
+                    {
+                        TextNote.Create(curDoc, newView.Id, noteData.Coord, noteData.Text, textOptions);
+                    }
+                }
+
+                // delete all "Door Tag-Type Comments" door tag instances
+                List<ElementId> doorTagsToDelete = new FilteredElementCollector(curDoc, newView.Id)
+                    .OfCategory(BuiltInCategory.OST_DoorTags)
+                    .WhereElementIsNotElementType()
+                    .Cast<IndependentTag>()
+                    .Where(tag => (curDoc.GetElement(tag.GetTypeId()) as FamilySymbol)?.Family.Name == "Door Tag-Type Comments")
+                    .Select(tag => tag.Id)
+                    .ToList();
+
+                if (doorTagsToDelete.Count > 0)
+                {
+                    curDoc.Delete(doorTagsToDelete);
+                }
+
+                // delete all detail lines using the "Thermal envelope" line style
+                List<ElementId> thermalLinesToDelete = new FilteredElementCollector(curDoc, newView.Id)
+                    .OfClass(typeof(CurveElement))
+                    .Cast<CurveElement>()
+                    .Where(ce => ce.LineStyle != null && ce.LineStyle.Name == "Thermal envelope")
+                    .Select(ce => ce.Id)
+                    .ToList();
+
+                if (thermalLinesToDelete.Count > 0)
+                {
+                    curDoc.Delete(thermalLinesToDelete);
+                }
 
                 t.Commit();
             }

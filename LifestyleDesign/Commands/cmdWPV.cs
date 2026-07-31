@@ -95,7 +95,7 @@ namespace LifestyleDesign
                 }
             }
 
-            // find the Standard text note type
+            // find the STANDARD text note type
             TextNoteType standardTextType = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(TextNoteType))
                 .Cast<TextNoteType>()

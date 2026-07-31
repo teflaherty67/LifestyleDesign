@@ -130,33 +130,39 @@ namespace LifestyleDesign
                 // assign the view template
                 newView.ViewTemplateId = viewTemplate.Id;
 
-                // recreate the existing text notes using the Standard type, center justified
-                List<TextNote> existingTextNotes = new FilteredElementCollector(curDoc, newView.Id)
+                // delete all existing text notes in the new view
+                List<ElementId> existingTextNoteIds = new FilteredElementCollector(curDoc, newView.Id)
                     .OfClass(typeof(TextNote))
-                    .Cast<TextNote>()
+                    .ToElementIds()
                     .ToList();
 
-                List<(XYZ Coord, double Width, string Text)> textNoteData = existingTextNotes
-                    .Select(tn => (tn.Coord, tn.Width, tn.Text))
-                    .ToList();
+                if (existingTextNoteIds.Count > 0)
+                {
+                    curDoc.Delete(existingTextNoteIds);
+                }
 
-                curDoc.Delete(existingTextNotes.Select(tn => tn.Id).ToList());
+                // create the required visitability text notes using the Standard type, center justified
+                List<string> visitabilityNotes = new List<string>
+                {
+                    "Exterior visitable route to carport",
+                    "Visitable entrance: Option 2 (see notes)",
+                    "Visitable bath (see notes)",
+                    "Visitable entrance: Option 1 (see notes)",
+                    "Exterior visitable route to public street"
+                };
 
-                foreach (var noteData in textNoteData)
+                double verticalOffset = 1.5; // feet between stacked notes, so they don't land on top of each other
+
+                for (int i = 0; i < visitabilityNotes.Count; i++)
                 {
                     TextNoteOptions textOptions = new TextNoteOptions(standardTextType.Id)
                     {
                         HorizontalAlignment = HorizontalTextAlignment.Center
                     };
 
-                    if (noteData.Width > 0.001)
-                    {
-                        TextNote.Create(curDoc, newView.Id, noteData.Coord, noteData.Width, noteData.Text, textOptions);
-                    }
-                    else
-                    {
-                        TextNote.Create(curDoc, newView.Id, noteData.Coord, noteData.Text, textOptions);
-                    }
+                    XYZ noteLocation = new XYZ(0, -i * verticalOffset, 0);
+
+                    TextNote.Create(curDoc, newView.Id, noteLocation, visitabilityNotes[i], textOptions);
                 }
 
                 // delete all "Door Tag-Type Comments" door tag instances

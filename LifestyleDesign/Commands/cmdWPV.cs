@@ -238,33 +238,13 @@ namespace LifestyleDesign
                     curRoomTag.ChangeTypeId(newTagType.Id);
                 }
 
-                // find the Powder room, then find the door located at it (no phase lookups)
-                Room powderRoom = Utils.GetAllRooms(curDoc)
-                    .FirstOrDefault(r => (r.Name ?? "").IndexOf("Powder", StringComparison.OrdinalIgnoreCase) >= 0
-                        || (r.Name ?? "").IndexOf("Pwdr", StringComparison.OrdinalIgnoreCase) >= 0);
-
-                if (powderRoom == null)
-                {
-                    t.RollBack();
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a room named 'Powder' or 'Pwdr' in the project.");
-                    return Result.Failed;
-                }
-
-                BoundingBoxXYZ roomBox = powderRoom.get_BoundingBox(null);
-
-                double buffer = 2.0; // feet, to catch a door hosted in the room's bounding wall
-                XYZ boxMin = roomBox.Min - new XYZ(buffer, buffer, buffer);
-                XYZ boxMax = roomBox.Max + new XYZ(buffer, buffer, buffer);
+                // change the Powder room's door to a 32"x80" Privacy door
+                List<string> powderRoomNames = new List<string> { "Powder", "Pwdr" };
 
                 FamilyInstance powderDoor = Utils.GetAllDoors(curDoc)
-                    .FirstOrDefault(d =>
-                    {
-                        XYZ doorPoint = (d.Location as LocationPoint)?.Point;
-
-                        return doorPoint != null
-                            && doorPoint.X >= boxMin.X && doorPoint.X <= boxMax.X
-                            && doorPoint.Y >= boxMin.Y && doorPoint.Y <= boxMax.Y;
-                    });
+                    .FirstOrDefault(curDoor =>
+                        (curDoor.ToRoom != null && powderRoomNames.Any(n => curDoor.ToRoom.Name.IndexOf(n, StringComparison.OrdinalIgnoreCase) >= 0))
+                        || (curDoor.FromRoom != null && powderRoomNames.Any(n => curDoor.FromRoom.Name.IndexOf(n, StringComparison.OrdinalIgnoreCase) >= 0)));
 
                 if (powderDoor == null)
                 {

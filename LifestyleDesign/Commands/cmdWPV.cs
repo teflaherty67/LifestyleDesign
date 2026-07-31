@@ -241,9 +241,11 @@ namespace LifestyleDesign
                 // change the Powder room's door to a 32"x80" Privacy door
                 Phase curPhase = curDoc.Phases.get_Item(curDoc.Phases.Size - 1);
 
+                List<string> powderRoomNames = new List<string> { "Powder", "Pwdr" };
+
                 FamilyInstance powderDoor = Utils.GetAllDoors(curDoc)
-                    .FirstOrDefault(d => d.get_FromRoom(curPhase)?.Name == "Powder"
-                        || d.get_ToRoom(curPhase)?.Name == "Powder");
+                    .FirstOrDefault(d => powderRoomNames.Contains(d.get_FromRoom(curPhase)?.Name, StringComparer.OrdinalIgnoreCase)
+                        || powderRoomNames.Contains(d.get_ToRoom(curPhase)?.Name, StringComparer.OrdinalIgnoreCase));
 
                 if (powderDoor == null)
                 {

@@ -99,11 +99,11 @@ namespace LifestyleDesign
             TextNoteType standardTextType = new FilteredElementCollector(curDoc)
                 .OfClass(typeof(TextNoteType))
                 .Cast<TextNoteType>()
-                .FirstOrDefault(tnt => tnt.Name == "Standard");
+                .FirstOrDefault(tnt => tnt.Name == "STANDARD");
 
             if (standardTextType == null)
             {
-                Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a text note type named 'Standard' in the project.");
+                Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a text note type named 'STANDARD' in the project.");
                 return Result.Failed;
             }
 

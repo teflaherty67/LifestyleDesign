@@ -239,30 +239,17 @@ namespace LifestyleDesign
                 }
 
                 // change the Powder room's door to a 32"x80" Privacy door
-                List<string> powderRoomNames = new List<string> { "Powder", "Pwdr" };
-
-                FamilyInstance powderDoor = null;
-
-                foreach (FamilyInstance curDoor in Utils.GetAllDoors(curDoc))
-                {
-                    foreach (Phase curPhase in curDoc.Phases)
+                FamilyInstance powderDoor = Utils.GetAllDoors(curDoc)
+                    .FirstOrDefault(d =>
                     {
-                        string fromRoomName = curDoor.get_FromRoom(curPhase)?.Name;
-                        string toRoomName = curDoor.get_ToRoom(curPhase)?.Name;
+                        string fromRoomValue = d.LookupParameter("From Room")?.AsValueString() ?? "";
+                        string toRoomValue = d.LookupParameter("To Room")?.AsValueString() ?? "";
 
-                        if (powderRoomNames.Contains(fromRoomName, StringComparer.OrdinalIgnoreCase)
-                            || powderRoomNames.Contains(toRoomName, StringComparer.OrdinalIgnoreCase))
-                        {
-                            powderDoor = curDoor;
-                            break;
-                        }
-                    }
-
-                    if (powderDoor != null)
-                    {
-                        break;
-                    }
-                }
+                        return fromRoomValue.IndexOf("Powder", StringComparison.OrdinalIgnoreCase) >= 0
+                            || fromRoomValue.IndexOf("Pwdr", StringComparison.OrdinalIgnoreCase) >= 0
+                            || toRoomValue.IndexOf("Powder", StringComparison.OrdinalIgnoreCase) >= 0
+                            || toRoomValue.IndexOf("Pwdr", StringComparison.OrdinalIgnoreCase) >= 0;
+                    });
 
                 if (powderDoor == null)
                 {

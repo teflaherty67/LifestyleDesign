@@ -238,6 +238,40 @@ namespace LifestyleDesign
                     curRoomTag.ChangeTypeId(newTagType.Id);
                 }
 
+                // change the Powder room's door to a 32"x80" Privacy door
+                Phase curPhase = curDoc.Phases.get_Item(curDoc.Phases.Size - 1);
+
+                FamilyInstance powderDoor = Utils.GetAllDoors(curDoc)
+                    .FirstOrDefault(d => d.get_FromRoom(curPhase)?.Name == "Powder"
+                        || d.get_ToRoom(curPhase)?.Name == "Powder");
+
+                if (powderDoor == null)
+                {
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a door serving the 'Powder' room.");
+                    return Result.Failed;
+                }
+
+                string powderDoorFamilyName = "Flush Single w_Hardware";
+                string powderDoorTypeName = "32\"x80\" Privacy";
+
+                FamilySymbol powderDoorType = Utils.FindFamilySymbol(curDoc, powderDoorFamilyName, powderDoorTypeName);
+
+                if (powderDoorType == null)
+                {
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find door type '{powderDoorTypeName}' in family '{powderDoorFamilyName}'.");
+                    return Result.Failed;
+                }
+
+                if (!powderDoorType.IsActive)
+                {
+                    powderDoorType.Activate();
+                    curDoc.Regenerate();
+                }
+
+                powderDoor.ChangeTypeId(powderDoorType.Id);
+
                 t.Commit();
             }
 

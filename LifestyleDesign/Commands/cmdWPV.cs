@@ -1,3 +1,4 @@
+using Autodesk.Revit.DB.Architecture;
 using LifestyleDesign.Common;
 
 namespace LifestyleDesign
@@ -190,6 +191,51 @@ namespace LifestyleDesign
                 if (thermalLinesToDelete.Count > 0)
                 {
                     curDoc.Delete(thermalLinesToDelete);
+                }
+
+                // normalize room tag types in the new view
+                List<RoomTag> newViewRoomTags = new FilteredElementCollector(curDoc, newView.Id)
+                    .OfCategory(BuiltInCategory.OST_RoomTags)
+                    .WhereElementIsNotElementType()
+                    .Cast<RoomTag>()
+                    .ToList();
+
+                foreach (RoomTag curRoomTag in newViewRoomTags)
+                {
+                    string curTypeName = curRoomTag.RoomTagType.Name;
+
+                    string newTypeName = null;
+                    if (curTypeName.StartsWith("Small") && curTypeName.EndsWith("single"))
+                    {
+                        newTypeName = "Small - Name,single";
+                    }
+                    else if (curTypeName.StartsWith("Small") && curTypeName.EndsWith("double"))
+                    {
+                        newTypeName = "Small - Name,double";
+                    }
+
+                    if (newTypeName == null || curTypeName == newTypeName)
+                    {
+                        continue;
+                    }
+
+                    string familyName = curRoomTag.RoomTagType.Family.Name;
+                    FamilySymbol newTagType = Utils.FindFamilySymbol(curDoc, familyName, newTypeName);
+
+                    if (newTagType == null)
+                    {
+                        t.RollBack();
+                        Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find room tag type '{newTypeName}' in family '{familyName}'.");
+                        return Result.Failed;
+                    }
+
+                    if (!newTagType.IsActive)
+                    {
+                        newTagType.Activate();
+                        curDoc.Regenerate();
+                    }
+
+                    curRoomTag.ChangeTypeId(newTagType.Id);
                 }
 
                 t.Commit();

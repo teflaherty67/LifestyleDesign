@@ -2876,6 +2876,7 @@ namespace LifestyleDesign.Common
         internal static ElementId ImportViewTemplates(Document sourceDoc, View sourceTemplate, Document targetDoc)
         {
             CopyPasteOptions copyPasteOptions = new CopyPasteOptions();
+            copyPasteOptions.SetDuplicateTypeNamesHandler(new UseDestinationDuplicateTypeNamesHandler());
 
             ElementId sourceTemplateId = sourceTemplate.Id;
 
@@ -2885,6 +2886,54 @@ namespace LifestyleDesign.Common
             ElementTransformUtils.CopyElements(sourceDoc, elementIds, targetDoc, Autodesk.Revit.DB.Transform.Identity, copyPasteOptions);
 
             return sourceTemplate.Id;
+        }
+
+        // brings in line styles that don't already exist in the target by name; never touches existing ones
+        internal static int ImportNewLineStyles(Document sourceDoc, Document targetDoc)
+        {
+            Category sourceLinesCategory = sourceDoc.Settings.Categories.get_Item(BuiltInCategory.OST_Lines);
+            Category targetLinesCategory = targetDoc.Settings.Categories.get_Item(BuiltInCategory.OST_Lines);
+
+            if (sourceLinesCategory?.SubCategories == null || targetLinesCategory?.SubCategories == null)
+            {
+                return 0;
+            }
+
+            HashSet<string> existingNames = new HashSet<string>();
+            foreach (Category subCat in targetLinesCategory.SubCategories)
+            {
+                existingNames.Add(subCat.Name);
+            }
+
+            List<ElementId> newLineStyleIds = new List<ElementId>();
+            foreach (Category subCat in sourceLinesCategory.SubCategories)
+            {
+                if (!existingNames.Contains(subCat.Name))
+                {
+                    newLineStyleIds.Add(subCat.Id);
+                }
+            }
+
+            if (newLineStyleIds.Count == 0)
+            {
+                return 0;
+            }
+
+            CopyPasteOptions copyPasteOptions = new CopyPasteOptions();
+            copyPasteOptions.SetDuplicateTypeNamesHandler(new UseDestinationDuplicateTypeNamesHandler());
+
+            ElementTransformUtils.CopyElements(sourceDoc, newLineStyleIds, targetDoc, Autodesk.Revit.DB.Transform.Identity, copyPasteOptions);
+
+            return newLineStyleIds.Count;
+        }
+
+        // resolves any duplicate type names encountered during a copy by keeping the destination's existing type, never overwriting it
+        private class UseDestinationDuplicateTypeNamesHandler : IDuplicateTypeNamesHandler
+        {
+            public DuplicateTypeAction OnDuplicateTypeNamesFound(DuplicateTypeNamesHandlerArgs args)
+            {
+                return DuplicateTypeAction.UseDestinationTypes;
+            }
         }
 
         internal static View GetViewTemplateByNameContains(Document curDoc, string vtName)

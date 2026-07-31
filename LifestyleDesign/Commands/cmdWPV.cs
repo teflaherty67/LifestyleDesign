@@ -60,10 +60,16 @@ namespace LifestyleDesign
                         return Result.Failed;
                     }
 
-                    using (Transaction tImport = new Transaction(curDoc, "Import View Template"))
+                    using (Transaction tImport = new Transaction(curDoc, "Import Project Standards"))
                     {
                         tImport.Start();
+
+                        // bring in any line styles from the source file that don't already exist (new only, never overwrite)
+                        Utils.ImportNewLineStyles(sourceDoc, curDoc);
+
+                        // bring in the view template (new only, never overwrite existing dependent types)
                         Utils.ImportViewTemplates(sourceDoc, sourceTemplate, curDoc);
+
                         tImport.Commit();
                     }
 

@@ -297,7 +297,7 @@ namespace LifestyleDesign
 
         internal static PushButtonData GetButtonData()
         {
-            string buttonInternalName = "btnCmd2_4";
+            string buttonInternalName = "btnCmd1_5";
             string buttonTitle = "Update View\rTemplates";
             string methodBase = MethodBase.GetCurrentMethod().DeclaringType?.FullName;
 

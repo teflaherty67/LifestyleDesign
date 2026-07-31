@@ -36,13 +36,57 @@ namespace LifestyleDesign
                 return Result.Failed;
             }
 
-            // find the view template to assign
-            View viewTemplate = Utils.GetViewTemplateByName(curDoc, "01-Floor Visitability");
+            // view template settings
+            string templateName = "01-Floor Visitability";
+            string templateSourcePath = @"S:\Shared Folders\Lifestyle USA Design\LGI Homes\Central Texas\Terrata Homes\Whisper Valley (WPV)\Dylan\Dylan(R)-CTX(0-8-27'4)WPV.rvt";
 
+            // find the view template to assign
+            View viewTemplate = Utils.GetViewTemplateByName(curDoc, templateName);
+
+            // if it's not already in the project, load it from the source file
             if (viewTemplate == null)
             {
-                Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a view template named '01-Floor Visitability' in the project.");
-                return Result.Failed;
+                Document sourceDoc = null;
+
+                try
+                {
+                    sourceDoc = uidoc.Application.Application.OpenDocumentFile(templateSourcePath);
+
+                    View sourceTemplate = Utils.GetViewTemplateByName(sourceDoc, templateName);
+
+                    if (sourceTemplate == null)
+                    {
+                        Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find a view template named '{templateName}' in the project or in the source file:\n{templateSourcePath}");
+                        return Result.Failed;
+                    }
+
+                    using (Transaction tImport = new Transaction(curDoc, "Import View Template"))
+                    {
+                        tImport.Start();
+                        Utils.ImportViewTemplates(sourceDoc, sourceTemplate, curDoc);
+                        tImport.Commit();
+                    }
+
+                    viewTemplate = Utils.GetViewTemplateByName(curDoc, templateName);
+
+                    if (viewTemplate == null)
+                    {
+                        Utils.TaskDialogError("Error", "Create Visitability Plan", $"The view template '{templateName}' failed to import from the source file.");
+                        return Result.Failed;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not load the view template from the source file:\n{templateSourcePath}\n\n{ex.Message}");
+                    return Result.Failed;
+                }
+                finally
+                {
+                    if (sourceDoc != null)
+                    {
+                        sourceDoc.Close(false);
+                    }
+                }
             }
 
             using (Transaction t = new Transaction(curDoc))

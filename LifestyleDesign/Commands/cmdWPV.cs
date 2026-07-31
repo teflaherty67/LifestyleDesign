@@ -238,34 +238,33 @@ namespace LifestyleDesign
                     curRoomTag.ChangeTypeId(newTagType.Id);
                 }
 
-                // change the Powder room's door to a 32"x80" Privacy door
-                FamilyInstance powderDoor = null;
+                // find the Powder room, then find the door located at it (no phase lookups)
+                Room powderRoom = Utils.GetAllRooms(curDoc)
+                    .FirstOrDefault(r => (r.Name ?? "").IndexOf("Powder", StringComparison.OrdinalIgnoreCase) >= 0
+                        || (r.Name ?? "").IndexOf("Pwdr", StringComparison.OrdinalIgnoreCase) >= 0);
 
-                foreach (FamilyInstance curDoor in Utils.GetAllDoors(curDoc))
+                if (powderRoom == null)
                 {
-                    bool isPowderDoor = false;
-
-                    foreach (Phase curPhase in curDoc.Phases)
-                    {
-                        string fromRoomValue = curDoor.get_FromRoom(curPhase)?.Name ?? "";
-                        string toRoomValue = curDoor.get_ToRoom(curPhase)?.Name ?? "";
-
-                        if (fromRoomValue.IndexOf("Powder", StringComparison.OrdinalIgnoreCase) >= 0
-                            || fromRoomValue.IndexOf("Pwdr", StringComparison.OrdinalIgnoreCase) >= 0
-                            || toRoomValue.IndexOf("Powder", StringComparison.OrdinalIgnoreCase) >= 0
-                            || toRoomValue.IndexOf("Pwdr", StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            isPowderDoor = true;
-                            break;
-                        }
-                    }
-
-                    if (isPowderDoor)
-                    {
-                        powderDoor = curDoor;
-                        break;
-                    }
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a room named 'Powder' or 'Pwdr' in the project.");
+                    return Result.Failed;
                 }
+
+                BoundingBoxXYZ roomBox = powderRoom.get_BoundingBox(null);
+
+                double buffer = 2.0; // feet, to catch a door hosted in the room's bounding wall
+                XYZ boxMin = roomBox.Min - new XYZ(buffer, buffer, buffer);
+                XYZ boxMax = roomBox.Max + new XYZ(buffer, buffer, buffer);
+
+                FamilyInstance powderDoor = Utils.GetAllDoors(curDoc)
+                    .FirstOrDefault(d =>
+                    {
+                        XYZ doorPoint = (d.Location as LocationPoint)?.Point;
+
+                        return doorPoint != null
+                            && doorPoint.X >= boxMin.X && doorPoint.X <= boxMax.X
+                            && doorPoint.Y >= boxMin.Y && doorPoint.Y <= boxMax.Y;
+                    });
 
                 if (powderDoor == null)
                 {

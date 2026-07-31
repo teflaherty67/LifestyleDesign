@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RevitAddIns>  
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>LifestyleDesign</Text>
+    <Description>Some description</Description>
+    <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>
+    <FullClassName>LifestyleDesign.cmdWPV</FullClassName>
+    <ClientId>7de932ff-7f03-4d1b-b6fd-cf64de52b55c</ClientId>
+    <VendorId>RBA, Inc.</VendorId>
+    <VendorDescription>Lifestyle USA Design, www.lusad.com</VendorDescription>
+  </AddIn>
   <AddIn Type="Application">
     <Name>LifestyleDesign</Name>
     <Assembly>LifestyleDesign\LifestyleDesign.dll</Assembly>

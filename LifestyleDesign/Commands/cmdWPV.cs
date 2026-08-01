@@ -273,33 +273,46 @@ namespace LifestyleDesign
 
                 powderDoor.ChangeTypeId(powderDoorType.Id);
 
-                // find an existing "A" series sheet (e.g. "A2a") to read the current elevation letter & title block from
-                // prefer sheets marked Category = "Active", in case more than one elevation's sheets exist in the project
+                // use the "First Floor Plan" sheet as the reference for elevation letter, title block, and
+                // browser grouping - it's guaranteed to be a normal content sheet, unlike the Cover sheet, which
+                // an arbitrary "any A-series sheet" pick could land on and would carry the wrong title block
                 List<ViewSheet> allSheets = Utils.GetAllSheets(curDoc);
 
-                ViewSheet referenceSheet = null;
+                ViewSheet referenceSheet = allSheets
+                    .FirstOrDefault(s => s.Name == "First Floor Plan" && Utils.GetParameterValueByName(s, "Category") == "Active")
+                    ?? allSheets.FirstOrDefault(s => s.Name == "First Floor Plan");
+
                 string elevLetter = null;
 
-                foreach (ViewSheet curSheet in allSheets)
+                if (referenceSheet != null)
                 {
-                    if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out _, out string letter)
-                        && Utils.GetParameterValueByName(curSheet, "Category") == "Active")
-                    {
-                        referenceSheet = curSheet;
-                        elevLetter = letter;
-                        break;
-                    }
+                    TryParseASeriesSheetNumber(referenceSheet.SheetNumber, out _, out elevLetter);
                 }
 
-                if (referenceSheet == null)
+                if (referenceSheet == null || elevLetter == null)
                 {
+                    // fall back to any "A" series sheet, preferring one marked Category = "Active"
                     foreach (ViewSheet curSheet in allSheets)
                     {
-                        if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out _, out string letter))
+                        if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out _, out string letter)
+                            && Utils.GetParameterValueByName(curSheet, "Category") == "Active")
                         {
                             referenceSheet = curSheet;
                             elevLetter = letter;
                             break;
+                        }
+                    }
+
+                    if (referenceSheet == null)
+                    {
+                        foreach (ViewSheet curSheet in allSheets)
+                        {
+                            if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out _, out string letter))
+                            {
+                                referenceSheet = curSheet;
+                                elevLetter = letter;
+                                break;
+                            }
                         }
                     }
                 }
@@ -359,25 +372,14 @@ namespace LifestyleDesign
                 visitabilitySheet.SheetNumber = "A1" + elevLetter;
                 visitabilitySheet.Name = "Visitability Plan";
 
-                string elevLetterUpper = elevLetter.ToUpper();
-
-                string codeFilter = elevLetterUpper switch
-                {
-                    "A" => "1",
-                    "B" => "2",
-                    "C" => "3",
-                    "D" => "4",
-                    "S" => "5",
-                    "T" => "6",
-                    _ => ""
-                };
-
-                // these are bookkeeping fields, not critical to the sheet itself - skip any that are locked
-                // rather than failing the whole command over them
-                TrySetParameterByName(visitabilitySheet, "Category", "Active");
-                TrySetParameterByName(visitabilitySheet, "Group", "Elevation " + elevLetterUpper);
-                TrySetParameterByName(visitabilitySheet, "Elevation Designation", elevLetterUpper);
-                TrySetParameterByName(visitabilitySheet, "Code Filter", codeFilter);
+                // copy these bookkeeping fields verbatim from the reference sheet - they may follow a structured
+                // project-specific format (e.g. "S-0/E/D/8") rather than a simple "Elevation X" string, so match
+                // whatever convention this project actually uses instead of reconstructing it. Non-critical to the
+                // sheet itself, so skip any that are locked rather than failing the whole command over them
+                TrySetParameterByName(visitabilitySheet, "Category", Utils.GetParameterValueByName(referenceSheet, "Category"));
+                TrySetParameterByName(visitabilitySheet, "Group", Utils.GetParameterValueByName(referenceSheet, "Group"));
+                TrySetParameterByName(visitabilitySheet, "Elevation Designation", Utils.GetParameterValueByName(referenceSheet, "Elevation Designation"));
+                TrySetParameterByName(visitabilitySheet, "Code Filter", Utils.GetParameterValueByName(referenceSheet, "Code Filter"));
 
                 // place the Visitability Plan view on the new sheet, centered on its title block
                 FamilyInstance newTitleBlock = new FilteredElementCollector(curDoc, visitabilitySheet.Id)
@@ -414,6 +416,11 @@ namespace LifestyleDesign
 
         private static void TrySetParameterByName(Element element, string paramName, string value)
         {
+            if (value == null)
+            {
+                return;
+            }
+
             Parameter param = element.LookupParameter(paramName);
 
             if (param != null && !param.IsReadOnly)

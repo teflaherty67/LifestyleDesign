@@ -273,12 +273,158 @@ namespace LifestyleDesign
 
                 powderDoor.ChangeTypeId(powderDoorType.Id);
 
+                // find an existing "A" series sheet (e.g. "A2a") to read the current elevation letter & title block from
+                // prefer sheets marked Category = "Active", in case more than one elevation's sheets exist in the project
+                List<ViewSheet> allSheets = Utils.GetAllSheets(curDoc);
+
+                ViewSheet referenceSheet = null;
+                string elevLetter = null;
+
+                foreach (ViewSheet curSheet in allSheets)
+                {
+                    if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out _, out string letter)
+                        && Utils.GetParameterValueByName(curSheet, "Category") == "Active")
+                    {
+                        referenceSheet = curSheet;
+                        elevLetter = letter;
+                        break;
+                    }
+                }
+
+                if (referenceSheet == null)
+                {
+                    foreach (ViewSheet curSheet in allSheets)
+                    {
+                        if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out _, out string letter))
+                        {
+                            referenceSheet = curSheet;
+                            elevLetter = letter;
+                            break;
+                        }
+                    }
+                }
+
+                if (referenceSheet == null)
+                {
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find an existing 'A' series sheet to determine the current elevation designation.");
+                    return Result.Failed;
+                }
+
+                // collect every "A" series sheet for this elevation, numbered 1 and up (leave the Cover sheet, A0x, alone)
+                List<(ViewSheet Sheet, int Number)> aSeriesSheets = allSheets
+                    .Where(curSheet => TryParseASeriesSheetNumber(curSheet.SheetNumber, out int num, out string letter)
+                        && letter.Equals(elevLetter, StringComparison.OrdinalIgnoreCase)
+                        && num >= 1)
+                    .Select(curSheet =>
+                    {
+                        TryParseASeriesSheetNumber(curSheet.SheetNumber, out int num, out _);
+                        return (Sheet: curSheet, Number: num);
+                    })
+                    .ToList();
+
+                // shift them up by 1, highest number first, to free up "A1" + elevation letter without collisions
+                foreach (var entry in aSeriesSheets.OrderByDescending(e => e.Number))
+                {
+                    entry.Sheet.SheetNumber = "A" + (entry.Number + 1) + elevLetter;
+                }
+
+                // match the title block already used on the reference sheet
+                FamilyInstance existingTitleBlock = new FilteredElementCollector(curDoc, referenceSheet.Id)
+                    .OfCategory(BuiltInCategory.OST_TitleBlocks)
+                    .WhereElementIsNotElementType()
+                    .Cast<FamilyInstance>()
+                    .FirstOrDefault();
+
+                if (existingTitleBlock == null)
+                {
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a title block on the reference sheet to match for the new sheet.");
+                    return Result.Failed;
+                }
+
+                // create the new sheet in the now-vacant "A1" + elevation letter slot
+                ViewSheet visitabilitySheet = ViewSheet.Create(curDoc, existingTitleBlock.Symbol.Id);
+                visitabilitySheet.SheetNumber = "A1" + elevLetter;
+                visitabilitySheet.Name = "Visitability Plan";
+
+                string elevLetterUpper = elevLetter.ToUpper();
+
+                string codeFilter = elevLetterUpper switch
+                {
+                    "A" => "1",
+                    "B" => "2",
+                    "C" => "3",
+                    "D" => "4",
+                    "S" => "5",
+                    "T" => "6",
+                    _ => ""
+                };
+
+                Utils.SetParameterByName(visitabilitySheet, "Category", "Active");
+                Utils.SetParameterByName(visitabilitySheet, "Group", "Elevation " + elevLetterUpper);
+                Utils.SetParameterByName(visitabilitySheet, "Elevation Designation", elevLetterUpper);
+                Utils.SetParameterByName(visitabilitySheet, "Code Filter", codeFilter);
+
+                // place the Visitability Plan view on the new sheet, centered on its title block
+                FamilyInstance newTitleBlock = new FilteredElementCollector(curDoc, visitabilitySheet.Id)
+                    .OfCategory(BuiltInCategory.OST_TitleBlocks)
+                    .WhereElementIsNotElementType()
+                    .Cast<FamilyInstance>()
+                    .FirstOrDefault();
+
+                XYZ viewportLocation = new XYZ(2.0, 1.5, 0);
+
+                BoundingBoxXYZ titleBlockBox = newTitleBlock?.get_BoundingBox(visitabilitySheet);
+
+                if (titleBlockBox != null)
+                {
+                    viewportLocation = (titleBlockBox.Min + titleBlockBox.Max) / 2.0;
+                }
+
+                if (!Viewport.CanAddViewToSheet(curDoc, visitabilitySheet.Id, newView.Id))
+                {
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not add the Visitability Plan view to the new sheet.");
+                    return Result.Failed;
+                }
+
+                Viewport.Create(curDoc, visitabilitySheet.Id, newView.Id, viewportLocation);
+
                 t.Commit();
             }
 
             Utils.TaskDialogInformation("Success", "Create Visitability Plan", "The Visitability Plan view has been created.");
 
             return Result.Succeeded;
+        }
+
+        private static bool TryParseASeriesSheetNumber(string sheetNumber, out int number, out string letterSuffix)
+        {
+            number = 0;
+            letterSuffix = null;
+
+            if (string.IsNullOrEmpty(sheetNumber) || sheetNumber.Length < 3 || sheetNumber[0] != 'A')
+            {
+                return false;
+            }
+
+            char lastChar = sheetNumber[sheetNumber.Length - 1];
+
+            if (!char.IsLetter(lastChar))
+            {
+                return false;
+            }
+
+            string middle = sheetNumber.Substring(1, sheetNumber.Length - 2);
+
+            if (!int.TryParse(middle, out number))
+            {
+                return false;
+            }
+
+            letterSuffix = lastChar.ToString();
+            return true;
         }
     }
 }

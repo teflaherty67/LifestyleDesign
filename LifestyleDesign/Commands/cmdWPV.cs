@@ -311,22 +311,24 @@ namespace LifestyleDesign
                     return Result.Failed;
                 }
 
-                // collect every "A" series sheet for this elevation, numbered 1 and up (leave the Cover sheet, A0x, alone)
-                List<(ViewSheet Sheet, int Number)> aSeriesSheets = allSheets
-                    .Where(curSheet => TryParseASeriesSheetNumber(curSheet.SheetNumber, out int num, out string letter)
-                        && letter.Equals(elevLetter, StringComparison.OrdinalIgnoreCase)
-                        && num >= 1)
-                    .Select(curSheet =>
+                // collect every "A" series sheet numbered 1 and up, across every elevation group present (leave each
+                // group's Cover sheet, A0x, alone). Sheet numbers stay in lockstep across elevation letters
+                // (A2a/A2b/A2c all mean the same content), so if more than one elevation group exists, they all
+                // need to shift together, not just the active one.
+                List<(ViewSheet Sheet, int Number, string Letter)> aSeriesSheets = new List<(ViewSheet, int, string)>();
+
+                foreach (ViewSheet curSheet in allSheets)
+                {
+                    if (TryParseASeriesSheetNumber(curSheet.SheetNumber, out int num, out string letter) && num >= 1)
                     {
-                        TryParseASeriesSheetNumber(curSheet.SheetNumber, out int num, out _);
-                        return (Sheet: curSheet, Number: num);
-                    })
-                    .ToList();
+                        aSeriesSheets.Add((curSheet, num, letter));
+                    }
+                }
 
                 // shift them up by 1, highest number first, to free up "A1" + elevation letter without collisions
                 foreach (var entry in aSeriesSheets.OrderByDescending(e => e.Number))
                 {
-                    entry.Sheet.SheetNumber = "A" + (entry.Number + 1) + elevLetter;
+                    entry.Sheet.SheetNumber = "A" + (entry.Number + 1) + entry.Letter;
                 }
 
                 // match the title block already used on the reference sheet

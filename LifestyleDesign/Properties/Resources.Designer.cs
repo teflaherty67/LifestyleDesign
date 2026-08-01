@@ -163,6 +163,26 @@ namespace LifestyleDesign.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] DupSheetGrp_16 {
+            get {
+                object obj = ResourceManager.GetObject("DupSheetGrp_16", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] DupSheetGrp_32 {
+            get {
+                object obj = ResourceManager.GetObject("DupSheetGrp_32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] FindReplace_16 {
             get {
                 object obj = ResourceManager.GetObject("FindReplace_16", resourceCulture);

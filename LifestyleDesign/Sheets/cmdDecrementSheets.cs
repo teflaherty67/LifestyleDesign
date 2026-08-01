@@ -199,7 +199,7 @@ namespace LifestyleDesign
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
                 Properties.Resources.DecrementSheets_32,
                 Properties.Resources.DecrementSheets_16,
-                "This is a tooltip for Button 2");
+                "Decrements the sheet number of selected sheets by the user provided value");
 
             return myButtonData.Data;
         }

@@ -368,6 +368,8 @@ namespace LifestyleDesign
             return Result.Succeeded;
         }
 
+        #region Helper Methods
+
         private ElementId ImportBrowserOrg(Document sourceDoc, Document targetDoc, BrowserOrganization schedBrowserOrg)
         {
             CopyPasteOptions copyPasteOptions = new CopyPasteOptions();
@@ -396,21 +398,31 @@ namespace LifestyleDesign
             return null;
         }
 
+        #endregion
+
+
         internal static PushButtonData GetButtonData()
         {
-            // use this method to define the properties for this command in the Revit ribbon
-            string buttonInternalName = "btnCommand2";
-            string buttonTitle = "Button 2";
+            string buttonInternalName = "btnCmd1_4";
+            string buttonTitle = "Update Schedules";
+            string methodBase = MethodBase.GetCurrentMethod().DeclaringType?.FullName;
 
-            clsButtonData myButtonData = new clsButtonData(
-                buttonInternalName,
-                buttonTitle,
-                MethodBase.GetCurrentMethod().DeclaringType?.FullName,
-                Properties.Resources.UpdateSchedules_32,
-                Properties.Resources.UpdateSchedules_16,
-                "This is a tooltip for Button 2");
+            if (methodBase == null)
+            {
+                throw new InvalidOperationException("MethodBase.GetCurrentMethod().DeclaringType?.FullName is null");
+            }
+            else
+            {
+                clsButtonData myBtnData1 = new Classes.clsButtonData(
+                    buttonInternalName,
+                    buttonTitle,
+                    methodBase,
+                     Properties.Resources.UpdateSchedules_32,
+                     Properties.Resources.UpdateSchedules_16,
+                    "Updates schedules to new standards");
 
-            return myButtonData.Data;
+                return myBtnData1.Data;
+            }
         }
     }
 }

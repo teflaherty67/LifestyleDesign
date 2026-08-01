@@ -212,7 +212,7 @@ namespace LifestyleDesign
 
         internal static PushButtonData GetButtonData()
         {
-            string buttonInternalName = "btnCmd2_5";
+            string buttonInternalName = "btnCmd1_3";
             string buttonTitle = "Update\r Room Tags";
             string methodBase = MethodBase.GetCurrentMethod().DeclaringType?.FullName;
 
@@ -228,7 +228,7 @@ namespace LifestyleDesign
                     methodBase,
                     Properties.Resources.UpdateRoomTags_32,
                     Properties.Resources.UpdateRoomTags_16,
-                    "Updates view templates to new standards");
+                    "Updates room tags to new standards");
 
                 return myBtnData1.Data;
             }

@@ -328,6 +328,15 @@ namespace LifestyleDesign
                 // shift them up by 1, highest number first, to free up "A1" + elevation letter without collisions
                 foreach (var entry in aSeriesSheets.OrderByDescending(e => e.Number))
                 {
+                    Parameter sheetNumberParam = entry.Sheet.get_Parameter(BuiltInParameter.SHEET_NUMBER);
+
+                    if (sheetNumberParam == null || sheetNumberParam.IsReadOnly)
+                    {
+                        t.RollBack();
+                        Utils.TaskDialogError("Error", "Create Visitability Plan", $"Sheet '{entry.Sheet.SheetNumber}' has a read-only sheet number (it may be a placeholder/shared sheet) and can't be renumbered.");
+                        return Result.Failed;
+                    }
+
                     entry.Sheet.SheetNumber = "A" + (entry.Number + 1) + entry.Letter;
                 }
 
@@ -363,10 +372,12 @@ namespace LifestyleDesign
                     _ => ""
                 };
 
-                Utils.SetParameterByName(visitabilitySheet, "Category", "Active");
-                Utils.SetParameterByName(visitabilitySheet, "Group", "Elevation " + elevLetterUpper);
-                Utils.SetParameterByName(visitabilitySheet, "Elevation Designation", elevLetterUpper);
-                Utils.SetParameterByName(visitabilitySheet, "Code Filter", codeFilter);
+                // these are bookkeeping fields, not critical to the sheet itself - skip any that are locked
+                // rather than failing the whole command over them
+                TrySetParameterByName(visitabilitySheet, "Category", "Active");
+                TrySetParameterByName(visitabilitySheet, "Group", "Elevation " + elevLetterUpper);
+                TrySetParameterByName(visitabilitySheet, "Elevation Designation", elevLetterUpper);
+                TrySetParameterByName(visitabilitySheet, "Code Filter", codeFilter);
 
                 // place the Visitability Plan view on the new sheet, centered on its title block
                 FamilyInstance newTitleBlock = new FilteredElementCollector(curDoc, visitabilitySheet.Id)
@@ -399,6 +410,16 @@ namespace LifestyleDesign
             Utils.TaskDialogInformation("Success", "Create Visitability Plan", "The Visitability Plan view has been created.");
 
             return Result.Succeeded;
+        }
+
+        private static void TrySetParameterByName(Element element, string paramName, string value)
+        {
+            Parameter param = element.LookupParameter(paramName);
+
+            if (param != null && !param.IsReadOnly)
+            {
+                param.Set(value);
+            }
         }
 
         private static bool TryParseASeriesSheetNumber(string sheetNumber, out int number, out string letterSuffix)

@@ -2503,8 +2503,8 @@ namespace LifestyleDesign.Convert_Spec_Level
                 buttonInternalName,
                 buttonTitle,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
-                Properties.Resources.Blue_32,
-                Properties.Resources.Blue_16,
+                Properties.Resources.Red_32,
+                Properties.Resources.Red_16,
                 "This is a tooltip for Button 1");
 
             return myButtonData.Data;

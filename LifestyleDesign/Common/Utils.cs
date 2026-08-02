@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static LifestyleDesign.frmConvertSpecLevel;
 
 namespace LifestyleDesign.Common
 {
@@ -126,6 +127,19 @@ namespace LifestyleDesign.Common
 
         #region Elements - Architectural
 
+        internal static Wall SelectWall(UIDocument uidoc, string prompt)
+        {
+            try
+            {
+                Reference picked = uidoc.Selection.PickObject(ObjectType.Element, new WallSelectionFilter(), prompt);
+                return uidoc.Document.GetElement(picked.ElementId) as Wall;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         //return list of all doors in the current model
         public static List<FamilyInstance> GetAllDoors(Document curDoc)
         {
@@ -186,6 +200,15 @@ namespace LifestyleDesign.Common
 
         #region Families
 
+        internal static bool IsFamilyInstancePresent(Document curDoc, string familyName)
+        {
+            return new FilteredElementCollector(curDoc)
+                .OfClass(typeof(FamilyInstance))
+                .OfCategory(BuiltInCategory.OST_GenericModel)
+                .Cast<FamilyInstance>()
+                .Any(fi => fi.Symbol.Family.Name.Equals(familyName, StringComparison.OrdinalIgnoreCase));
+        }
+
         internal static FamilySymbol GetFamilySymbolByName(Document curDoc, string familyName, string typeName)
         {
             List<Family> m_famList = GetAllFamilies(curDoc);
@@ -212,22 +235,7 @@ namespace LifestyleDesign.Common
             }
 
             return null;
-        }
-
-        private static List<Family> GetAllFamilies(Document curDoc)
-        {
-            List<Family> m_returnList = new List<Family>();
-
-            FilteredElementCollector m_colFamilies = new FilteredElementCollector(curDoc)
-                .OfClass(typeof(Family));
-
-            foreach (Family family in m_colFamilies)
-            {
-                m_returnList.Add(family);
-            }
-
-            return m_returnList;
-        }
+        }       
 
         internal static Family LoadFamilyFromLibrary(Document curDoc, String filePath, string familyName)
         {
@@ -326,6 +334,25 @@ namespace LifestyleDesign.Common
             }
 
             return null;
+        }
+
+        public static List<FamilyInstance> GetAllGenericFamilies(Document curDoc)
+        {
+            ElementClassFilter m_famFilter = new ElementClassFilter(typeof(FamilyInstance));
+            ElementCategoryFilter m_typeFilter = new ElementCategoryFilter(BuiltInCategory.OST_GenericModel);
+            LogicalAndFilter andFilter = new LogicalAndFilter(m_famFilter, m_typeFilter);
+
+            FilteredElementCollector m_colGM = new FilteredElementCollector(curDoc);
+            m_colGM.WherePasses(andFilter);
+
+            List<FamilyInstance> m_famList = new List<FamilyInstance>();
+
+            foreach (FamilyInstance curFam in m_colGM)
+            {
+                m_famList.Add(curFam);
+            }
+
+            return m_famList;
         }
 
         #endregion
@@ -1891,6 +1918,39 @@ namespace LifestyleDesign.Common
 
         #region Rooms
 
+        /// <summary>
+        /// Retrieves all rooms from the document whose names contain the specified string,
+        /// and filters out rooms with zero or invalid area.
+        /// </summary>        
+        internal static List<Room> GetRoomByNameContains(Document curDoc, string nameRoom)
+        {
+            // Retrieve all rooms in the document
+            List<Room> m_roomList = GetAllRooms(curDoc);
+
+            // Initialize the list to hold the matching rooms
+            List<Room> m_returnList = new List<Room>();
+
+            // Iterate through all rooms
+            foreach (Room curRoom in m_roomList)
+            {
+                // Check if the room name contains the specified substring
+                if (curRoom != null &&
+                curRoom.Name != null &&
+                curRoom.Name.IndexOf(nameRoom, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    // Check if the room has a valid area (greater than 0)
+                    if (curRoom.Area > 0)
+                    {
+                        // Add the room to the result list
+                        m_returnList.Add(curRoom);
+                    }
+                }
+            }
+
+            // Return the filtered list of rooms
+            return m_returnList;
+        }
+
         internal static List<Room> GetAllRooms(Document curDoc)
         {
             FilteredElementCollector m_colRooms = new FilteredElementCollector(curDoc);
@@ -1913,6 +1973,28 @@ namespace LifestyleDesign.Common
             return m_roomTags;
         }
 
+        /// <summary>
+        /// Gets the center point of a room for note placement
+        /// </summary>
+        /// <returns>The center point or null if not found</returns>
+        internal static XYZ GetRoomCenterPoint(Room curRoom)
+        {
+            try
+            {
+                LocationPoint location = curRoom.Location as LocationPoint;
+                return location?.Point;
+            }
+            catch
+            {
+                // Fallback: use bounding box center
+                var bbox = curRoom.get_BoundingBox(null);
+                if (bbox != null)
+                {
+                    return (bbox.Min + bbox.Max) / 2;
+                }
+                return null;
+            }
+        }
 
         #endregion
 
@@ -2372,6 +2454,23 @@ namespace LifestyleDesign.Common
 
         #region Sheets
 
+        internal static ViewSheet GetSheetByName(Document curDoc, string sheetName)
+        {
+            //get all sheets
+            List<ViewSheet> curSheets = GetAllSheets(curDoc);
+
+            //loop through sheets and check sheet name
+            foreach (ViewSheet curSheet in curSheets)
+            {
+                if (curSheet.Name == sheetName)
+                {
+                    return curSheet;
+                }
+            }
+
+            return null;
+        }
+
         internal static List<ViewSheet> GetAndSortAllSheets(Document curDoc)
         {
             var m_returnList = new FilteredElementCollector(curDoc)
@@ -2632,6 +2731,27 @@ namespace LifestyleDesign.Common
 
         #endregion
 
+        #region Text Notes
+
+        public static List<TextNoteType> GetAllTextNoteTypes(Document curDoc)
+        {
+            List<TextNoteType> returnList = new FilteredElementCollector(curDoc)
+                .OfClass(typeof(TextNoteType))
+                .Cast<TextNoteType>()
+                .ToList();
+
+            return returnList;
+        }
+
+        public static TextNoteType GetTextNoteTypeByName(Document curDoc, string name)
+        {
+            List<TextNoteType> textNoteList = GetAllTextNoteTypes(curDoc).ToList();
+
+            return textNoteList.FirstOrDefault(curStyle => curStyle.Name == name);
+        }
+
+        #endregion
+
         #region Titleblocks
 
         internal static FamilySymbol GetTitleBlockByNameContains(Document curDoc, string tBlockName)
@@ -2747,6 +2867,29 @@ namespace LifestyleDesign.Common
         #endregion
 
         #region Views
+
+        internal static List<View> GetAllViewsByNameContains(Document curDoc, string viewName)
+        {
+            // create an empty list to hold the results
+            List<View> m_returnList = new List<View>();
+
+            // get all views in the document
+            List<View> m_allViews = GetAllViews(curDoc);
+
+            // loop through all views
+            foreach (View curView in m_allViews)
+            {
+                // check if the view name contains the specified string
+                if (curView.Name.IndexOf(viewName, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    // add the view to the return list
+                    m_returnList.Add(curView);
+                }
+            }
+
+            // return the list of views that match the criteria
+            return m_returnList;
+        }
 
         internal static List<View> GetAllViewsByNameContainsAndAssociatedLevel(Document curDoc, string viewName, string levelName)
         {

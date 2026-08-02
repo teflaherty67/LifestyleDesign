@@ -112,6 +112,20 @@ namespace LifestyleDesign
                 foreach (List<string> curSheetData in dataSheets)
                 {
                     FamilySymbol tblock = Utils.GetTitleBlockByNameContains(curDoc, curSheetData[2]);
+
+                    if (tblock == null)
+                    {
+                        // notify the user which titleblock could not be found
+                        Utils.TaskDialogWarning("Lifestyle Design", "Create Sheet Group",
+                            $"No titleblock found matching \"{curSheetData[2]}\". Load the titleblock family into the project and try again.");
+
+                        t.RollBack();
+                        return Result.Failed;
+                    }
+
+                    if (!tblock.IsActive)
+                        tblock.Activate();
+
                     ElementId tBlockId = tblock.Id;
 
                     ViewSheet curSheet = ViewSheet.Create(curDoc, tBlockId);

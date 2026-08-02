@@ -186,6 +186,49 @@ namespace LifestyleDesign.Common
 
         #region Families
 
+        internal static FamilySymbol GetFamilySymbolByName(Document curDoc, string familyName, string typeName)
+        {
+            List<Family> m_famList = GetAllFamilies(curDoc);
+
+            // loop through families in current document and look for match
+            foreach (Family curFam in m_famList)
+            {
+                if (curFam.Name == familyName)
+                {
+                    // get family symbol from family
+                    ISet<ElementId> fsList = curFam.GetFamilySymbolIds();
+
+                    // loop through family symbol ids and look for match
+                    foreach (ElementId fsID in fsList)
+                    {
+                        FamilySymbol fs = curDoc.GetElement(fsID) as FamilySymbol;
+
+                        if (fs.Name == typeName)
+                        {
+                            return fs;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private static List<Family> GetAllFamilies(Document curDoc)
+        {
+            List<Family> m_returnList = new List<Family>();
+
+            FilteredElementCollector m_colFamilies = new FilteredElementCollector(curDoc)
+                .OfClass(typeof(Family));
+
+            foreach (Family family in m_colFamilies)
+            {
+                m_returnList.Add(family);
+            }
+
+            return m_returnList;
+        }
+
         internal static Family LoadFamilyFromLibrary(Document curDoc, String filePath, string familyName)
         {
             // create the full path to the family file
@@ -2704,6 +2747,135 @@ namespace LifestyleDesign.Common
         #endregion
 
         #region Views
+
+        internal static List<View> GetAllViewsByNameContainsAndAssociatedLevel(Document curDoc, string viewName, string levelName)
+        {
+            // create an empty list to hold the results
+            List<View> m_returnList = new List<View>();
+
+            // get all views in the document
+            List<View> m_allViews = GetAllViews(curDoc);
+
+            // loop through all views
+            foreach (View curView in m_allViews)
+            {
+                // check if the view name contains the specified string
+                if (curView.Name.IndexOf(viewName, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    // get the associated level parameter
+                    Parameter associatedLevelParam = curView.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL);
+
+                    // check if the parameter is not null and has a value
+                    if (associatedLevelParam != null && associatedLevelParam.HasValue)
+                    {
+                        // get the level name from the parameter
+                        string levelNameFromParam = associatedLevelParam.AsString();
+
+                        // check if the level name matches the specified level name
+                        if (levelNameFromParam.Equals(levelName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            // filter out dependent views
+                            if (curView.GetPrimaryViewId() == ElementId.InvalidElementId)
+                            {
+                                // add the view to the return list
+                                m_returnList.Add(curView);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // return the list of views that match the criteria
+            return m_returnList;
+        }
+
+        internal static View GetViewByNameContainsAndAssociatedLevel(Document curDoc, string viewName, string levelName)
+        {
+            // create an empty list to hold the results
+            List<View> m_returnList = new List<View>();
+
+            // get all views in the document
+            List<View> m_allViews = GetAllViews(curDoc);
+
+            // loop through all views
+            foreach (View curView in m_allViews)
+            {
+                // check if the view name contains the specified string
+                if (curView.Name.IndexOf(viewName, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    // get the associated level parameter
+                    Parameter paramAssociatedLevel = curView.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL);
+
+                    // check if the parameter is not null and has a value
+                    if (paramAssociatedLevel != null && paramAssociatedLevel.HasValue)
+                    {
+                        // get the level name from the parameter
+                        string levelNameFromParam = paramAssociatedLevel.AsString();
+
+                        // check if the level name matches the specified level name
+                        if (levelNameFromParam.Equals(levelName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            // add the view to the return list
+                            m_returnList.Add(curView);
+                        }
+                    }
+                }
+            }
+
+            // return the list of views that match the criteria
+            if (m_returnList.Count > 0)
+            {
+                return m_returnList.FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        internal static View GetViewByNameContainsAndAssociatedLevel(Document curDoc, string viewName, string levelName, string levelNameAlt)
+        {
+            // create an empty list to hold the results
+            List<View> m_returnList = new List<View>();
+
+            // get all views in the document
+            List<View> m_allViews = GetAllViews(curDoc);
+
+            // loop through all views
+            foreach (View curView in m_allViews)
+            {
+                // check if the view name contains the specified string
+                if (curView.Name.IndexOf(viewName, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    // get the associated level parameter
+                    Parameter paramAssociatedLevel = curView.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL);
+
+                    // check if the parameter is not null and has a value
+                    if (paramAssociatedLevel != null && paramAssociatedLevel.HasValue)
+                    {
+                        // get the level name from the parameter
+                        string levelNameFromParam = paramAssociatedLevel.AsString();
+
+                        // check if the level name matches the specified level name
+                        if (levelNameFromParam.Equals(levelName, StringComparison.OrdinalIgnoreCase) || levelNameFromParam.Equals(levelNameAlt, StringComparison.OrdinalIgnoreCase))
+                        {
+                            // add the view to the return list
+                            m_returnList.Add(curView);
+                        }
+                    }
+                }
+            }
+
+            // return the list of views that match the criteria
+            if (m_returnList.Count > 0)
+            {
+                return m_returnList.FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public static List<View> GetAllNonTemplateViews(Document curDoc)
         {

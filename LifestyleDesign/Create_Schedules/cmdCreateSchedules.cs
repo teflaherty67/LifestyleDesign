@@ -688,21 +688,13 @@ namespace LifestyleDesign
                         // if not, create the area plans
                         if (areaAtticView == null)
                         {
-                            if (typeFoundation == "Basement" || typeFoundation == "Crawlspace" && floorNum == 3)
-                            {
-                                atticLevel = "Upper Level";
-                            }
-                            else if (typeFoundation == "Basement" || typeFoundation == "Crawlspace" && floorNum == 2)
+                            if (typeFoundation == "Basement" || typeFoundation == "Crawlspace")
                             {
                                 atticLevel = "Main Level";
                             }
-                            else if (typeFoundation == "Slab" && floorNum == 3)
+                            else if (typeFoundation == "Slab")
                             {
-                                atticLevel = "Third Floor";
-                            }
-                            else if (typeFoundation == "Slab" && floorNum == 2)
-                            {
-                                atticLevel = "Second Floor";
+                                atticLevel = "First Floor";
                             }
                             else
                             {

@@ -54,6 +54,14 @@ namespace LifestyleDesign.Elevation_Designation
             List<View> viewsList = Utils.GetAllNonTemplateViews(curDoc);
             List<ViewSheet> sheetsList = Utils.GetAllSheets(curDoc);
 
+            // normalize any schedules still using the "X-#/X/X/#" format to "Title - Elevation X"
+            using (Transaction tRename = new Transaction(curDoc, "Normalize Schedule Names"))
+            {
+                tRename.Start();
+                Utils.RenameSchedulesToElevationFormat(curDoc);
+                tRename.Commit();
+            }
+
             // check if all the schedules exist for newElev
             List<ViewSchedule> curElevList = Utils.GetAllSchedulesByElevation(curDoc, curElev);
             List<ViewSchedule> newElevList = Utils.GetAllSchedulesByElevation(curDoc, newElev);
@@ -83,7 +91,9 @@ namespace LifestyleDesign.Elevation_Designation
                             try
                             {
                                 // rename the views
-                                if (curView.Name.Contains(curElev + " "))
+                                if (curView.Name.Contains(curElev + " - "))
+                                    curView.Name = curView.Name.Replace(curElev + " - ", newElev + " ");
+                                else if (curView.Name.Contains(curElev + " "))
                                     curView.Name = curView.Name.Replace(curElev + " ", newElev + " ");
                                 if (curView.Name.Contains(curElev + "-"))
                                     curView.Name = curView.Name.Replace(curElev + "-", newElev + " ");
@@ -198,17 +208,18 @@ namespace LifestyleDesign.Elevation_Designation
                                     {
                                     }
 
-                                    // update the masonry code
-                                    Utils.SetParameterByName(curSheet, "Code Masonry", codeMasonry);
-
-                                    // update the group name only if it uses the structured X-X|X|X|X format
-                                    string[] curGroup = curGrp.Split('-', '|');
-                                    if (curGroup.Length >= 5)
+                                    // update the masonry code and group name only when a real value was selected
+                                    if (codeMasonry != "N/A")
                                     {
-                                        string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
-                                        Utils.SetParameterByName(curSheet, "Group", newCode);
+                                        Utils.SetParameterByName(curSheet, "Code Masonry", codeMasonry);
+
+                                        string[] curGroup = curGrp.Split('-', '|');
+                                        if (curGroup.Length >= 5)
+                                        {
+                                            string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
+                                            Utils.SetParameterByName(curSheet, "Group", newCode);
+                                        }
                                     }
-                                    // else: "Elevation X" format — Code Masonry already set above, Group name doesn't need rebuilding
                                 }
                             }
                         }
@@ -237,20 +248,18 @@ namespace LifestyleDesign.Elevation_Designation
                                 if (curGrp.Contains(curElev))
                                     Utils.SetParameterByName(curSheet, "Code Filter", newFilter);
 
-                                // update the masonry code
-                                if (curGrp.Contains(curElev))
+                                // update the masonry code and group name only when a real value was selected
+                                if (codeMasonry != "N/A" && curGrp.Contains(curElev))
+                                {
                                     Utils.SetParameterByName(curSheet, "Code Masonry", codeMasonry);
 
-                                // replace masonry code in group name
-                                // Only reformat the group if it uses the structured X-X|X|X|X format
-                                string[] curGroup = grpNewName.Split('-', '|');
-
-                                if (curGroup.Length >= 5)
-                                {
-                                    string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
-                                    Utils.SetParameterByName(curSheet, "Group", newCode);
+                                    string[] curGroup = grpNewName.Split('-', '|');
+                                    if (curGroup.Length >= 5)
+                                    {
+                                        string newCode = curGroup[0] + "-" + codeMasonry + "|" + curGroup[2] + "|" + curGroup[3] + "|" + curGroup[4];
+                                        Utils.SetParameterByName(curSheet, "Group", newCode);
+                                    }
                                 }
-                                // else: group is "Elevation X" format — name was already updated by GetLastCharacterInString, nothing more to do
                             }
                         }
 
@@ -285,8 +294,9 @@ namespace LifestyleDesign.Elevation_Designation
                             {
                                 // set some variables
                                 ElementId newSheetId = newCover.Id;
-                                string schedName = curSchedule.Name;
-                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
+                                bool hasStar = curSchedule.Name.EndsWith("*");
+                                string schedName = curSchedule.Name.TrimEnd('*');
+                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev + (hasStar ? "*" : "");
 
                                 // get the schedule name
                                 ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName); // equal to ID of schedule to replace existing
@@ -329,8 +339,9 @@ namespace LifestyleDesign.Elevation_Designation
                             {
                                 // set some variables
                                 ElementId newSheetId = newRoof.Id;
-                                string schedName = curSchedule.Name;
-                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev;
+                                bool hasStar = curSchedule.Name.EndsWith("*");
+                                string schedName = curSchedule.Name.TrimEnd('*');
+                                string newSchedName = schedName.Substring(0, schedName.Length - 1) + newElev + (hasStar ? "*" : "");
 
                                 // get the schedule name
                                 ViewSchedule newSchedule = Utils.GetScheduleByName(curDoc, newSchedName); // equal to ID of schedule to replace existing

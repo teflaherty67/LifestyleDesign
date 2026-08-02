@@ -33,7 +33,7 @@ namespace LifestyleDesign
             cmbCurElev.SelectedIndex = 0;
             cmbNewElev.SelectedIndex = 0;
 
-            List<string> listMasonry = new List<string> { "0", "25", "50", "75", "100" };
+            List<string> listMasonry = new List<string> { "N/A", "0", "25", "50", "75", "100" };
 
             foreach (string masonry in listMasonry)
             {

@@ -32,7 +32,7 @@ namespace LifestyleDesign
             allCheckboxes.Add(chbFrame);
             allCheckboxes.Add(chbAttic);
 
-            List<string> listElevations = new List<string> { "A", "B", "C", "D", "S", "T" };
+            List<string> listElevations = new List<string> { "A", "B", "C", "D", "E", "F", "S", "T" };
 
             foreach (string elevation in listElevations)
             {

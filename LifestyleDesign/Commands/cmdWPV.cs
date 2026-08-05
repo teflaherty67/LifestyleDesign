@@ -68,8 +68,14 @@ namespace LifestyleDesign
                 .Where(name => !existingLegendNames.Contains(name))
                 .ToList();
 
-            // if the template or any legends aren't already in the project, load them from the source file
-            if (viewTemplate == null || missingLegendNames.Count > 0)
+            // the "No Title" viewport type is needed for placing the legends on the new sheet
+            bool hasNoTitleViewportType = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_Viewports)
+                .WhereElementIsElementType()
+                .Any(vt => vt.Name == "No Title");
+
+            // if the template, any legends, or the viewport type aren't already in the project, load them from the source file
+            if (viewTemplate == null || missingLegendNames.Count > 0 || !hasNoTitleViewportType)
             {
                 Document sourceDoc = null;
 
@@ -83,6 +89,9 @@ namespace LifestyleDesign
 
                         // bring in any line styles from the source file that don't already exist (new only, never overwrite)
                         Utils.ImportNewLineStyles(sourceDoc, curDoc);
+
+                        // bring in any viewport types that don't already exist (new only, never overwrite)
+                        Utils.ImportNewViewportTypes(sourceDoc, curDoc);
 
                         // bring in the view template (new only, never overwrite existing dependent types)
                         if (viewTemplate == null)
@@ -159,6 +168,19 @@ namespace LifestyleDesign
             if (standardTextType == null)
             {
                 Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a text note type named 'STANDARD' in the project.");
+                return Result.Failed;
+            }
+
+            // find the "No Title" viewport type for the legends
+            ElementType noTitleViewportType = new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_Viewports)
+                .WhereElementIsElementType()
+                .Cast<ElementType>()
+                .FirstOrDefault(vt => vt.Name == "No Title");
+
+            if (noTitleViewportType == null)
+            {
+                Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a viewport type named 'No Title' in the project or in the source file.");
                 return Result.Failed;
             }
 
@@ -598,7 +620,8 @@ namespace LifestyleDesign
 
                     XYZ legendLocation = new XYZ(legendBasePoint.X, legendBasePoint.Y + legendIndex * legendOffset, 0);
 
-                    Viewport.Create(curDoc, visitabilitySheet.Id, legendView.Id, legendLocation);
+                    Viewport legendViewport = Viewport.Create(curDoc, visitabilitySheet.Id, legendView.Id, legendLocation);
+                    legendViewport.ChangeTypeId(noTitleViewportType.Id);
 
                     legendIndex++;
                 }

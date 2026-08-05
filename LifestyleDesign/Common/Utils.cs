@@ -2927,6 +2927,40 @@ namespace LifestyleDesign.Common
             return newLineStyleIds.Count;
         }
 
+        // brings in viewport types that don't already exist in the target by name; never touches existing ones
+        internal static int ImportNewViewportTypes(Document sourceDoc, Document targetDoc)
+        {
+            List<ElementType> sourceViewportTypes = new FilteredElementCollector(sourceDoc)
+                .OfCategory(BuiltInCategory.OST_Viewports)
+                .WhereElementIsElementType()
+                .Cast<ElementType>()
+                .ToList();
+
+            HashSet<string> existingNames = new FilteredElementCollector(targetDoc)
+                .OfCategory(BuiltInCategory.OST_Viewports)
+                .WhereElementIsElementType()
+                .Cast<ElementType>()
+                .Select(vt => vt.Name)
+                .ToHashSet();
+
+            List<ElementId> newViewportTypeIds = sourceViewportTypes
+                .Where(vt => !existingNames.Contains(vt.Name))
+                .Select(vt => vt.Id)
+                .ToList();
+
+            if (newViewportTypeIds.Count == 0)
+            {
+                return 0;
+            }
+
+            CopyPasteOptions copyPasteOptions = new CopyPasteOptions();
+            copyPasteOptions.SetDuplicateTypeNamesHandler(new UseDestinationDuplicateTypeNamesHandler());
+
+            ElementTransformUtils.CopyElements(sourceDoc, newViewportTypeIds, targetDoc, Autodesk.Revit.DB.Transform.Identity, copyPasteOptions);
+
+            return newViewportTypeIds.Count;
+        }
+
         // resolves any duplicate type names encountered during a copy by keeping the destination's existing type, never overwriting it
         private class UseDestinationDuplicateTypeNamesHandler : IDuplicateTypeNamesHandler
         {

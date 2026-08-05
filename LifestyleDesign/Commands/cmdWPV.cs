@@ -480,6 +480,29 @@ namespace LifestyleDesign
                     }
                 }
 
+                // the new WPV_Cover title block already includes general notes text, so remove the old, separately
+                // placed "General Notes" generic annotation instance from Cover sheets - otherwise the two stack
+                foreach (ViewSheet curSheet in allSheets)
+                {
+                    if (curSheet.Name.IndexOf("Cover", StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        continue;
+                    }
+
+                    List<ElementId> oldGeneralNotesIds = new FilteredElementCollector(curDoc, curSheet.Id)
+                        .OfCategory(BuiltInCategory.OST_GenericAnnotation)
+                        .WhereElementIsNotElementType()
+                        .Cast<FamilyInstance>()
+                        .Where(fi => fi.Symbol.Family.Name.IndexOf("General Notes", StringComparison.OrdinalIgnoreCase) >= 0)
+                        .Select(fi => fi.Id)
+                        .ToList();
+
+                    if (oldGeneralNotesIds.Count > 0)
+                    {
+                        curDoc.Delete(oldGeneralNotesIds);
+                    }
+                }
+
                 // make sure "Stamp Horizontal" is checked on the Electrical sheets
                 foreach (ViewSheet curSheet in allSheets)
                 {

@@ -353,7 +353,7 @@ namespace LifestyleDesign
                 //  - the over-microwave cabinet, 30"x21"x15" -> 30"x30"x15"
                 //  - the over-refrigerator (Ref Sp) cabinet, 39"x18"x15" -> 39"x27"x15"
                 Room kitchenRoom = Utils.GetAllRooms(curDoc)
-                    .FirstOrDefault(r => (r.Name ?? "").IndexOf("Kitchen", StringComparison.OrdinalIgnoreCase) >= 0);
+                    .FirstOrDefault(r => r.Area > 0 && (r.Name ?? "").IndexOf("Kitchen", StringComparison.OrdinalIgnoreCase) >= 0);
 
                 if (kitchenRoom == null)
                 {

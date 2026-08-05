@@ -480,6 +480,15 @@ namespace LifestyleDesign
                     }
                 }
 
+                // make sure "Stamp Horizontal" is checked on the Electrical sheets
+                foreach (ViewSheet curSheet in allSheets)
+                {
+                    if (curSheet.Name.IndexOf("Electrical", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        TrySetParameterByName(curSheet, "Stamp Horizontal", 1);
+                    }
+                }
+
                 // create the new sheet in the now-vacant "A1" + elevation letter slot
                 ViewSheet visitabilitySheet = ViewSheet.Create(curDoc, wpvStandardType.Id);
                 visitabilitySheet.SheetNumber = "A1" + elevLetter;

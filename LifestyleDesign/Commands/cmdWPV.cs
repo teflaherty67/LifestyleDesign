@@ -37,29 +37,45 @@ namespace LifestyleDesign
                 return Result.Failed;
             }
 
-            // view template settings
+            // source file for the view template, line styles, and visitability legends
             string templateName = "01-Floor Visitability";
-            string templateSourcePath = @"S:\Shared Folders\Lifestyle USA Design\LGI Homes\Central Texas\Terrata Homes\Whisper Valley (WPV)\Dylan\Dylan(R)-CTX(0-8-27'4)WPV.rvt";
+            string templateSourcePath = @"S:\Shared Folders\Lifestyle USA Design\LGI Homes\Central Texas\Terrata Homes\Whisper Valley (WPV)\Antone\Antone(R)-CTX(5-12-27').rvt";
+
+            List<string> legendNames = new List<string>
+            {
+                "Threshold",
+                "Visitability - Entrance",
+                "Visitability - Entrance Options",
+                "Visitability - Exterior Route",
+                "Visitability - Handrail",
+                "Visitability - Notes",
+                "Visitability - Powder",
+                "Visitable Route"
+            };
 
             // find the view template to assign
             View viewTemplate = Utils.GetViewTemplateByName(curDoc, templateName);
 
-            // if it's not already in the project, load it from the source file
-            if (viewTemplate == null)
+            // find which legends are missing from the project
+            List<string> existingLegendNames = new FilteredElementCollector(curDoc)
+                .OfClass(typeof(View))
+                .Cast<View>()
+                .Where(v => v.ViewType == ViewType.Legend)
+                .Select(v => v.Name)
+                .ToList();
+
+            List<string> missingLegendNames = legendNames
+                .Where(name => !existingLegendNames.Contains(name))
+                .ToList();
+
+            // if the template or any legends aren't already in the project, load them from the source file
+            if (viewTemplate == null || missingLegendNames.Count > 0)
             {
                 Document sourceDoc = null;
 
                 try
                 {
                     sourceDoc = uidoc.Application.Application.OpenDocumentFile(templateSourcePath);
-
-                    View sourceTemplate = Utils.GetViewTemplateByName(sourceDoc, templateName);
-
-                    if (sourceTemplate == null)
-                    {
-                        Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find a view template named '{templateName}' in the project or in the source file:\n{templateSourcePath}");
-                        return Result.Failed;
-                    }
 
                     using (Transaction tImport = new Transaction(curDoc, "Import Project Standards"))
                     {
@@ -69,7 +85,45 @@ namespace LifestyleDesign
                         Utils.ImportNewLineStyles(sourceDoc, curDoc);
 
                         // bring in the view template (new only, never overwrite existing dependent types)
-                        Utils.ImportViewTemplates(sourceDoc, sourceTemplate, curDoc);
+                        if (viewTemplate == null)
+                        {
+                            View sourceTemplate = Utils.GetViewTemplateByName(sourceDoc, templateName);
+
+                            if (sourceTemplate == null)
+                            {
+                                tImport.RollBack();
+                                Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find a view template named '{templateName}' in the project or in the source file:\n{templateSourcePath}");
+                                return Result.Failed;
+                            }
+
+                            Utils.ImportViewTemplates(sourceDoc, sourceTemplate, curDoc);
+                        }
+
+                        // bring in any missing visitability legends (new only)
+                        if (missingLegendNames.Count > 0)
+                        {
+                            List<View> sourceLegends = new FilteredElementCollector(sourceDoc)
+                                .OfClass(typeof(View))
+                                .Cast<View>()
+                                .Where(v => v.ViewType == ViewType.Legend && missingLegendNames.Contains(v.Name))
+                                .ToList();
+
+                            List<string> notFoundLegendNames = missingLegendNames
+                                .Except(sourceLegends.Select(v => v.Name))
+                                .ToList();
+
+                            if (notFoundLegendNames.Count > 0)
+                            {
+                                tImport.RollBack();
+                                Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find the following legend(s) in the source file:\n{string.Join(", ", notFoundLegendNames)}");
+                                return Result.Failed;
+                            }
+
+                            foreach (View sourceLegend in sourceLegends)
+                            {
+                                Utils.ImportViewTemplates(sourceDoc, sourceLegend, curDoc);
+                            }
+                        }
 
                         tImport.Commit();
                     }
@@ -84,7 +138,7 @@ namespace LifestyleDesign
                 }
                 catch (Exception ex)
                 {
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not load the view template from the source file:\n{templateSourcePath}\n\n{ex.Message}");
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not load content from the source file:\n{templateSourcePath}\n\n{ex.Message}");
                     return Result.Failed;
                 }
                 finally

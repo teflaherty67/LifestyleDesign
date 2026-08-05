@@ -513,9 +513,17 @@ namespace LifestyleDesign
                         .Select(fi => fi.Id)
                         .ToList();
 
-                    if (oldGeneralNotesIds.Count > 0)
+                    // delete one at a time - a nested/shared instance inside the title block family can't be
+                    // deleted directly, and a batch Delete fails entirely if even one id can't be removed
+                    foreach (ElementId oldNoteId in oldGeneralNotesIds)
                     {
-                        curDoc.Delete(oldGeneralNotesIds);
+                        try
+                        {
+                            curDoc.Delete(oldNoteId);
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
 

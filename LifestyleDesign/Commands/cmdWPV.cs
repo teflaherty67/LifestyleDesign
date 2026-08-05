@@ -372,14 +372,38 @@ namespace LifestyleDesign
                 visitabilitySheet.SheetNumber = "A1" + elevLetter;
                 visitabilitySheet.Name = "Visitability Plan";
 
-                // copy these bookkeeping fields verbatim from the reference sheet - they may follow a structured
-                // project-specific format (e.g. "S-0/E/D/8") rather than a simple "Elevation X" string, so match
-                // whatever convention this project actually uses instead of reconstructing it. Non-critical to the
-                // sheet itself, so skip any that are locked rather than failing the whole command over them
-                TrySetParameterByName(visitabilitySheet, "Category", Utils.GetParameterValueByName(referenceSheet, "Category"));
-                TrySetParameterByName(visitabilitySheet, "Group", Utils.GetParameterValueByName(referenceSheet, "Group"));
-                TrySetParameterByName(visitabilitySheet, "Elevation Designation", Utils.GetParameterValueByName(referenceSheet, "Elevation Designation"));
-                TrySetParameterByName(visitabilitySheet, "Code Filter", Utils.GetParameterValueByName(referenceSheet, "Code Filter"));
+                // copy every descriptive/bookkeeping identity parameter verbatim from the reference sheet, by
+                // storage type, so numeric/checkbox fields (Sq Ft, Appears In Sheet List) copy correctly too and
+                // not just strings. Skips locked or missing parameters instead of failing the whole command.
+                List<string> paramsToCopy = new List<string>
+                {
+                    "Category",
+                    "Sheet Collection",
+                    "Approved By",
+                    "Designed By",
+                    "Checked By",
+                    "Drawn By",
+                    "Sheet Issue Date",
+                    "Appears In Sheet List",
+                    "Code Appliance",
+                    "Code Attic Access",
+                    "Code Filter",
+                    "Code Masonry",
+                    "Code Pitch",
+                    "Elevation Designation",
+                    "Group",
+                    "Sq Ft",
+                    "Subdivision Designator",
+                    "Guide Grid"
+                };
+
+                foreach (string paramName in paramsToCopy)
+                {
+                    CopyParameterValue(referenceSheet, visitabilitySheet, paramName);
+                }
+
+                // Index Position identifies this sheet's own position, not something to copy from the reference sheet
+                TrySetParameterByName(visitabilitySheet, "Index Position", 1);
 
                 // place the Visitability Plan view on the new sheet, centered on its title block
                 FamilyInstance newTitleBlock = new FilteredElementCollector(curDoc, visitabilitySheet.Id)
@@ -426,6 +450,43 @@ namespace LifestyleDesign
             if (param != null && !param.IsReadOnly)
             {
                 param.Set(value);
+            }
+        }
+
+        private static void TrySetParameterByName(Element element, string paramName, int value)
+        {
+            Parameter param = element.LookupParameter(paramName);
+
+            if (param != null && !param.IsReadOnly)
+            {
+                param.Set(value);
+            }
+        }
+
+        private static void CopyParameterValue(Element source, Element target, string paramName)
+        {
+            Parameter sourceParam = source.LookupParameter(paramName);
+            Parameter targetParam = target.LookupParameter(paramName);
+
+            if (sourceParam == null || targetParam == null || targetParam.IsReadOnly || !sourceParam.HasValue)
+            {
+                return;
+            }
+
+            switch (sourceParam.StorageType)
+            {
+                case StorageType.String:
+                    targetParam.Set(sourceParam.AsString());
+                    break;
+                case StorageType.Integer:
+                    targetParam.Set(sourceParam.AsInteger());
+                    break;
+                case StorageType.Double:
+                    targetParam.Set(sourceParam.AsDouble());
+                    break;
+                case StorageType.ElementId:
+                    targetParam.Set(sourceParam.AsElementId());
+                    break;
             }
         }
 

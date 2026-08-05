@@ -353,22 +353,78 @@ namespace LifestyleDesign
                     entry.Sheet.SheetNumber = "A" + (entry.Number + 1) + entry.Letter;
                 }
 
-                // match the title block already used on the reference sheet
-                FamilyInstance existingTitleBlock = new FilteredElementCollector(curDoc, referenceSheet.Id)
-                    .OfCategory(BuiltInCategory.OST_TitleBlocks)
-                    .WhereElementIsNotElementType()
-                    .Cast<FamilyInstance>()
-                    .FirstOrDefault();
+                // load the WPV title blocks from the library, and swap every sheet's title block to the matching
+                // variant based on the sheet's own name: "Cover" -> WPV_Cover, "Interior" -> WPV_Interiors,
+                // everything else (including the new Visitability Plan sheet) -> WPV_Standard
+                string titleBlockLibraryPath = @"S:\Shared Folders\Lifestyle USA Design\Library 2027\Titleblock\Client\LGI\LGI-CTX";
 
-                if (existingTitleBlock == null)
+                string coverFamilyName = "LD_TB_LGI-CTX-WPV_Cover_11x17_Terrata";
+                string standardFamilyName = "LD_TB_LGI-CTX-WPV_Standard_11x17_Terrata";
+                string interiorsFamilyName = "LD_TB_LGI-CTX-WPV_Interiors_11x17_Terrata";
+
+                Utils.LoadFamilyFromLibrary(curDoc, titleBlockLibraryPath, coverFamilyName);
+                Utils.LoadFamilyFromLibrary(curDoc, titleBlockLibraryPath, standardFamilyName);
+                Utils.LoadFamilyFromLibrary(curDoc, titleBlockLibraryPath, interiorsFamilyName);
+
+                FamilySymbol wpvCoverType = GetTitleBlockByFamilyNameContains(curDoc, "WPV_Cover");
+                FamilySymbol wpvStandardType = GetTitleBlockByFamilyNameContains(curDoc, "WPV_Standard");
+                FamilySymbol wpvInteriorsType = GetTitleBlockByFamilyNameContains(curDoc, "WPV_Interiors");
+
+                if (wpvCoverType == null || wpvStandardType == null || wpvInteriorsType == null)
                 {
                     t.RollBack();
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a title block on the reference sheet to match for the new sheet.");
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not load one or more of the WPV title blocks from:\n{titleBlockLibraryPath}");
                     return Result.Failed;
                 }
 
+                if (!wpvCoverType.IsActive)
+                {
+                    wpvCoverType.Activate();
+                }
+
+                if (!wpvStandardType.IsActive)
+                {
+                    wpvStandardType.Activate();
+                }
+
+                if (!wpvInteriorsType.IsActive)
+                {
+                    wpvInteriorsType.Activate();
+                }
+
+                curDoc.Regenerate();
+
+                foreach (ViewSheet curSheet in allSheets)
+                {
+                    FamilySymbol targetTitleBlockType;
+
+                    if (curSheet.Name.IndexOf("Cover", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        targetTitleBlockType = wpvCoverType;
+                    }
+                    else if (curSheet.Name.IndexOf("Interior", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        targetTitleBlockType = wpvInteriorsType;
+                    }
+                    else
+                    {
+                        targetTitleBlockType = wpvStandardType;
+                    }
+
+                    FamilyInstance curTitleBlock = new FilteredElementCollector(curDoc, curSheet.Id)
+                        .OfCategory(BuiltInCategory.OST_TitleBlocks)
+                        .WhereElementIsNotElementType()
+                        .Cast<FamilyInstance>()
+                        .FirstOrDefault();
+
+                    if (curTitleBlock != null && curTitleBlock.Symbol.Id != targetTitleBlockType.Id)
+                    {
+                        curTitleBlock.ChangeTypeId(targetTitleBlockType.Id);
+                    }
+                }
+
                 // create the new sheet in the now-vacant "A1" + elevation letter slot
-                ViewSheet visitabilitySheet = ViewSheet.Create(curDoc, existingTitleBlock.Symbol.Id);
+                ViewSheet visitabilitySheet = ViewSheet.Create(curDoc, wpvStandardType.Id);
                 visitabilitySheet.SheetNumber = "A1" + elevLetter;
                 visitabilitySheet.Name = "Visitability Plan";
 
@@ -436,6 +492,15 @@ namespace LifestyleDesign
             Utils.TaskDialogInformation("Success", "Create Visitability Plan", "The Visitability Plan view has been created.");
 
             return Result.Succeeded;
+        }
+
+        private static FamilySymbol GetTitleBlockByFamilyNameContains(Document curDoc, string familyNameContains)
+        {
+            return new FilteredElementCollector(curDoc)
+                .OfCategory(BuiltInCategory.OST_TitleBlocks)
+                .WhereElementIsElementType()
+                .Cast<FamilySymbol>()
+                .FirstOrDefault(fs => fs.Family.Name.IndexOf(familyNameContains, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private static void TrySetParameterByName(Element element, string paramName, string value)

@@ -182,6 +182,9 @@ namespace LifestyleDesign
                     return Result.Failed;
                 }
 
+                // set the "Title on Sheet" override so the viewport label reads "Visitability Plan"
+                TrySetParameterByName(newView, "Title on Sheet", "Visitability Plan");
+
                 // assign the view template
                 newView.ViewTemplateId = viewTemplate.Id;
 

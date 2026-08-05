@@ -552,6 +552,34 @@ namespace LifestyleDesign
 
                 Viewport.Create(curDoc, visitabilitySheet.Id, newView.Id, viewportLocation);
 
+                // place the transferred visitability legends on the new sheet, stacked near a corner of the
+                // title block (small offsets, since the sheet itself is small - 11x17); drag into place after
+                XYZ legendBasePoint = titleBlockBox != null
+                    ? new XYZ(titleBlockBox.Min.X + 0.1, titleBlockBox.Min.Y + 0.1, 0)
+                    : new XYZ(0.1, 0.1, 0);
+
+                double legendOffset = 0.1; // feet between stacked legends
+                int legendIndex = 0;
+
+                foreach (string legendName in legendNames)
+                {
+                    View legendView = new FilteredElementCollector(curDoc)
+                        .OfClass(typeof(View))
+                        .Cast<View>()
+                        .FirstOrDefault(v => v.ViewType == ViewType.Legend && v.Name == legendName);
+
+                    if (legendView == null || !Viewport.CanAddViewToSheet(curDoc, visitabilitySheet.Id, legendView.Id))
+                    {
+                        continue;
+                    }
+
+                    XYZ legendLocation = new XYZ(legendBasePoint.X, legendBasePoint.Y + legendIndex * legendOffset, 0);
+
+                    Viewport.Create(curDoc, visitabilitySheet.Id, legendView.Id, legendLocation);
+
+                    legendIndex++;
+                }
+
                 t.Commit();
             }
 

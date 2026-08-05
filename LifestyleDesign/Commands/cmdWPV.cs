@@ -178,6 +178,8 @@ namespace LifestyleDesign
                 return Result.Failed;
             }
 
+            bool refSpCabinetFound = false;
+
             using (Transaction t = new Transaction(curDoc))
             {
                 t.Start("Create Visitability Plan");
@@ -345,6 +347,89 @@ namespace LifestyleDesign
                 }
 
                 powderDoor.ChangeTypeId(powderDoorType.Id);
+
+                // swap the Kitchen's upper cabinets to their new sizes:
+                //  - any "Upper Cabinet-*" type ending in 36" tall -> 42" tall (height is always the 2nd segment)
+                //  - the over-microwave cabinet, 30"x21"x15" -> 30"x30"x15"
+                //  - the over-refrigerator (Ref Sp) cabinet, 39"x18"x15" -> 39"x27"x15"
+                Room kitchenRoom = Utils.GetAllRooms(curDoc)
+                    .FirstOrDefault(r => (r.Name ?? "").IndexOf("Kitchen", StringComparison.OrdinalIgnoreCase) >= 0);
+
+                if (kitchenRoom == null)
+                {
+                    t.RollBack();
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a room named 'Kitchen' in the project.");
+                    return Result.Failed;
+                }
+
+                List<FamilyInstance> kitchenUpperCabinets = new FilteredElementCollector(curDoc)
+                    .OfCategory(BuiltInCategory.OST_Casework)
+                    .WhereElementIsNotElementType()
+                    .Cast<FamilyInstance>()
+                    .Where(fi => fi.Symbol.Family.Name.StartsWith("Upper Cabinet-", StringComparison.OrdinalIgnoreCase))
+                    .Where(fi =>
+                    {
+                        XYZ point = (fi.Location as LocationPoint)?.Point;
+
+                        if (point == null)
+                        {
+                            return false;
+                        }
+
+                        Room room = curDoc.GetRoomAtPoint(point);
+
+                        return room != null && room.Id == kitchenRoom.Id;
+                    })
+                    .ToList();
+
+                foreach (FamilyInstance curCabinet in kitchenUpperCabinets)
+                {
+                    string curCabinetTypeName = curCabinet.Symbol.Name;
+                    string cabinetFamilyName = curCabinet.Symbol.Family.Name;
+                    string newCabinetTypeName = null;
+
+                    if (curCabinetTypeName == "30\"x21\"x15\"")
+                    {
+                        newCabinetTypeName = "30\"x30\"x15\"";
+                    }
+                    else if (curCabinetTypeName == "39\"x18\"x15\"")
+                    {
+                        refSpCabinetFound = true;
+                        newCabinetTypeName = "39\"x27\"x15\"";
+                    }
+                    else
+                    {
+                        string[] cabinetTypeParts = curCabinetTypeName.Split('x');
+
+                        if (cabinetTypeParts.Length >= 2 && cabinetTypeParts[1].Trim() == "36\"")
+                        {
+                            cabinetTypeParts[1] = "42\"";
+                            newCabinetTypeName = string.Join("x", cabinetTypeParts);
+                        }
+                    }
+
+                    if (newCabinetTypeName == null)
+                    {
+                        continue;
+                    }
+
+                    FamilySymbol newCabinetType = Utils.FindFamilySymbol(curDoc, cabinetFamilyName, newCabinetTypeName);
+
+                    if (newCabinetType == null)
+                    {
+                        t.RollBack();
+                        Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find cabinet type '{newCabinetTypeName}' in family '{cabinetFamilyName}'.");
+                        return Result.Failed;
+                    }
+
+                    if (!newCabinetType.IsActive)
+                    {
+                        newCabinetType.Activate();
+                        curDoc.Regenerate();
+                    }
+
+                    curCabinet.ChangeTypeId(newCabinetType.Id);
+                }
 
                 // use the "First Floor Plan" sheet as the reference for elevation letter, title block, and
                 // browser grouping - it's guaranteed to be a normal content sheet, unlike the Cover sheet, which
@@ -631,7 +716,14 @@ namespace LifestyleDesign
                 t.Commit();
             }
 
-            Utils.TaskDialogInformation("Success", "Create Visitability Plan", "The Visitability Plan view has been created.");
+            string successMessage = "The Visitability Plan view has been created.";
+
+            if (!refSpCabinetFound)
+            {
+                successMessage += "\n\nNo Ref Sp cabinet (39\"x18\"x15\") was found in the Kitchen - please add one manually.";
+            }
+
+            Utils.TaskDialogInformation("Success", "Create Visitability Plan", successMessage);
 
             return Result.Succeeded;
         }

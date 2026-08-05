@@ -362,41 +362,12 @@ namespace LifestyleDesign
                     return Result.Failed;
                 }
 
-                // test at a safe Z near the bottom of the room rather than the cabinet's actual mounting elevation
-                // (54"+ AFF) - GetRoomAtPoint only finds a room if the point falls within its vertical extent,
-                // and a cabinet's real elevation can easily fall outside that. Using the room's bounding box
-                // instead of Room.Level, which can return null even for a normally placed room.
-                BoundingBoxXYZ kitchenBox = kitchenRoom.get_BoundingBox(null);
-
-                if (kitchenBox == null)
-                {
-                    t.RollBack();
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not determine the bounding box of the 'Kitchen' room.");
-                    return Result.Failed;
-                }
-
-                double kitchenTestZ = kitchenBox.Min.Z + 1.0;
-
                 List<FamilyInstance> kitchenUpperCabinets = new FilteredElementCollector(curDoc)
                     .OfCategory(BuiltInCategory.OST_Casework)
                     .WhereElementIsNotElementType()
                     .Cast<FamilyInstance>()
                     .Where(fi => fi.Symbol.Family.Name.StartsWith("Upper Cabinet-", StringComparison.OrdinalIgnoreCase))
-                    .Where(fi =>
-                    {
-                        XYZ point = (fi.Location as LocationPoint)?.Point;
-
-                        if (point == null)
-                        {
-                            return false;
-                        }
-
-                        XYZ testPoint = new XYZ(point.X, point.Y, kitchenTestZ);
-
-                        Room room = curDoc.GetRoomAtPoint(testPoint);
-
-                        return room != null && room.Id == kitchenRoom.Id;
-                    })
+                    .Where(fi => fi.Room != null && fi.Room.Id == kitchenRoom.Id)
                     .ToList();
 
                 foreach (FamilyInstance curCabinet in kitchenUpperCabinets)

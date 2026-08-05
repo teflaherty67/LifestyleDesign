@@ -69,10 +69,7 @@ namespace LifestyleDesign
                 .ToList();
 
             // the "No Title" viewport type is needed for placing the legends on the new sheet
-            bool hasNoTitleViewportType = new FilteredElementCollector(curDoc)
-                .OfCategory(BuiltInCategory.OST_Viewports)
-                .WhereElementIsElementType()
-                .Any(vt => vt.Name == "No Title");
+            bool hasNoTitleViewportType = Utils.GetAllViewportTypes(curDoc).Any(vt => vt.Name == "No Title");
 
             // if the template, any legends, or the viewport type aren't already in the project, load them from the source file
             if (viewTemplate == null || missingLegendNames.Count > 0 || !hasNoTitleViewportType)
@@ -172,10 +169,7 @@ namespace LifestyleDesign
             }
 
             // find the "No Title" viewport type for the legends
-            ElementType noTitleViewportType = new FilteredElementCollector(curDoc)
-                .OfCategory(BuiltInCategory.OST_Viewports)
-                .WhereElementIsElementType()
-                .Cast<ElementType>()
+            ElementType noTitleViewportType = Utils.GetAllViewportTypes(curDoc)
                 .FirstOrDefault(vt => vt.Name == "No Title");
 
             if (noTitleViewportType == null)

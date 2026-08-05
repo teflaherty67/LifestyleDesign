@@ -2927,19 +2927,25 @@ namespace LifestyleDesign.Common
             return newLineStyleIds.Count;
         }
 
+        // returns every viewport element type in the document; uses a Category.Id comparison rather than
+        // FilteredElementCollector.OfCategory(OST_Viewports), which doesn't reliably match viewport types
+        internal static List<ElementType> GetAllViewportTypes(Document curDoc)
+        {
+            Category viewportCategory = curDoc.Settings.Categories.get_Item(BuiltInCategory.OST_Viewports);
+
+            return new FilteredElementCollector(curDoc)
+                .OfClass(typeof(ElementType))
+                .Cast<ElementType>()
+                .Where(et => et.Category != null && et.Category.Id == viewportCategory.Id)
+                .ToList();
+        }
+
         // brings in viewport types that don't already exist in the target by name; never touches existing ones
         internal static int ImportNewViewportTypes(Document sourceDoc, Document targetDoc)
         {
-            List<ElementType> sourceViewportTypes = new FilteredElementCollector(sourceDoc)
-                .OfCategory(BuiltInCategory.OST_Viewports)
-                .WhereElementIsElementType()
-                .Cast<ElementType>()
-                .ToList();
+            List<ElementType> sourceViewportTypes = GetAllViewportTypes(sourceDoc);
 
-            HashSet<string> existingNames = new FilteredElementCollector(targetDoc)
-                .OfCategory(BuiltInCategory.OST_Viewports)
-                .WhereElementIsElementType()
-                .Cast<ElementType>()
+            HashSet<string> existingNames = GetAllViewportTypes(targetDoc)
                 .Select(vt => vt.Name)
                 .ToHashSet();
 

@@ -362,6 +362,11 @@ namespace LifestyleDesign
                     return Result.Failed;
                 }
 
+                // test at a safe Z near the room's own level rather than the cabinet's actual mounting elevation
+                // (54"+ AFF) - GetRoomAtPoint only finds a room if the point falls within its vertical extent,
+                // and a cabinet's real elevation can easily fall outside that
+                double kitchenTestZ = kitchenRoom.Level.Elevation + 1.0;
+
                 List<FamilyInstance> kitchenUpperCabinets = new FilteredElementCollector(curDoc)
                     .OfCategory(BuiltInCategory.OST_Casework)
                     .WhereElementIsNotElementType()
@@ -376,7 +381,9 @@ namespace LifestyleDesign
                             return false;
                         }
 
-                        Room room = curDoc.GetRoomAtPoint(point);
+                        XYZ testPoint = new XYZ(point.X, point.Y, kitchenTestZ);
+
+                        Room room = curDoc.GetRoomAtPoint(testPoint);
 
                         return room != null && room.Id == kitchenRoom.Id;
                     })

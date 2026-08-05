@@ -376,7 +376,7 @@ namespace LifestyleDesign
                     string cabinetFamilyName = curCabinet.Symbol.Family.Name;
                     string newCabinetTypeName = null;
 
-                    if (curCabinetTypeName == "30\"x21\"x15\"")
+                    if (curCabinetTypeName == "30\"x18\"x15\"")
                     {
                         newCabinetTypeName = "30\"x30\"x15\"";
                     }

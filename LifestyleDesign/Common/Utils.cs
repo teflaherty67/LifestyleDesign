@@ -2927,16 +2927,15 @@ namespace LifestyleDesign.Common
             return newLineStyleIds.Count;
         }
 
-        // returns every viewport element type in the document; uses a Category.Id comparison rather than
-        // FilteredElementCollector.OfCategory(OST_Viewports), which doesn't reliably match viewport types
+        // returns every viewport element type in the document. Viewport is a system family, and its types don't
+        // reliably report Category via FilteredElementCollector.OfCategory(OST_Viewports) or et.Category, so
+        // filter by FamilyName instead - matches what Revit's own Properties panel shows ("Viewport / <type>")
         internal static List<ElementType> GetAllViewportTypes(Document curDoc)
         {
-            Category viewportCategory = curDoc.Settings.Categories.get_Item(BuiltInCategory.OST_Viewports);
-
             return new FilteredElementCollector(curDoc)
                 .OfClass(typeof(ElementType))
                 .Cast<ElementType>()
-                .Where(et => et.Category != null && et.Category.Id == viewportCategory.Id)
+                .Where(et => et.FamilyName == "Viewport")
                 .ToList();
         }
 

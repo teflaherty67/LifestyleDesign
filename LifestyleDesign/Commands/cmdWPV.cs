@@ -336,7 +336,8 @@ namespace LifestyleDesign
                     return Result.Failed;
                 }
 
-                string accessibleDoorFamilyName = "Flush Single w_Hardware";
+                // use whatever family this door is already in - not every plan uses the same door family
+                string accessibleDoorFamilyName = accessibleBathDoor.Symbol.Family.Name;
                 string accessibleDoorTypeName = "32\"x80\" Privacy";
 
                 FamilySymbol accessibleDoorType = Utils.FindFamilySymbol(curDoc, accessibleDoorFamilyName, accessibleDoorTypeName);

@@ -336,16 +336,17 @@ namespace LifestyleDesign
                     return Result.Failed;
                 }
 
-                // use whatever family this door is already in - not every plan uses the same door family
+                // use whatever family this door is already in - not every plan uses the same door family, and
+                // type naming isn't consistent across families either (e.g. "32"x80" Privacy" vs plain "32"x80"),
+                // so match by dimensions and prefer a "Privacy" variant if the family has one
                 string accessibleDoorFamilyName = accessibleBathDoor.Symbol.Family.Name;
-                string accessibleDoorTypeName = "32\"x80\" Privacy";
 
-                FamilySymbol accessibleDoorType = Utils.FindFamilySymbol(curDoc, accessibleDoorFamilyName, accessibleDoorTypeName);
+                FamilySymbol accessibleDoorType = FindDoorTypeByDimensions(curDoc, accessibleDoorFamilyName, "32\"", "80\"");
 
                 if (accessibleDoorType == null)
                 {
                     t.RollBack();
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find door type '{accessibleDoorTypeName}' in family '{accessibleDoorFamilyName}'.");
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find a 32\"x80\" door type in family '{accessibleDoorFamilyName}'.");
                     return Result.Failed;
                 }
 
@@ -645,6 +646,20 @@ namespace LifestyleDesign
             Utils.TaskDialogInformation("Success", "Create Visitability Plan", "The Visitability Plan view has been created.");
 
             return Result.Succeeded;
+        }
+
+        private static FamilySymbol FindDoorTypeByDimensions(Document curDoc, string familyName, string widthToken, string heightToken)
+        {
+            List<FamilySymbol> candidates = new FilteredElementCollector(curDoc)
+                .OfClass(typeof(FamilySymbol))
+                .Cast<FamilySymbol>()
+                .Where(fs => fs.Family.Name.Equals(familyName, StringComparison.OrdinalIgnoreCase)
+                    && fs.Name.IndexOf(widthToken, StringComparison.OrdinalIgnoreCase) >= 0
+                    && fs.Name.IndexOf(heightToken, StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList();
+
+            return candidates.FirstOrDefault(fs => fs.Name.IndexOf("Privacy", StringComparison.OrdinalIgnoreCase) >= 0)
+                ?? candidates.FirstOrDefault();
         }
 
         private static FamilySymbol GetTitleBlockByFamilyNameContains(Document curDoc, string familyNameContains)

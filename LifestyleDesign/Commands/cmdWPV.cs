@@ -311,40 +311,50 @@ namespace LifestyleDesign
                     curRoomTag.ChangeTypeId(newTagType.Id);
                 }
 
-                // change the Powder room's door to a 32"x80" Privacy door
+                // change the accessible bath door to a 32"x80" Privacy door - Powder room on two-story plans,
+                // or Bath 2 on one-story plans, which don't have a dedicated Powder room
                 List<string> powderRoomNames = new List<string> { "Powder", "Pwdr" };
+                List<string> bath2RoomNames = new List<string> { "Bath 2" };
 
-                FamilyInstance powderDoor = Utils.GetAllDoors(curDoc)
+                FamilyInstance accessibleBathDoor = Utils.GetAllDoors(curDoc)
                     .FirstOrDefault(curDoor =>
                         (curDoor.ToRoom != null && powderRoomNames.Any(n => curDoor.ToRoom.Name.IndexOf(n, StringComparison.OrdinalIgnoreCase) >= 0))
                         || (curDoor.FromRoom != null && powderRoomNames.Any(n => curDoor.FromRoom.Name.IndexOf(n, StringComparison.OrdinalIgnoreCase) >= 0)));
 
-                if (powderDoor == null)
+                if (accessibleBathDoor == null)
+                {
+                    accessibleBathDoor = Utils.GetAllDoors(curDoc)
+                        .FirstOrDefault(curDoor =>
+                            (curDoor.ToRoom != null && bath2RoomNames.Any(n => curDoor.ToRoom.Name.IndexOf(n, StringComparison.OrdinalIgnoreCase) >= 0))
+                            || (curDoor.FromRoom != null && bath2RoomNames.Any(n => curDoor.FromRoom.Name.IndexOf(n, StringComparison.OrdinalIgnoreCase) >= 0)));
+                }
+
+                if (accessibleBathDoor == null)
                 {
                     t.RollBack();
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a door serving the 'Powder' room.");
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", "Could not find a door serving the 'Powder' or 'Bath 2' room.");
                     return Result.Failed;
                 }
 
-                string powderDoorFamilyName = "Flush Single w_Hardware";
-                string powderDoorTypeName = "32\"x80\" Privacy";
+                string accessibleDoorFamilyName = "Flush Single w_Hardware";
+                string accessibleDoorTypeName = "32\"x80\" Privacy";
 
-                FamilySymbol powderDoorType = Utils.FindFamilySymbol(curDoc, powderDoorFamilyName, powderDoorTypeName);
+                FamilySymbol accessibleDoorType = Utils.FindFamilySymbol(curDoc, accessibleDoorFamilyName, accessibleDoorTypeName);
 
-                if (powderDoorType == null)
+                if (accessibleDoorType == null)
                 {
                     t.RollBack();
-                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find door type '{powderDoorTypeName}' in family '{powderDoorFamilyName}'.");
+                    Utils.TaskDialogError("Error", "Create Visitability Plan", $"Could not find door type '{accessibleDoorTypeName}' in family '{accessibleDoorFamilyName}'.");
                     return Result.Failed;
                 }
 
-                if (!powderDoorType.IsActive)
+                if (!accessibleDoorType.IsActive)
                 {
-                    powderDoorType.Activate();
+                    accessibleDoorType.Activate();
                     curDoc.Regenerate();
                 }
 
-                powderDoor.ChangeTypeId(powderDoorType.Id);
+                accessibleBathDoor.ChangeTypeId(accessibleDoorType.Id);
 
                 // use the "First Floor Plan" sheet as the reference for elevation letter, title block, and
                 // browser grouping - it's guaranteed to be a normal content sheet, unlike the Cover sheet, which

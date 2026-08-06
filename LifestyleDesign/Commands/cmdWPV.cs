@@ -710,29 +710,23 @@ namespace LifestyleDesign
         private static bool TryParseASeriesSheetNumber(string sheetNumber, out int number, out string letterSuffix)
         {
             number = 0;
-            letterSuffix = null;
+            letterSuffix = "";
 
-            if (string.IsNullOrEmpty(sheetNumber) || sheetNumber.Length < 3 || sheetNumber[0] != 'A')
+            if (string.IsNullOrEmpty(sheetNumber) || sheetNumber.Length < 2 || sheetNumber[0] != 'A')
             {
                 return false;
             }
 
-            char lastChar = sheetNumber[sheetNumber.Length - 1];
+            // sheets shared across elevations (e.g. "A11") have no trailing letter - only strip one off if present
+            string remainder = sheetNumber.Substring(1);
 
-            if (!char.IsLetter(lastChar))
+            if (remainder.Length > 0 && char.IsLetter(remainder[remainder.Length - 1]))
             {
-                return false;
+                letterSuffix = remainder[remainder.Length - 1].ToString();
+                remainder = remainder.Substring(0, remainder.Length - 1);
             }
 
-            string middle = sheetNumber.Substring(1, sheetNumber.Length - 2);
-
-            if (!int.TryParse(middle, out number))
-            {
-                return false;
-            }
-
-            letterSuffix = lastChar.ToString();
-            return true;
+            return int.TryParse(remainder, out number);
         }
     }
 }

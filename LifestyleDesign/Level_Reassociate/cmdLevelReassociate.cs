@@ -102,63 +102,63 @@ namespace LifestyleDesign
             int reassociatedElements = 0;
             int reassociatedParams = 0;
             Dictionary<ElementId, string> skippedElements = new Dictionary<ElementId, string>();
-            bool rolledBackEntirely = false;
 
-            using (Transaction t = new Transaction(curDoc, "Reassociate Level"))
+            // each element gets its own independent transaction - not a shared one, and not a
+            // sub-transaction nested inside a shared one - so that a geometry failure on one
+            // element (e.g. a compound wall that can't extend its layers at the new elevation)
+            // can only roll back that element's own transaction, never anyone else's already-
+            // committed changes. The group bundles them back into a single undo step.
+            SilentFailuresPreprocessor silentPreprocessor = new SilentFailuresPreprocessor();
+
+            using (TransactionGroup tg = new TransactionGroup(curDoc))
             {
-                t.Start();
-
-                // some elements (e.g. compound walls that can't extend their layers at the new
-                // elevation) will fail Revit's geometry validation. Isolate each element's change in
-                // its own sub-transaction so a single failure only rolls back that one element, and
-                // resolve failures silently instead of letting Revit pop up a blocking dialog.
-                FailureHandlingOptions failureOptions = t.GetFailureHandlingOptions();
-                failureOptions.SetFailuresPreprocessor(new SilentFailuresPreprocessor());
-                failureOptions.SetClearAfterRollback(true);
-                t.SetFailureHandlingOptions(failureOptions);
+                tg.Start("Reassociate Level");
 
                 foreach (Element curElem in candidates)
                 {
-                    int changed;
-                    bool hadUnresolvedReference;
-
-                    using (SubTransaction st = new SubTransaction(curDoc))
+                    using (Transaction t = new Transaction(curDoc, "Reassociate Element"))
                     {
-                        st.Start();
+                        t.Start();
 
-                        (changed, hadUnresolvedReference) = ReassignLevelReferences(curElem, sourceId, targetId);
+                        FailureHandlingOptions failureOptions = t.GetFailureHandlingOptions();
+                        failureOptions.SetFailuresPreprocessor(silentPreprocessor);
+                        failureOptions.SetClearAfterRollback(true);
+                        t.SetFailureHandlingOptions(failureOptions);
+
+                        (int changed, bool hadUnresolvedReference) = ReassignLevelReferences(curElem, sourceId, targetId);
+
+                        TransactionStatus status;
 
                         if (changed == 0)
                         {
-                            st.RollBack();
+                            t.RollBack();
+                            status = TransactionStatus.RolledBack;
                         }
-                        else if (st.Commit() == TransactionStatus.Committed)
+                        else
+                        {
+                            status = t.Commit();
+                        }
+
+                        if (status == TransactionStatus.Committed)
                         {
                             reassociatedElements++;
                             reassociatedParams += changed;
                         }
-                        else
+                        else if (changed > 0)
                         {
                             // Revit couldn't resolve a geometry error caused by this change
                             // (e.g. a compound wall that can't extend its layers) - rolled back
                             hadUnresolvedReference = true;
                         }
-                    }
 
-                    if (hadUnresolvedReference)
-                    {
-                        skippedElements[curElem.Id] = DescribeElement(curElem);
+                        if (hadUnresolvedReference)
+                        {
+                            skippedElements[curElem.Id] = DescribeElement(curElem);
+                        }
                     }
                 }
 
-                rolledBackEntirely = t.Commit() != TransactionStatus.Committed;
-            }
-
-            if (rolledBackEntirely)
-            {
-                Utils.TaskDialogError("Error", "Reassociate Level",
-                    "Revit could not complete the reassociation and rolled back all changes. No elements were modified; nothing was deleted.");
-                return Result.Failed;
+                tg.Assimilate();
             }
 
             // verify: anything Revit still considers associated with the source level that wasn't

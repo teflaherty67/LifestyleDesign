@@ -2247,6 +2247,11 @@ namespace LifestyleDesign.Convert_Spec_Level
             string outletFilePath = @"S:\Shared Folders\Lifestyle USA Design\Library 2026\Electrical";
             string tagFilePath    = @"S:\Shared Folders\Lifestyle USA Design\Library 2026\Annotation\Tags";
 #endif
+#if REVIT2027
+            string outletFilePath = @"S:\Shared Folders\Lifestyle USA Design\Library 2027\Electrical";
+            string tagFilePath    = @"S:\Shared Folders\Lifestyle USA Design\Library 2027\Annotation\Tags";
+#endif
+
 
             string outletFamilyName = "LD_EF_Recep_None";
             string outletTypeName = "Sprinkler";
@@ -2491,7 +2496,7 @@ namespace LifestyleDesign.Convert_Spec_Level
             }
         }
 
-        #endregion
+#endregion
 
         internal static PushButtonData GetButtonData()
         {

@@ -2252,7 +2252,6 @@ namespace LifestyleDesign.Convert_Spec_Level
             string tagFilePath    = @"S:\Shared Folders\Lifestyle USA Design\Library 2027\Annotation\Tags";
 #endif
 
-
             string outletFamilyName = "LD_EF_Recep_None";
             string outletTypeName = "Sprinkler";
             string tagFamilyName = "LD_AN_Tag_EF_Type-Comments";

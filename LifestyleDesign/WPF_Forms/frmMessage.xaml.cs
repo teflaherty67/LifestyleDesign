@@ -44,12 +44,12 @@ namespace LifestyleDesign
             if (showCancel)
             {
                 // confirmation: OK and Cancel
-                btnCancel.Visibility = Visibility.Visible;
+                btnCancel.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
                 // notification: a single Close button that answers to both Enter and Esc
-                btnCancel.Visibility = Visibility.Collapsed;
+                btnCancel.Visibility = System.Windows.Visibility.Collapsed;
                 btnOK.Content = "Close";
                 btnOK.IsCancel = true;
             }

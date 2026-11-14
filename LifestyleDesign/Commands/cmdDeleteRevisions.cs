@@ -13,13 +13,10 @@ namespace LifestyleDesign
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document curDoc = uidoc.Document;
 
-            string msgText = "About to delete all Revisions.";
-            string msgTitle = "Warning";
-            Forms.MessageBoxButton msgButtons = Forms.MessageBoxButton.OKCancel;
+            // ask the user to confirm before deleting anything
+            bool confirmed = Utils.TaskDialogConfirm("Delete Revisions", "Warning", "About to delete all Revisions.");
 
-            Forms.MessageBoxResult result = Forms.MessageBox.Show(msgText, msgTitle, msgButtons, Forms.MessageBoxImage.Warning);
-
-            if (result == Forms.MessageBoxResult.OK)
+            if (confirmed)
             {
                 // start the transaction
                 using (Transaction t = new Transaction(curDoc))
@@ -39,13 +36,11 @@ namespace LifestyleDesign
                     curDoc.Delete(revisions);
 
                     t.Commit();
-
-                    string msgText2 = "All Revisions have been deleted.";
-                    string msgTitle2 = "Complete";
-                    Forms.MessageBoxButton msgButtons2 = Forms.MessageBoxButton.OK;
-
-                    Forms.MessageBox.Show(msgText2, msgTitle2, msgButtons2, Forms.MessageBoxImage.Information);
                 }
+
+                // notify the user
+                Utils.TaskDialogInformation("Delete Revisions", "Complete", "All Revisions have been deleted.");
+
                 return Result.Succeeded;
             }
 

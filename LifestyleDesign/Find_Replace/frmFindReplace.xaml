@@ -16,59 +16,14 @@
         Background="Transparent">
 
     <Window.Resources>
-        <Style x:Key="StyledButton" TargetType="Button">
-            <Setter Property="Background" Value="#E5E7EB"/>
-            <Setter Property="BorderBrush" Value="#9CA3AF"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#D1D5DB"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#9CA3AF"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="LinkButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Foreground" Value="#2B5A8E"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <TextBlock Text="{TemplateBinding Content}"
-                                   Foreground="{TemplateBinding Foreground}"
-                                   FontSize="{TemplateBinding FontSize}"
-                                   TextDecorations="Underline"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LifestyleDesign;component/Common/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
-    <Border Background="White"
-            CornerRadius="8"
-            BorderBrush="#9CA3AF"
-            BorderThickness="1">
+    <Border Style="{StaticResource WindowFrame}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -77,51 +32,13 @@
 
             <!-- Title Bar -->
             <Border Grid.Row="0"
-                    Background="#2B5A8E"
-                    CornerRadius="8,8,0,0"
-                    BorderBrush="#E5E7EB"
-                    BorderThickness="0,0,0,1"
+                    Style="{StaticResource TitleBar}"
                     MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <Grid>
                     <TextBlock Text="Find and Replace"
-                               FontSize="14"
-                               FontWeight="SemiBold"
-                               Foreground="White"
-                               VerticalAlignment="Center"
-                               Margin="15,0,0,0"/>
-                    <Button Content="×"
-                            Width="30"
-                            Height="30"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Margin="0,0,5,0"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            FontSize="20"
-                            Foreground="White"
-                            Cursor="Hand"
-                            Click="btnCancel_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                                                    CornerRadius="3">
-                                                <ContentPresenter HorizontalAlignment="Center"
-                                                                  VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#1E4A7A"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                               Style="{StaticResource TitleBarText}"/>
+                    <Button Style="{StaticResource TitleBarCloseButton}"
+                            Click="btnCancel_Click"/>
                 </Grid>
             </Border>
 
@@ -151,7 +68,7 @@
                     <!-- Check All / Check None -->
                     <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
                         <Button Content="Check All"  Style="{StaticResource LinkButton}" Click="CheckAll_Click"  Margin="0,0,8,0"/>
-                        <TextBlock Text="|" Foreground="#9CA3AF" FontSize="11" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="|" Foreground="{StaticResource SeparatorBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <Button Content="Check None" Style="{StaticResource LinkButton}" Click="CheckNone_Click"/>
                     </StackPanel>
 

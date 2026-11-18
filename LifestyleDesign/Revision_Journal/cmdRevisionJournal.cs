@@ -31,7 +31,7 @@ namespace LifestyleDesign
             // a blank job number would match every folder
             if (string.IsNullOrWhiteSpace(GlobalVars.JobNumber))
             {
-                Utils.TaskDialogWarning("Job Number", "Job Number Required", "Please enter a job number and try again.");
+                Utils.TaskDialogWarning("Revision Journal", "Revision Journal", "Please enter a job number and try again.");
                 return Result.Cancelled;
             }
 
@@ -60,7 +60,7 @@ namespace LifestyleDesign
             if (folderPath == "")
             {
                 // warn the user the job folder doesn't exist
-                Utils.TaskDialogInformation("Job Number", "Folder Not Found",
+                Utils.TaskDialogInformation("Revision Journal", "Revision Journal",
                     $"No job folder found for job number {GlobalVars.JobNumber} in the Job Log. Contact a project manager to verify the job number and try again.");
 
                 return Result.Failed;

@@ -25,7 +25,19 @@ namespace LifestyleDesign
             curForm1.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             curForm1.Topmost = true;
 
-            curForm1.ShowDialog();
+            // clear any job number left over from an earlier run
+            GlobalVars.JobNumber = "";
+
+            // exit if the user cancelled or closed the form
+            if (curForm1.ShowDialog() != true)
+                return Result.Cancelled;
+
+            // a blank job number would match every folder
+            if (string.IsNullOrWhiteSpace(GlobalVars.JobNumber))
+            {
+                Utils.TaskDialogWarning("Job Number", "Job Number Required", "Please enter a job number and try again.");
+                return Result.Cancelled;
+            }
 
             string[] directory1 = Directory.GetDirectories(searchPath1);
             string[] directory2 = Directory.GetDirectories(searchPath2);
@@ -51,16 +63,9 @@ namespace LifestyleDesign
 
             if (folderPath == "")
             {
-                // add task dialog to warn user job doesn't exist
-                // Show final report
-                TaskDialog tdJobNumber = new TaskDialog("Job Number");
-                tdJobNumber.MainIcon = Icon.TaskDialogIconInformation;
-                tdJobNumber.Title = "Folder Not Found";
-                tdJobNumber.TitleAutoPrefix = false;
-                tdJobNumber.MainContent = $"No job folder found for job number {GlobalVars.JobNumber} in the Job Log. Contact a project manager to verify the job number and try again.";
-                tdJobNumber.CommonButtons = TaskDialogCommonButtons.Close;
-
-                TaskDialogResult tdSchedSuccessRes = tdJobNumber.Show();
+                // warn the user the job folder doesn't exist
+                Utils.TaskDialogInformation("Job Number", "Folder Not Found",
+                    $"No job folder found for job number {GlobalVars.JobNumber} in the Job Log. Contact a project manager to verify the job number and try again.");
 
                 return Result.Failed;
             }

@@ -26,12 +26,14 @@ namespace LifestyleDesign
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            GlobalVars.JobNumber = this.tbxJobNum.Text;
+            GlobalVars.JobNumber = this.tbxJobNum.Text.Trim();
+            this.DialogResult = true;
             this.Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
     }

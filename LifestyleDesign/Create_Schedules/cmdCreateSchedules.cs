@@ -116,15 +116,9 @@ namespace LifestyleDesign
                     if (floorAreaScheme == null || floorColorScheme == null)
                     {
                         // if null, warn the user & exit the command
-                        TaskDialog tdFloorError = new TaskDialog("Error");
-                        tdFloorError.MainIcon = Icon.TaskDialogIconWarning;
-                        tdFloorError.Title = "Create Schedules";
-                        tdFloorError.TitleAutoPrefix = false;
-                        tdFloorError.MainContent = "Either the Area Scheme, or the Color Scheme, does not exist " +
-                            "or is named incorrectly. Resolve the issue & try again.";
-                        tdFloorError.CommonButtons = TaskDialogCommonButtons.Close;
-
-                        TaskDialogResult tdFloorErrorRes = tdFloorError.Show();
+                        Utils.TaskDialogWarning("Create Schedules", "Create Schedules",
+                            "Either the Area Scheme, or the Color Scheme, does not exist " +
+                            "or is named incorrectly. Resolve the issue & try again.");
 
                         return Result.Failed;
                     }
@@ -414,15 +408,9 @@ namespace LifestyleDesign
                     if (frameAreaScheme == null || frameColorScheme == null)
                     {
                         // if null, warn the user & exit the command
-                        TaskDialog tdFrameError = new TaskDialog("Error");
-                        tdFrameError.MainIcon = Icon.TaskDialogIconWarning;
-                        tdFrameError.Title = "Create Schedules";
-                        tdFrameError.TitleAutoPrefix = false;
-                        tdFrameError.MainContent = "Either the Area Scheme, or the Color Scheme, does not exist " +
-                            "or is named incorrectly. Resolve the issue & try again.";
-                        tdFrameError.CommonButtons = TaskDialogCommonButtons.Close;
-
-                        TaskDialogResult tdFrameErrorRes = tdFrameError.Show();
+                        Utils.TaskDialogWarning("Create Schedules", "Create Schedules",
+                            "Either the Area Scheme, or the Color Scheme, does not exist " +
+                            "or is named incorrectly. Resolve the issue & try again.");
                     }
 
                     #region Frame Area Plans
@@ -661,15 +649,9 @@ namespace LifestyleDesign
                     if (atticAreaScheme == null || atticColorScheme == null)
                     {
                         // if null, warn the user & exit the command
-                        TaskDialog tdAtticError = new TaskDialog("Error");
-                        tdAtticError.MainIcon = Icon.TaskDialogIconWarning;
-                        tdAtticError.Title = "Create Schedules";
-                        tdAtticError.TitleAutoPrefix = false;
-                        tdAtticError.MainContent = "Either the attic Area Scheme, or the attic Color Scheme, does not exist " +
-                            "or is named incorrectly. Resolve the issue & try again.";
-                        tdAtticError.CommonButtons = TaskDialogCommonButtons.Close;
-
-                        TaskDialogResult tdAtticErrorRes = tdAtticError.Show();
+                        Utils.TaskDialogWarning("Create Schedules", "Create Schedules",
+                            "Either the attic Area Scheme, or the attic Color Scheme, does not exist " +
+                            "or is named incorrectly. Resolve the issue & try again.");
 
                         return Result.Failed;
                     }
@@ -836,16 +818,10 @@ namespace LifestyleDesign
 
             // alert the user
             // if null, warn the user & exit the command
-            TaskDialog tdSchedSuccess = new TaskDialog("Complete");
-            tdSchedSuccess.MainIcon = Icon.TaskDialogIconInformation;
-            tdSchedSuccess.Title = "Create Schedules";
-            tdSchedSuccess.TitleAutoPrefix = false;
-            tdSchedSuccess.MainContent = "The specified schedules have been created. However, the API is not capable of setting the Design Option or adding calculated parameters. " +
-                "The Design Option for the Exterior Veneer Calculations and the Roof Ventilation Equipment schedules will need to be set manually. Also," +
-                "the calculated parameters, Ratio & Required Free Ventilation Area, for the Roof Ventilation Calculations schedule will need to be added.";
-            tdSchedSuccess.CommonButtons = TaskDialogCommonButtons.Close;
-
-            TaskDialogResult tdSchedSuccessRes = tdSchedSuccess.Show();
+            Utils.TaskDialogInformation("Create Schedules", "Create Schedules",
+                "The specified schedules have been created. However, the API is not capable of setting the Design Option or adding calculated parameters. " +
+                "The Design Option for the Exterior Veneer Calculations and the Roof Ventilation Equipment schedules will need to be set manually. Also, " +
+                "the calculated parameters, Ratio & Required Free Ventilation Area, for the Roof Ventilation Calculations schedule will need to be added.");
 
             return Result.Succeeded;
         }

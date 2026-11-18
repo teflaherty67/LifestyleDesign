@@ -119,6 +119,11 @@ namespace LifestyleDesign
                 return rbMulti.Content.ToString();
         }
 
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
         private void btnAll_Click(object sender, RoutedEventArgs e)
         {
             foreach (System.Windows.Controls.CheckBox cBox in allCheckboxes)

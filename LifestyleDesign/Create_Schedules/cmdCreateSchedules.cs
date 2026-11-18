@@ -36,15 +36,15 @@ namespace LifestyleDesign
 
             // open the form
 
+            // size and position come from frmCreateSchedules.xaml
             frmCreateSchedules curForm = new frmCreateSchedules()
             {
-                Width = 420,
-                Height = 380,
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
                 Topmost = true,
             };
 
-            curForm.ShowDialog();
+            // exit if the user cancelled or closed the form
+            if (curForm.ShowDialog() != true)
+                return Result.Cancelled;
 
             // get data from the form
 

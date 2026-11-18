@@ -5,62 +5,103 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LifestyleDesign"
         mc:Ignorable="d"
-        Title="Create Schedules" Height="450" Width="800">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="150"/>
-        </Grid.ColumnDefinitions>
-        
-        
-        <GroupBox Header="Elevation Designation:" BorderThickness="0">
-            <ComboBox x:Name="cmbElevation" Height="25" Width="100" HorizontalAlignment="Left"/>
-        </GroupBox>
-        <GroupBox Grid.Row="1" BorderThickness="0" Header="Number of Floors:">
-            <ComboBox x:Name="cmbFloors" Height="25" Width="100" HorizontalAlignment="Left"/>
-        </GroupBox>        
-        
-        <Label Grid.Column="1" Grid.RowSpan="2" Content="Foundation Type:" VerticalAlignment="Top"/>
-        <StackPanel Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="20,0,0,0">
-            <RadioButton x:Name="rbBasement" Content="Basement" Width="80" VerticalAlignment="Top" Height="20" GroupName="Group1" HorizontalAlignment="Left"/>
-            <RadioButton x:Name="rbCrawlspace" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Height="20" Content="Crawlspace" GroupName="Group1"/>
-            <RadioButton x:Name="rbSlab" Width="50" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Slab" GroupName="Group1" IsChecked="True"/>
-        </StackPanel>
-        
-        <Label Grid.Row="3" Content="Schedules to Create:" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="4">
-            <CheckBox x:Name="chbIndex" Margin="30,0,0,3" Content="Sheet Index"/>
-            <CheckBox x:Name="chbVeneer" Margin="30,0,0,3" Content="Veneer Calculations"/>
-            <CheckBox x:Name="chbFloor" Margin="30,0,0,3" Content="Floor Areas"/>
-            <CheckBox x:Name="chbFrame" Margin="30,0,0,3" Content="Frame Areas"/>
-            <CheckBox x:Name="chbAttic" Margin="30,0,0,3" Content="Attic Areas"/>
-        </StackPanel>
+        Title="Create Schedules"
+        Width="420"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
 
-        <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Top">
-            <Button x:Name="btnAll" Width="90" Height="25" Content="Check All" HorizontalAlignment="Right" Click="btnAll_Click"/>
-            <Button x:Name="btnNone" Content="Check None" Width="90" Height="25" HorizontalAlignment="Right" Click="btnNone_Click" Margin="0,10,0,0"/>
-        </StackPanel>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LifestyleDesign;component/Common/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,2,0,0">
-            <RadioButton x:Name="rbSingle" Content="Single-Space" GroupName="Group2" IsChecked="True"/>
-            <RadioButton x:Name="rbMulti" Content="Multi-Space" Margin="10,0,0,0" GroupName="Group2"/>
-        </StackPanel>
-        
-        <StackPanel Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button x:Name="btnOK" Width="90" Height="25" Content="OK" Margin="0,0,10,0" Click="btnOK_Click"/>
-            <Button x:Name="btnCancel" Width="90" Height="25" Content="Cancel" Click="btnCancel_Click" Margin="0,0,10,0"/>
-            <Button x:Name="btnHelp" Width="90" Height="25" Content="Help" Click="btnHelp_Click"/>
-        </StackPanel>
-        
-    </Grid>
+    <Border Style="{StaticResource WindowFrame}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title Bar -->
+            <Border Grid.Row="0"
+                    Style="{StaticResource TitleBar}"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid>
+                    <TextBlock Text="Create Schedules"
+                               Style="{StaticResource TitleBarText}"/>
+                    <Button Style="{StaticResource TitleBarCloseButton}"
+                            Click="btnCancel_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- Content Area -->
+            <StackPanel Grid.Row="1" Margin="15,12,15,12">
+
+                <!-- Elevation, Floors and Foundation -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="160"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <Label Content="Elevation Designation:" FontSize="11" Padding="0" Margin="0,0,0,4"/>
+                        <ComboBox x:Name="cmbElevation" Width="100" Height="22" FontSize="11" HorizontalAlignment="Left"/>
+
+                        <Label Content="Number of Floors:" FontSize="11" Padding="0" Margin="0,12,0,4"/>
+                        <ComboBox x:Name="cmbFloors" Width="100" Height="22" FontSize="11" HorizontalAlignment="Left"/>
+                    </StackPanel>
+
+                    <GroupBox Grid.Column="1" Header="Foundation Type" FontSize="11" Padding="5,4,5,4" VerticalAlignment="Top">
+                        <StackPanel>
+                            <RadioButton x:Name="rbBasement"   Content="Basement"   GroupName="Group1" FontSize="11" Margin="0,2"/>
+                            <RadioButton x:Name="rbCrawlspace" Content="Crawlspace" GroupName="Group1" FontSize="11" Margin="0,2"/>
+                            <RadioButton x:Name="rbSlab"       Content="Slab"       GroupName="Group1" FontSize="11" Margin="0,2" IsChecked="True"/>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+                <!-- Schedules to Create -->
+                <GroupBox Header="Schedules to Create" FontSize="11" Padding="5,4,5,4" Margin="0,14,0,0">
+                    <StackPanel>
+                        <CheckBox x:Name="chbIndex"  Content="Sheet Index"         FontSize="11" Margin="0,2"/>
+                        <CheckBox x:Name="chbVeneer" Content="Veneer Calculations" FontSize="11" Margin="0,2"/>
+                        <CheckBox x:Name="chbFloor"  Content="Floor Areas"         FontSize="11" Margin="0,2"/>
+                        <CheckBox x:Name="chbFrame"  Content="Frame Areas"         FontSize="11" Margin="0,2"/>
+                        <CheckBox x:Name="chbAttic"  Content="Attic Areas"         FontSize="11" Margin="0,2"/>
+
+                        <!-- Attic options -->
+                        <StackPanel Orientation="Horizontal" Margin="20,2,0,0">
+                            <RadioButton x:Name="rbSingle" Content="Single-Space" GroupName="Group2" FontSize="11" IsChecked="True"/>
+                            <RadioButton x:Name="rbMulti"  Content="Multi-Space"  GroupName="Group2" FontSize="11" Margin="12,0,0,0"/>
+                        </StackPanel>
+
+                        <!-- Check All / Check None -->
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,2">
+                            <Button x:Name="btnAll"  Content="Check All"  Style="{StaticResource LinkButton}" Click="btnAll_Click" Margin="0,0,8,0"/>
+                            <TextBlock Text="|" Foreground="{StaticResource SeparatorBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <Button x:Name="btnNone" Content="Check None" Style="{StaticResource LinkButton}" Click="btnNone_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,16,0,0">
+                    <Button x:Name="btnOK"     Content="OK"     Width="90" Height="30" Margin="0,0,10,0" IsDefault="True" Click="btnOK_Click"     Style="{StaticResource StyledButton}"/>
+                    <Button x:Name="btnCancel" Content="Cancel" Width="90" Height="30" Margin="0,0,10,0" IsCancel="True"  Click="btnCancel_Click" Style="{StaticResource StyledButton}"/>
+                    <Button x:Name="btnHelp"   Content="Help"   Width="90" Height="30"                                    Click="btnHelp_Click"   Style="{StaticResource StyledButton}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

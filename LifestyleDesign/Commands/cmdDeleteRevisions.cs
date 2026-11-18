@@ -39,7 +39,7 @@ namespace LifestyleDesign
                 }
 
                 // notify the user
-                Utils.TaskDialogInformation("Delete Revisions", "Complete", "All Revisions have been deleted.");
+                Utils.TaskDialogInformation("Delete Revisions", "Delete Revisions", "All Revisions have been deleted.");
 
                 return Result.Succeeded;
             }

@@ -17,12 +17,8 @@ namespace LifestyleDesign
             string searchPath1 = @"S:\Shared Folders\-Job Log-\01-Current Jobs";
             string searchPath2 = @"S:\Shared Folders\-Job log-\02-Completed Jobs";
 
+            // size and position come from frmJobNumber.xaml
             frmJobNumber curForm1 = new frmJobNumber();
-
-            curForm1.Width = 375;
-            curForm1.Height = 150;
-
-            curForm1.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             curForm1.Topmost = true;
 
             // clear any job number left over from an earlier run

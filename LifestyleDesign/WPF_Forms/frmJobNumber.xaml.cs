@@ -24,6 +24,11 @@ namespace LifestyleDesign
             InitializeComponent();
         }
 
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             GlobalVars.JobNumber = this.tbxJobNum.Text.Trim();

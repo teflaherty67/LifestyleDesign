@@ -14,7 +14,7 @@ namespace LifestyleDesign
             Document curDoc = uidoc.Document;
 
             // ask the user to confirm before deleting anything
-            bool confirmed = Utils.TaskDialogConfirm("Delete Revisions", "Warning", "About to delete all Revisions.");
+            bool confirmed = Utils.TaskDialogConfirm("Delete Revisions", "Delete Revisions", "About to delete all Revisions.");
 
             if (confirmed)
             {

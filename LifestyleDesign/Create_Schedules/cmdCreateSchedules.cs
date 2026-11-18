@@ -411,6 +411,8 @@ namespace LifestyleDesign
                         Utils.TaskDialogWarning("Create Schedules", "Create Schedules",
                             "Either the Area Scheme, or the Color Scheme, does not exist " +
                             "or is named incorrectly. Resolve the issue & try again.");
+
+                        return Result.Failed;
                     }
 
                     #region Frame Area Plans
